@@ -17,12 +17,12 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Chào mừng bạn đã quay lại</h1>
                                 </div>
-                                <form class="user" id="dangnhap">
+                                <form class="user" id="dangnhap" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
-                                            placeholder="Nhập tài khoản" name="taikhoan" required>
-                                        <span style="color: red" class="er er_sdt"></span>
+                                        <input type="email" class="form-control form-control-user"
+                                            placeholder="Nhập Email" name="email" required>
+                                        <span style="color: red" class="er er_email"></span>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <input type="checkbox" name="remember" class="custom-control-input" id="customCheck">
                                             <label class="custom-control-label" for="customCheck">Remember
                                                 Me</label>
                                         </div>

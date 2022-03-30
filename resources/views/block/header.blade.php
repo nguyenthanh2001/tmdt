@@ -1,6 +1,7 @@
  <!-- Page Preloder -->
  @yield('load')
 <!-- Humberger Begin -->
+
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
@@ -14,17 +15,33 @@
         <div class="header__cart__price">item: <span>$150.00</span></div>
     </div>
     <div class="humberger__menu__widget">
+
         <div class="header__top__right__language">
-            <img src="{{ asset('asset/img/language.png') }}" alt="">
-            <div>English</div>
+            
+            @if (Auth::check())
+            <div>
+                <i class="fa fa-address-card" aria-hidden="true"></i>
+                 Thông tin cá nhân
+            </div>
             <span class="arrow_carrot-down"></span>
             <ul>
-                <li><a href="#">Spanis</a></li>
-                <li><a href="#">English</a></li>
+                <li><a href="#">Hồ sơ</a></li>
+                <li><a href="#">Đăng xuất</a></li>
             </ul>
+            @else
+            <div>Đăng ký</div>
+            @endif          
         </div>
         <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
+            @if (Auth::check())
+            <div>
+                <i class="fa fa-user"></i>
+                <span>{{Auth::user()->name}}</span>
+            </div>
+            @else
+            <a href="#"><i class="fa fa-user"></i>Đăng Nhập</a>
+            @endif
+        
         </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
@@ -82,16 +99,34 @@
                             <a href="#"><i class="fa fa-pinterest-p"></i></a>
                         </div>
                         <div class="header__top__right__language">
-                            <img src="{{ asset('asset/img/language.png') }}" alt="">
-                            <div>English</div>
+                            @if (Auth::check())
+                            <div>
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                                 Thông tin cá nhân
+                            </div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="#">Spanis</a></li>
-                                <li><a href="#">English</a></li>
+                                <li><a href="#">Hồ sơ</a></li>
+                                <li><a href="{{ route('home.dangxuat') }}">Đăng xuất</a></li>
                             </ul>
+                            @else
+                            <a href="{{ route('home.dangky') }}">
+                                <div>
+                                 <i class="fa fa-address-card" aria-hidden="true"></i>
+                                  Đăng ký
+                                </div>
+                            </a>
+                           @endif
+                            
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            @if (Auth::check())
+                            <div><i class="fa fa-user"></i>
+                                <span>{{ Auth::user()->name }}</span>
+                            </div>
+                            @else
+                            <a href="{{ route('home.dangnhap') }}"><i class="fa fa-user"></i> Đăng nhập</a>
+                            @endif                         
                         </div>
                     </div>
                 </div>

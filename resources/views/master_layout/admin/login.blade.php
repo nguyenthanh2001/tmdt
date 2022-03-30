@@ -27,9 +27,9 @@
 <body class="bg-gradient-primary">
 
    @yield('dangnhap_dangky')
+   
 
     <!-- Bootstrap core JavaScript-->
-
     <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $('#dangnhap').on('submit', function (event) {
         $('.er').text("");
+        toastr.options.progressBar = true;
+        toastr.options.newestOnTop = true;
       event.preventDefault();
       $.ajax({
          url : "dang-nhap",
@@ -12,8 +14,15 @@ $(document).ready(function () {
         success: function (data2) {            
           console.log(data2);
           var trangthai=data2.status;
-          if(trangthai == false){
-            toastr.options.progressBar = true;
+          if (trangthai == true) {
+            toastr.success('Hệ Thống sẽ chuyển hướng', 'Hệ thông');
+            toastr.success('Đăng nhập thành công', 'Thông báo');
+            setTimeout(function(){
+              window.location.replace(data2.link);
+          }, 2000);
+
+          }
+          else{
             toastr.error("Sai thông tin đăng nhập vui lòng kiểm tra lại","Thông báo")
           }
         },

@@ -20,18 +20,18 @@ input::-webkit-inner-spin-button {
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Tạo Tài Khoản</h1>
                         </div>
-                        <form class="user" id="dangky">
+                        <form class="user" id="dangky"  method="POST">
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" 
                                     placeholder="Nhập Họ Tên" name="hoten" required>
                                     <span style="color: red" class="er er_hoten"></span>
-                            </div>   
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-user" 
-                                    placeholder="Nhập Tài khoản" name="taikhoan" required>
-                                    <span style="color: red" class="er er_taikhoan"></span>
                             </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user" 
+                                    placeholder="Tài Khoản Email" name="email" required>
+                                    <span style="color: red" class="er er_email"></span >
+                            </div>     
                             <div class="form-group">
                                 <input type="password" class="form-control form-control-user" 
                                     placeholder="Nhập Mật Khẩu" name="matkhau" required>
@@ -61,11 +61,7 @@ input::-webkit-inner-spin-button {
                                         <span style="color: red" class="er er_sdt"></span>
                                 </div>                             
                             </div>                       
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" 
-                                    placeholder="Email Liên Lạc" name="gmail" required>
-                                    <span style="color: red" class="er er_gmail"></span >
-                            </div>  
+                     
                             
                             <div class="form-group">
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Địa Chỉ" name="diachi" required></textarea>
