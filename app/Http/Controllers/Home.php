@@ -7,8 +7,6 @@ use Nette\Utils\Validators;
 use PhpParser\Node\Expr\Cast\Array_;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use App\Models\HomeModel;
-use App\Models\TaikhoanModel;
 use Illuminate\Support\Facades\View;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
@@ -17,22 +15,26 @@ use App\Models\User;
 
 class Home extends Controller
 {
+    
     private $taikhoan;
     public function __construct()
     {
-        $this->taikhoan =new TaikhoanModel();    
+
     }
     public function index(Request $request){
       
         return view('home');
     }
     public function chitietsp($id=null){
-        if (empty($id)) {      
+        if (empty($id)) {                
             return abort(404);
         }
+       
         return 'day la chi tiet san pham cua '.$id;
         //trangchitiet
+
     }
+
     public function dangnhap(){
         //trangdangnhap
         return view('dangnhap');
@@ -43,9 +45,9 @@ class Home extends Controller
         $request->session()->regenerateToken();
         return view('dangnhap');
     }
-    public function handle_dangnhap(Request $request){
+    public function handle_dangnhap(Request $request){      
         //xu ly dang nhap
-        $remember = isset($request->remember) ? true :false;
+        $remember = ($request->has('remember')) ? true :false;
         $rule=[
             'email' => 'required|email',
             'matkhau' => 'required|min:6',           
@@ -57,7 +59,6 @@ class Home extends Controller
             ];
             $validator = Validator::make($request->all(), $rule,$mess);  
             $validator->validate();
-          
             if (!$validator->fails()) {
                 $data = [
                     'email' => $request->email,
@@ -108,7 +109,7 @@ class Home extends Controller
             $user->ngaysinh = $request->ngaysinh;         
             $user->sdt = $request->sdt;
             $user->diachi =$request->diachi;
-            $user->maquyen = 2;       
+            $user->phanquyen_id = 2;       
             $trangthai = $user->save();           
             return response()->json(['status'=>$trangthai]);
        }

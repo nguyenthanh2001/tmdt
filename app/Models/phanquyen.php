@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-class HomeModel extends Model
+class phanquyen extends Model
 {
     use HasFactory;
-
-    public function test()
+    protected $table ='phanquyen';
+    public function us()
     {
-        $sql = DB::table('loaibanh')->get();
-        return $sql;
+        return $this->hasMany(User::class,'phanquyen_id','id');
     }
 }
-
-

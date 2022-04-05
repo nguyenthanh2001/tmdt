@@ -27,7 +27,7 @@ class User extends Authenticatable
         'sdt',
         'gmail',
         'diachi',
-        'maquyen'
+        'phanquyen_id'
         
     ];
 

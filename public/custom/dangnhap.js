@@ -1,8 +1,6 @@
 $(document).ready(function () {
     $('#dangnhap').on('submit', function (event) {
         $('.er').text("");
-        toastr.options.progressBar = true;
-        toastr.options.newestOnTop = true;
       event.preventDefault();
       $.ajax({
          url : "dang-nhap",
@@ -26,7 +24,7 @@ $(document).ready(function () {
             toastr.error("Sai thông tin đăng nhập vui lòng kiểm tra lại","Thông báo")
           }
         },
-        error: function (data2) { 
+         error: function (data2) { 
          console.log(data2); 
          let mess =data2.responseJSON.errors
          console.log(mess);  

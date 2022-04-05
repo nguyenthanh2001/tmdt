@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Home;
+use App\Http\Controllers\Admin\QLloaibanh;
+use App\Http\Controllers\Banh;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,10 +35,21 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
 });
 
-Route::get('index',[Home::class,'index']);
-// Route::get('home',function(){
-//     return view('home');
-// });
+//admin 
+Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(function (){
+    //loại bánh
+    Route::get('index','index')->name('trangchu_admin');
+    Route::get('loai-banh','getloaibanh')->name('getloaibanh');
+    Route::post('postloaibanh','postloaibanh');
+    Route::get('edit-loaibanh/{id}','get_edit_loaibanh')->name('get-edit-loaibanh');
+    Route::post('edit-loaibanh/{id}','post_edit_loaibanh');
+    Route::get('delete-loaibanh/{id}','get_delete_loaibanh');
+});
+Route::prefix('admin')->controller(Banh::class)->name('admin.')->group(function (){
+   // Route::get('trangchu','index');
+});
+
+
 Route::get('new',function(){
     return view('new');
 });
