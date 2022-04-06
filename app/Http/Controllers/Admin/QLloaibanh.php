@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class QLloaibanh extends Controller
 {
-    public function index(Request $request)
-    {
-        $test = Loaibanh::find(1)->banh;
-
-        return view('admin.trangchu');
-    }
+    // public function index(Request $request)
+    // {
+    //     $test = Loaibanh::find(1)->banh;
+    //     return view('admin.trangchu');
+    // }
     public function getloaibanh(Request $request)
     {
         $ad_lb = Loaibanh::orderBy('maloai', 'desc')->get();
@@ -64,7 +63,7 @@ class QLloaibanh extends Controller
         if (!empty($loaibanh)) {
             return response()->json(['datalb' => $loaibanh]);
         }
-        return redirect()->route('admin.get-edit-loaibanh'); 
+        return redirect()->route('admin.getloaibanh'); 
     }
 
     public function post_edit_loaibanh(Request $request,$id)

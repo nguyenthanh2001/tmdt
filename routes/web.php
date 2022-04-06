@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\Admin\QLloaibanh;
-use App\Http\Controllers\Banh;
+use App\Http\Controllers\Admin\QLkhuyenmai;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,18 +36,22 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
 });
 
-//admin 
-Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(function (){
-    //loại bánh
-    Route::get('index','index')->name('trangchu_admin');
+//admin-loại bánh
+Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(function (){ 
+    // Route::get('index','index')->name('trangchu_admin');
     Route::get('loai-banh','getloaibanh')->name('getloaibanh');
     Route::post('postloaibanh','postloaibanh');
-    Route::get('edit-loaibanh/{id}','get_edit_loaibanh')->name('get-edit-loaibanh');
+    Route::get('edit-loaibanh/{id}','get_edit_loaibanh');
     Route::post('edit-loaibanh/{id}','post_edit_loaibanh');
     Route::get('delete-loaibanh/{id}','get_delete_loaibanh');
+    
 });
-Route::prefix('admin')->controller(Banh::class)->name('admin.')->group(function (){
-   // Route::get('trangchu','index');
+Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(function (){
+   Route::get('khuyen-mai','Showkhuyenmai')->name('getkhuyenmai');
+   Route::post('khuyen-mai','Post_add_khuyenmai');
+   Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
+   Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
+   Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
 });
 
 

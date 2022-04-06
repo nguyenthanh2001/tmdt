@@ -95,6 +95,8 @@ function loaddata(){
     ]
 } );
 }
+
+
 function sualoaibanh(id) {  
   var url_edit='edit-loaibanh/'+id;
   $.ajax({
@@ -127,7 +129,6 @@ function sualoaibanh(id) {
 
 
 function xoaloaibanh(id) {
-  console.log(id);
   var url_delete = 'delete-loaibanh/'+id;
 
   Swal.fire({
@@ -155,7 +156,7 @@ function xoaloaibanh(id) {
             loaddata();            
           }
           else{
-            toastr.error('Không thể xóa lại bánh này',"Thông báo")
+            toastr.error('Không thể xóa loại bánh này',"Thông báo")
          }                 
         },
          error: function (data_er) { 
