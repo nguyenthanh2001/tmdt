@@ -17,4 +17,5 @@ class Loaibanh extends Model
     {
         return $this->hasMany(Banh::class,'maloai_id','maloai');
     }
+    
 }

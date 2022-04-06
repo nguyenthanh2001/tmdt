@@ -10,7 +10,7 @@ use App\Models\Khuyenmai;
 class QLkhuyenmai extends Controller
 {
     public function Showkhuyenmai(Request $request)
-    {
+    {     
         $khuyenmai = Khuyenmai::orderBy('makm', 'desc')->get();
         if ($request->ajax()) {
             $custom  = array();
@@ -57,12 +57,15 @@ class QLkhuyenmai extends Controller
             return response()->json(['status' => $trangthai]);    
         }
     }
-    public function get_edit_khuyen_mai($id){
-        $khuyenmai = Khuyenmai::find($id);
-        if (!empty($khuyenmai)) {
-            return response()->json(['datakm' => $khuyenmai]);
+    public function get_edit_khuyen_mai($id,Request $request){
+        if ($request->ajax()) {
+            $khuyenmai = Khuyenmai::find($id);
+            if (!empty($khuyenmai)) {
+                return response()->json(['datakm' => $khuyenmai]);
+            }
         }
         return redirect()->route('admin.getkhuyenmai'); 
+
     }
     public function post_edit_khuyen_mai(Request $request,$id){
         $rule = [

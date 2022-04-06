@@ -11,4 +11,8 @@ class Khuyenmai extends Model
     protected $table ='khuyenmai';
     protected $primaryKey = 'makm';
     public $timestamps = false;
+    public function banh()
+    {
+        return $this->hasMany(Banh::class,'maloai_id','makm');
+    }
 }

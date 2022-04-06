@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
 use App\Http\Controllers\Admin\QLloaibanh;
 use App\Http\Controllers\Admin\QLkhuyenmai;
+use App\Http\Controllers\Admin\QLbanh;
 
 
 
@@ -46,6 +47,7 @@ Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(fun
     Route::get('delete-loaibanh/{id}','get_delete_loaibanh');
     
 });
+//admin-khuyến mãi
 Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(function (){
    Route::get('khuyen-mai','Showkhuyenmai')->name('getkhuyenmai');
    Route::post('khuyen-mai','Post_add_khuyenmai');
@@ -53,7 +55,14 @@ Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(fu
    Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
    Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
 });
-
+//admin-bánh
+Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(function (){
+    Route::get('banh','Showbanh')->name('getbanh');
+    // Route::post('khuyen-mai','Post_add_khuyenmai');
+    // Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
+    // Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
+    // Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
+ });
 
 Route::get('new',function(){
     return view('new');

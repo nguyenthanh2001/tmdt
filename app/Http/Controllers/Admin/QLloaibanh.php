@@ -17,24 +17,22 @@ class QLloaibanh extends Controller
     public function getloaibanh(Request $request)
     {
         $ad_lb = Loaibanh::orderBy('maloai', 'desc')->get();
-        if ($request->ajax()) {   
-              $custom  = Array();
-              foreach ($ad_lb as $key => $value) {
-                  $custom[$key]['stt']=$key+1;
-                  $custom[$key]['tenloai']=$value->tenloai;
-                  $custom[$key]['btn-sua']='
-                  <button onclick="sualoaibanh('.$value->maloai.')" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#sualoaibanh">
+        if ($request->ajax()) {
+            $custom  = array();
+            foreach ($ad_lb as $key => $value) {
+                $custom[$key]['stt'] = $key + 1;
+                $custom[$key]['tenloai'] = $value->tenloai;
+                $custom[$key]['btn-sua'] = '
+                  <button onclick="sualoaibanh(' . $value->maloai . ')" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#sualoaibanh">
                         <i class="fas fa-edit"></i>
-                  </button>';  
-                  $custom[$key]['btn-xoa']='
-                  <button onclick="xoaloaibanh('.$value->maloai.')" class="btn btn-danger btn-circle btn-sm">
+                  </button>';
+                $custom[$key]['btn-xoa'] = '
+                  <button onclick="xoaloaibanh(' . $value->maloai . ')" class="btn btn-danger btn-circle btn-sm">
                             <i class="fas fa-trash"></i>
                   </button>
                   ';
-
-              }
-            return response()->json(['data' =>$custom]); 
-
+            }
+            return response()->json(['data' => $custom]);
         }
         return view('admin.loaibanh', compact('ad_lb'));
     }
@@ -49,24 +47,26 @@ class QLloaibanh extends Controller
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();
-        if (!$validator->fails()) {            
+        if (!$validator->fails()) {
             $addlb = new Loaibanh();
             $addlb->tenloai = $request->tenloai;
-            $trangthai = $addlb->save(); 
-            return response()->json(['status' => $trangthai]);                                                          
+            $trangthai = $addlb->save();
+            return response()->json(['status' => $trangthai]);
         }
     }
 
-    public function get_edit_loaibanh($id)
+    public function get_edit_loaibanh($id, Request $request)
     {
-        $loaibanh = Loaibanh::find($id);
-        if (!empty($loaibanh)) {
-            return response()->json(['datalb' => $loaibanh]);
+        if ($request->ajax()) {
+            $loaibanh = Loaibanh::find($id);
+            if (!empty($loaibanh)) {
+                return response()->json(['datalb' => $loaibanh]);
+            }
         }
-        return redirect()->route('admin.getloaibanh'); 
+        return redirect()->route('admin.getloaibanh');
     }
 
-    public function post_edit_loaibanh(Request $request,$id)
+    public function post_edit_loaibanh(Request $request, $id)
     {
         $rule = [
             'tenloai' => 'required|unique:loaibanh',
@@ -77,13 +77,12 @@ class QLloaibanh extends Controller
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();
-        if (!$validator->fails()) {            
+        if (!$validator->fails()) {
             $addlb = Loaibanh::find($id);
             $addlb->tenloai = $request->tenloai;
-            $trangthai = $addlb->save(); 
-            return response()->json(['status' => $trangthai]);                                                          
+            $trangthai = $addlb->save();
+            return response()->json(['status' => $trangthai]);
         }
-
     }
     public function get_delete_loaibanh($id)
     {
@@ -94,9 +93,8 @@ class QLloaibanh extends Controller
                 return response()->json(['status' => $status]);
             } catch (\Throwable $th) {
                 return response()->json(['status' => false]);
-            }          
+            }
         }
-        return redirect()->route('admin.get-edit-loaibanh'); 
-
+        return redirect()->route('admin.get-edit-loaibanh');
     }
 }
