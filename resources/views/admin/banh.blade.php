@@ -1,6 +1,7 @@
 @extends('master_layout.admin.layout_admin')
 @push('css')
     <link href=" {{ asset('admin/hashtag/tagsinput.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 @endpush
 <!-- Begin Page Content -->
 @section('main_admin')
@@ -100,67 +101,11 @@
             </div>
         </div>
     </div>
-{{-- thembanh --}}
-    <div class="modal fade" id="thembanh">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Thêm bánh</h4>
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Tên bánh</label>
-                        <input type="text" class="form-control" placeholder="Thêm tên bánh" name="tenbanh" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Số lượng</label>
-                        <input type="number" class="form-control" placeholder="Thêm số lượng" name="soluong" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlFile1" class="font-weight-bold">Thêm hình ảnh bánh</label>
-                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="hinhanh" required>
-                    </div>                  
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
-                        <input type="text" class="form-control" placeholder="Nhập giá bánh" name="giabanh" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1" class="font-weight-bold">Mã khuyến mãi</label>
-                        <select class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="makm">
-                            <option selected>Chọn mã khuyến mãi</option>
-                            <option value="1">10%</option>
-                            <option value="2">20%</option>
-                            <option value="3">30%</option>
-                        </select>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1" class="font-weight-bold">Mã loại</label>
-                            <select class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="maloai">
-                                <option selected>Chọn mã loại</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1" class="font-weight-bold">Mô tả</label>
-                            <textarea type="text" id="editor"  class="form-control" placeholder="Nhập mô tả" name="mota" required></textarea>
-                        </div>
-
-                        <div class="form-group ">
-                            <button type="submit " name="submit" value="Gửi" id="btn_them" class="btn btn-success">Thêm</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin.form_input.thembanh')
+    
 @endsection
 @push('js')
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('custom/admin/qlbanh.js') }}"></script>
     <script src="{{ asset('admin/hashtag/tagsinput.js') }}"></script>  
 @endpush
