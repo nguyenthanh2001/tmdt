@@ -52,13 +52,11 @@ $(document).ready(function () {
                 var html="";
                 var size_select = this.value;
                 for (var index = 0; index < size_select; index++) {
-                    html += size_banh(index);           
-                }
+                    html += size_banh(index);                                      
+                }            
                 html +='<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
                 $("#size_div_2").html(html)
-        });
-
-
+         });      
         } else {
             console.log('khong');
             $("#size_div").empty();

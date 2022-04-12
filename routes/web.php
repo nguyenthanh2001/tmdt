@@ -58,14 +58,14 @@ Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(fu
 //admin-bánh
 Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(function (){
     Route::get('banh','Showbanh')->name('getbanh');
+    Route::post('addCake','PostAddCake')->name('postAddCake');
+    Route::get('new','PostAddCake');
     // Route::post('khuyen-mai','Post_add_khuyenmai');
     // Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
     // Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
     // Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
  });
 
-Route::get('new',function(){
-    return view('new');
-});
+Route::get('new',function(){});
 Route::get('test',[Home::class,'sayhi']);
 Route::post('new',[Home::class,'form']);

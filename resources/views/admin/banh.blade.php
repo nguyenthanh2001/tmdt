@@ -6,6 +6,13 @@
 <!-- Begin Page Content -->
 @section('main_admin')
     <div class="container-fluid">
+
+        <form action="{{ route('admin.postAddCake') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="files[]" accept=".png, .jpg, .jpeg" multiple>
+            <input type="submit" value="them">
+        </form>
+
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Quản Lý Bánh Ngọt</h1>
         <p class="mb-4 text-info">Tại đây quản trị có thể thêm Bánh, sửa Bánh , xóa Bánh ,
