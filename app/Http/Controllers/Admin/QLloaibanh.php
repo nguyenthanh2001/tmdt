@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Loaibanh;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rule;
 class QLloaibanh extends Controller
 {
     // public function index(Request $request)
@@ -68,8 +68,9 @@ class QLloaibanh extends Controller
 
     public function post_edit_loaibanh(Request $request, $id)
     {
+        $addlb = Loaibanh::find($id);
         $rule = [
-            'tenloai' => 'required|unique:loaibanh',
+            'tenloai' => ['required',Rule::unique('Loaibanh')->ignore($addlb->tenloai,'tenloai')],
         ];
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
@@ -78,7 +79,6 @@ class QLloaibanh extends Controller
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();
         if (!$validator->fails()) {
-            $addlb = Loaibanh::find($id);
             $addlb->tenloai = $request->tenloai;
             $trangthai = $addlb->save();
             return response()->json(['status' => $trangthai]);

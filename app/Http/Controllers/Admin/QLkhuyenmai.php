@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Khuyenmai;
-
+use Illuminate\Validation\Rule;
 class QLkhuyenmai extends Controller
 {
     public function Showkhuyenmai(Request $request)
@@ -68,9 +68,10 @@ class QLkhuyenmai extends Controller
 
     }
     public function post_edit_khuyen_mai(Request $request,$id){
+        $addkm = Khuyenmai::find($id);
         $rule = [
-            'tenkm' => 'required|unique:khuyenmai',
-            'giatri' => 'required|numeric|min:1|max:99|unique:khuyenmai'
+            'tenkm' =>  ['required',Rule::unique('khuyenmai')->ignore($addkm->tenkm,'tenkm')],
+            'giatri' =>  ['required','numeric','min:1','max:99',Rule::unique('khuyenmai')->ignore($addkm->giatri,'giatri')]
         ];
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
@@ -84,7 +85,6 @@ class QLkhuyenmai extends Controller
         $validator->validate();
         if (!$validator->fails())
         {
-            $addkm = Khuyenmai::find($id);
             $addkm->giatri = $request->giatri;
             $addkm->tenkm = $request->tenkm;
             $trangthai = $addkm->save(); 

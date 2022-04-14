@@ -9,6 +9,7 @@ use App\Models\Sizebanh;
 use App\Models\Loaibanh;
 use App\Models\Khuyenmai;
 use App\Models\Anhct;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Nette\Utils\Arrays;
 use Illuminate\Support\Facades\Storage;
@@ -22,32 +23,41 @@ class QLbanh extends Controller
             $custom  = array();
             foreach ($banh as $key => $value) {
                 $custom[$key]['stt'] = $key + 1;
-                $custom[$key]['tenkm'] = $value->tenbanh;
-                $custom[$key]['tenkm'] = $value->soluong;
-                $custom[$key]['tenkm'] = $value->hinhanh;
-                $custom[$key]['tenkm'] = $value->mota;
-                $custom[$key]['tenkm'] = $value->giabanh;
-                $custom[$key]['giatri'] = $value->giatri;
+                $custom[$key]['tenbanh'] = $value['tenbanh'];
+                $custom[$key]['soluong'] = $value['soluong'];
+                $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: cover;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail">';
+                $custom[$key]['mota'] = Str::limit($value['mota'], 30);
+                if($value['giabanh'] == 0){
+                    $custom[$key]['giabanh'] ='<button class="badge badge-pil badge-success">Bánh có nhiều Size</button>';
+                }else{
+                    $custom[$key]['giabanh'] = number_format($value['giabanh']);   
+                }
+                $custom[$key]['loaibanh'] = '<span class="badge badge-pill badge-info">'.$value["loaibanh"]["tenloai"].'</span> ';
+                if(!empty($value["khuyenmai"])){
+                    $custom[$key]['khuyenmai'] = $value["khuyenmai"]["giatri"];
+                }else{
+                    $custom[$key]['khuyenmai'] =0;
+                }
                 $custom[$key]['btn-sua'] = '
-                <button onclick="suakm(' . $value->makm . ')" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#suakhuyenmai">
+                <button onclick="editCake(' . $value['mabanh'] . ')" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#suabanh">
                       <i class="fas fa-edit"></i>
                 </button>';
                 $custom[$key]['btn-xoa'] = '
-                <button onclick="xoakm(' . $value->makm . ')" class="btn btn-danger btn-circle btn-sm">
+                <button onclick="deleteCake(' . $value['mabanh'] . ')" class="btn btn-danger btn-circle btn-sm">
                           <i class="fas fa-trash"></i>
                 </button>
                 ';
             }
-
             return response()->json(['data' => $custom]);
         }
+
         $loaibanh = Loaibanh::orderBy('maloai', 'desc')->get();
         $khuyenmai = Khuyenmai::orderBy('giatri', 'desc')->get();
         return view('admin.banh', compact('banh', 'loaibanh', 'khuyenmai'));
     }
+
     public function PostAddCake(Request $request)
     {
-        dd(public_path());
         $checkSize = ($request->has('sizebanh')) ? true : false;
         if ($request->has('sizebanh')) {
             $rule = [
@@ -55,7 +65,6 @@ class QLbanh extends Controller
                 'soluong' => 'required|numeric|min:1',
                 'hinhanh' => 'required',
                 'hinhanhct.*' => 'required',
-                'giabanh' => 'required|numeric|min:1',
                 //
                 'tensize.*' => 'required',
                 'gia.*' => 'required|numeric|min:1',
@@ -94,7 +103,6 @@ class QLbanh extends Controller
         $validator->validate();
 
 
-
         if (!$validator->fails()) {
             //check file              
             $fileCake = $request->file('hinhanh');
@@ -114,8 +122,7 @@ class QLbanh extends Controller
             }
 
             $nameCake = $fileCake->hashName();
-            //  $fileCake->move('upload/imgCake', $nameCake);
-
+            //  $fileCake->move('upload/imgCake', $nameCake);           
             //insert banh          
             $addCake = new Banh();
             $addCake->tenbanh = $request->tenbanh;
@@ -123,7 +130,7 @@ class QLbanh extends Controller
             $addCake->hinhanh = $nameCake;
             $addCake->mota = $request->mota;
             if (!$checkSize) {
-                $addCake->giabanh = $request->giabanh;
+                $addCake->giabanh = $request->giabanh.'000';
             }
             if ($request->makm != 0) {
                 $addCake->makm = $request->makm;
@@ -132,7 +139,6 @@ class QLbanh extends Controller
 
             //save img Cake
             $fileCake->move('upload/imgCake', $nameCake);
-
             if ($addCake->save()) {
                 //insert chi tiet anh     
                 foreach ($fileCakes as $key => $value) {
@@ -149,11 +155,23 @@ class QLbanh extends Controller
                         $addSizeCake = new Sizebanh();
                         $addSizeCake->tensize = $request->tensize[$i];
                         $addSizeCake->mabanh = $addCake->mabanh;
-                        $addSizeCake->gia = $request->gia[$i];
+                        $addSizeCake->gia = $request->gia[$i].'000';
                         $addSizeCake->save();
                     }
                 }
+                 return response()->json(['status' => true]);
             }
         }
+    }
+
+    public function getEditCake(Request $request,$id)
+    {   
+        if ($request->ajax()) {
+            $banh = Banh::find($id)->load('sizebanh','anhct')->toArray();
+            if (!empty($banh)) {
+                return response()->json(['dataCake' => $banh]);
+            }
+      }
+        return redirect()->route('admin.getbanh');
     }
 }

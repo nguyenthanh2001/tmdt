@@ -19,4 +19,13 @@ class Banh extends Model
     {
         return $this->belongsTo(Khuyenmai::class,'makm','makm');
     }
+    public function anhct()
+    {
+        return $this->hasMany(Anhct::class,'mabanh','mabanh');
+    }
+    public function sizebanh()
+    {
+        return $this->hasMany(Sizebanh::class,'mabanh','mabanh');
+    }
+
 }

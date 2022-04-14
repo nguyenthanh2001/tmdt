@@ -59,7 +59,7 @@ Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(fu
 Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(function (){
     Route::get('banh','Showbanh')->name('getbanh');
     Route::post('addCake','PostAddCake')->name('postAddCake');
-    Route::get('new','PostAddCake');
+    Route::get('editCake/{id}','getEditCake');
     // Route::post('khuyen-mai','Post_add_khuyenmai');
     // Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
     // Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');

@@ -1,18 +1,12 @@
 @extends('master_layout.admin.layout_admin')
 @push('css')
     <link href=" {{ asset('admin/hashtag/tagsinput.css') }}" rel="stylesheet">
+    <link href=" {{ asset('custom/css/formAddCake.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 @endpush
 <!-- Begin Page Content -->
 @section('main_admin')
     <div class="container-fluid">
-
-        <form action="{{ route('admin.postAddCake') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="file" name="files[]" accept=".png, .jpg, .jpeg" multiple>
-            <input type="submit" value="them">
-        </form>
-
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Quản Lý Bánh Ngọt</h1>
         <p class="mb-4 text-info">Tại đây quản trị có thể thêm Bánh, sửa Bánh , xóa Bánh ,
@@ -44,7 +38,7 @@
                                 <th>Hình Ảnh</th>
                                 <th>Số Lượng</th>
                                 <th>Mô Tả</th>
-                                <th>Gía Bánh</th>
+                                <th>Giá Bánh VNĐ</th>
                                 <th>Loại Bánh</th>
                                 <th>Khuyến Mãi %</th>
                                 <th>Sửa</th>
@@ -58,7 +52,7 @@
                                 <th>Hình Ảnh</th>
                                 <th>Số Lượng</th>
                                 <th>Mô Tả</th>
-                                <th>Gía Bánh</th>
+                                <th>Giá Bánh VNĐ</th>
                                 <th>Loại Bánh</th>
                                 <th>Khuyến Mãi %</th>
                                 <th>Sửa</th>
@@ -70,17 +64,16 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $item['tenbanh'] }}</td>
-                                    <td>{{ $item['hinhanh'] }}</td>
+                                    <td style="width:20%"><img style="width:100%;height: 200px;object-fit: cover;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail"></td>
                                     <td>{{ $item['soluong'] }}</td>
                                     <td> {{ Str::limit($item['mota'], 30) }}</td>
-                                   
-                                    <td>{{ $item['giabanh'] }}</td>
-                                    @if (!empty($item['loaibanh']))
-                                        <td>{{ $item['loaibanh']['tenloai'] }}</td>
-                                    @else
-                                        <td>Không có Loại Bánh</td>
-                                    @endif
-
+                                   @if ($item['giabanh'] == 0)
+                                   <td><button class="badge badge-pil badge-success">Bánh có nhiều Size</button></td>
+                                   @else
+                                   <td>{{ number_format($item['giabanh']) }}</td>
+                                   @endif
+                                
+                                    <td><span class="badge badge-pill badge-info">{{ $item['loaibanh']['tenloai'] }}</span> </td>
                                     @if (!empty($item['khuyenmai']))
                                         <td>{{ $item['khuyenmai']['giatri'] }}</td>
                                     @else
@@ -88,14 +81,14 @@
                                     @endif
 
                                     <td>
-                                        <button onclick="suabanh({{ $item['mabanh'] }})"
+                                        <button onclick="editCake({{ $item['mabanh'] }})"
                                             class="btn btn-warning btn-circle btn-sm" data-toggle="modal"
                                             data-target="#suabanh">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
                                     <td>
-                                        <button onclick="xoakm({{ $item['mabanh'] }})"
+                                        <button onclick="deleteCake({{ $item['mabanh'] }})"
                                             class="btn btn-danger btn-circle btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -109,6 +102,7 @@
         </div>
     </div>
     @include('admin.form_input.thembanh')
+    @include('admin.form_input.suabanh')
     
 @endsection
 @push('js')
