@@ -11,6 +11,7 @@ use App\Models\Khuyenmai;
 use App\Models\Anhct;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File; 
 use Nette\Utils\Arrays;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +26,7 @@ class QLbanh extends Controller
                 $custom[$key]['stt'] = $key + 1;
                 $custom[$key]['tenbanh'] = $value['tenbanh'];
                 $custom[$key]['soluong'] = $value['soluong'];
-                $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: cover;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail">';
+                $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: contain;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail">';
                 $custom[$key]['mota'] = Str::limit($value['mota'], 30);
                 if($value['giabanh'] == 0){
                     $custom[$key]['giabanh'] ='<button class="badge badge-pil badge-success">Bánh có nhiều Size</button>';
@@ -169,9 +170,33 @@ class QLbanh extends Controller
         if ($request->ajax()) {
             $banh = Banh::find($id)->load('sizebanh','anhct')->toArray();
             if (!empty($banh)) {
+                $tmpNameCake = $banh["hinhanh"];
+                $banh["hinhanh"] = asset('upload/imgCake/'.$tmpNameCake);
+                if (count($banh["anhct"]) != 0) {
+                    for ($i=0; $i < count($banh["anhct"]); $i++) { 
+                       $tmpName =  $banh["anhct"][$i]["link"];
+                       $path = asset('upload/imgCakes/'.$tmpName);
+                       $banh["anhct"][$i]["link"] = $path;
+                    }
+                }
+               
                 return response()->json(['dataCake' => $banh]);
             }
       }
         return redirect()->route('admin.getbanh');
     }
+
+    public function getDeleteImgCakes(Request $request,$id)
+    {  
+        if ($request->ajax()) {
+            $imgDetailed = Anhct::find($id);
+            if (!empty($imgDetailed) && File::exists(public_path('upload/imgCakes/'.$imgDetailed->link))) {
+                File::delete(public_path('upload/imgCakes/'.$imgDetailed->link));
+               $status = $imgDetailed->delete();
+               return response()->json(['status' => $status]);
+            }
+        }
+        return redirect()->route('admin.getbanh');
+    }
+
 }

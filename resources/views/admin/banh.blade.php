@@ -64,7 +64,7 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $item['tenbanh'] }}</td>
-                                    <td style="width:20%"><img style="width:100%;height: 200px;object-fit: cover;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail"></td>
+                                    <td style="width:20%"><img style="width:100%;height: 200px;object-fit: contain;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail"></td>
                                     <td>{{ $item['soluong'] }}</td>
                                     <td> {{ Str::limit($item['mota'], 30) }}</td>
                                    @if ($item['giabanh'] == 0)

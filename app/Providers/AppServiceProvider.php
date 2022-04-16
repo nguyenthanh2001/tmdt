@@ -25,8 +25,14 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {    
-        $loaibanh=Loaibanh::orderBy('maloai', 'desc')->get();    
-        View::share('loaibanh', $loaibanh);
+    {
+        $loaibanh = Loaibanh::orderBy('maloai', 'desc')->get();
+        View::share('loaibanh', $loaibanh);    
+        
+        // View::composer('dangnhap', function ($view) {
+        //     $data = 'hello word';
+        //         //pass the data to the view
+        //         $view->with('data', $data);
+        // });
     }
 }

@@ -20,37 +20,23 @@
 
                 <div class="form-group">
                     <label for="exampleFormControlFile1" class="font-weight-bold">Thêm hình ảnh bánh</label>
-                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file" id="idAnhEdit" name="hinhanh" id="photo" required>
-                    <img id="duongdanEdit" src="" alt="" class="img-rounded">
+                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file" id="idAnhEdit" name="hinhanh">
+                    <img id="duongdanEdit" src="" alt="" class="img-rounded imgCake">
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlFile1" class="font-weight-bold">Thêm ảnh chỉ tiết</label>
-                    <input type="file" accept=".png, .jpg, .jpeg" class="form-control-file" id="file-input-Edit" onchange="preview()" name="hinhanhct[]" multiple required>
-                    <div id="images-edit">
-                        <figure>
-                            <img src="">
-                            <figcaption> <button value="" type="button" class="btn btn-danger" style="zoom:80%">Xóa Hình</button></figcaption>
-                        </figure>
-                    </div>
+                    <input  type="file" onchange="previewEdit()" accept=".png, .jpg, .jpeg" class="form-control-file" id="file-input-Edit" name="hinhanhct[]" multiple >
+                    <div id="imagesNew" class="imgAddEdit"></div>
+                    <div id="images-edit" class="imgAddEdit"></div>          
                 </div>      
                          
-                <div class="form-group" id="editPrice">
-                    <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
-                    <div class="input-group mb-3">                
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">VNĐ</span>
-                        </div>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" required>
-                        <div class="input-group-append">
-                          <span class="input-group-text">.000</span>
-                        </div>
-                    </div>  
+                <div class="form-group" id="editPrice">            
                 </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1" class="font-weight-bold">Mã khuyến mãi</label>
-                    <select class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="makm" required>
+                    <select id="promotion" class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="makm" required>
                         <option value="" disabled selected >Chọn mã khuyến mãi</option>
                         <option value="0">Không Khuyến Mãi</option>
                         @foreach ($khuyenmai as $khuyenmai) 
@@ -62,7 +48,7 @@
                 <div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1" class="font-weight-bold">Mã loại</label>
-                        <select class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="maloai" required>
+                        <select id="categoryEdit" class="custom-select mr-sm-2" aria-label=".form-select-lg example" name="maloai" required>
                             <option value="" selected disabled>Chọn mã loại</option>
                             @foreach ($loaibanh as $loaibanh) 
                             <option value="{{ $loaibanh->maloai }}">{{ $loaibanh->tenloai }}</option>
@@ -75,7 +61,7 @@
                     </div>
                     <div class="form-group ">
                         <button type="submit" name="submit" value="Gửi" 
-                            class="btn btn-success" id="btn-edit-from">Sửa</button>
+                            class="btn btn-success" id="btnEditCakeForm">Sửa</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

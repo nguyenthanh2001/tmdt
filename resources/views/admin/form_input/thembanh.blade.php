@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlFile1" class="font-weight-bold">Thêm ảnh chỉ tiết</label>
                     <input type="file" accept=".png, .jpg, .jpeg" id="file-input" onchange="preview()" class="form-control-file" name="hinhanhct[]" multiple required>
-                    <div id="images"></div>
+                    <div id="images" class="imgAddEdit"></div>
                 </div>
 
                 <div class="form-group">

@@ -16,7 +16,6 @@ use App\Models\User;
 class Home extends Controller
 {
     
-    private $taikhoan;
     public function __construct()
     {
 

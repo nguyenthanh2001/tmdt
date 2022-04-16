@@ -2,7 +2,6 @@ figure{
     margin-top: 10px;
     width: 45%;
 }
-
 figure img{
     width:100%;
     height: auto;
@@ -14,7 +13,7 @@ figcaption{
     font-size: 2.4vmin;
     margin-top: 0.5vmin;
 }
-#images{
+.imgAddEdit{
     width: 90%;
     position: relative;
     margin: auto;
@@ -23,4 +22,16 @@ figcaption{
     flex-direction: row-reverse;
     gap: 20px;
     flex-wrap: wrap;
+}
+.imgCake{ 
+    width :70%;
+    height :auto;
+    position :relative;
+    margin : auto;
+    display : flex;
+    gap : 20px;
+}
+.tag{
+    background-color: #4D77FF;
+    color: white;
 }

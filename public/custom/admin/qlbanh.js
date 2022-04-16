@@ -19,6 +19,7 @@ function showImage(idAnh, duongdan) {
 
 var srcEdit = document.getElementById("idAnhEdit");
 var targetEdit = document.getElementById("duongdanEdit");
+var tmpImg;
 showImageEdit(srcEdit, targetEdit);
 function showImageEdit(idAnh, duongdan) {
     var fr = new FileReader();
@@ -26,13 +27,18 @@ function showImageEdit(idAnh, duongdan) {
     fr.onload = function (e) { duongdan.src = this.result; };
     idAnh.addEventListener("change", function () {
         // fill fr with image data    
-        fr.readAsDataURL(idAnh.files[0]);
-        duongdan.style.width = "70%";
-        duongdan.style.height = "auto";
-        duongdan.style.position = "relative";
-        duongdan.style.margin = "auto";
-        duongdan.style.display = "flex";
-        duongdan.style.gap = "20px";
+        if (idAnh.files.length > 0) {
+            fr.readAsDataURL(idAnh.files[0]);
+            duongdan.style.width = "70%";
+            duongdan.style.height = "auto";
+            duongdan.style.position = "relative";
+            duongdan.style.margin = "auto";
+            duongdan.style.display = "flex";
+            duongdan.style.gap = "20px";
+        }else{
+            $('#duongdanEdit').attr('src',tmpImg);  
+        }
+     
     });
 }
 
@@ -40,6 +46,28 @@ function preview() {
     //vào css lại
     let fileInput = document.getElementById("file-input");
     let imageContainer = document.getElementById("images");
+    imageContainer.innerHTML = "";
+    for (i of fileInput.files) {
+      let reader = new FileReader();
+      let figure = document.createElement("figure");
+      let figCap = document.createElement("figcaption");
+      figCap.innerText = i.name;
+      figure.appendChild(figCap);
+      reader.onload = () => {
+        let img = document.createElement("img");
+        img.setAttribute("src", reader.result);
+        figure.insertBefore(img, figCap);
+      }
+      imageContainer.appendChild(figure);
+      reader.readAsDataURL(i);
+    }
+
+  }
+
+  function previewEdit() {
+    //vào css lại
+    let fileInput = document.getElementById("file-input-Edit");
+    let imageContainer = document.getElementById("imagesNew");
     imageContainer.innerHTML = "";
     for (i of fileInput.files) {
       let reader = new FileReader();
@@ -184,11 +212,60 @@ function editCake(id) {
         });
       },
       success: function (data2) {  
-          console.log(data2);         
-        //   $('#tenkm').val(data2.datakm.tenkm);
-        //   $('#giatri').val(data2.datakm.giatri);
-        //   $("#btn-edit-from").attr('value', data2.datakm.makm);  
-          swal.close();             
+          console.log(data2);   
+            var htmlImgs;
+            if (data2.dataCake.anhct.length > 0) {
+                htmlImgs ='';
+                for (x of data2.dataCake.anhct) {
+                    htmlImgs += `<figure id="${x.maanhct}">
+                    <img src="${x.link}">
+                    <figcaption> <button value="${x.maanhct}" type="button" onclick="DeleteImgCakes(${x.maanhct},this)" class="btn btn-danger" style="zoom:80%">Xóa Hình</button></figcaption>
+                    </figure>`;
+                }  
+            }
+            $('#editName').val(data2.dataCake.tenbanh);      
+            $('#editQuantity').val(data2.dataCake.soluong);  
+            $('#duongdanEdit').attr('src',data2.dataCake.hinhanh);        
+            if(typeof htmlImgs !== 'undefined'){
+                $('#images-edit').html(htmlImgs);
+            }else{
+                $('#images-edit').empty();
+            }
+
+            if(data2.dataCake.sizebanh.length == 0){
+                var htmlPrice = `
+                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
+                <div class="input-group mb-3">                
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">VNĐ</span>
+                    </div>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" id="priceCake" value="${data2.dataCake.giabanh}" required>
+                    <div class="input-group-append">
+                      <span class="input-group-text">.000</span>
+                    </div>
+                </div> `;
+                $('#editPrice').html(htmlPrice)
+            }else{
+                var htmlPrice = `
+                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
+                <div class="input-group mb-3">                 
+                    <span class="badge tag">Bánh có nhiều Size mỗi giá khác nhau</span>
+                </div> `;
+                $('#editPrice').html(htmlPrice);
+            }
+            
+
+            if (data2.dataCake.makm == null) {
+                $('#promotion').val(0).change();
+            }else{
+                $('#promotion').val(data2.dataCake.makm).change();
+            }
+            $('#categoryEdit').val(data2.dataCake.maloai_id).change();
+            CKEDITOR.instances.editor1.setData(data2.dataCake.mota);
+           $("#btnEditCakeForm").attr('value', data2.dataCake.mabanh);
+
+          swal.close();     
+          tmpImg = data2.dataCake.hinhanh;         
       }
     });
 }
@@ -211,7 +288,7 @@ $(document).ready(function () {
                 console.log(data2);
                 var trangthai = data2.status;
                 if (trangthai == true) {
-                    toastr.success('Thêm Bánh thành công', 'Thông báo');
+                    toastr.success('Thêm Bánh thành công', 'Thông báo');                
                     loaddata();
                 }
                 else {
@@ -230,4 +307,34 @@ $(document).ready(function () {
     });
 });
 
+function DeleteImgCakes(id,x) {
+    var anh = $(x).parent().parent();
+    $.ajax({
+        url: "deleteImgCakes/"+id,
+        method: 'GET',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data2) {
+            console.log(data2);
+            var trangthai = data2.status; 
+            if (trangthai) {
+                toastr.success('Xóa Ảnh Thành Công', 'Thông Báo');
+                anh.slideUp('slow');
+                setTimeout(function () {
+                   anh.remove();
+                 }, 2000);
+
+            }else{
+                toastr.error('Xóa Ảnh Thất Bại','Thông Báo');
+            }
+
+        },
+        error: function (data2) {
+            console.log(data2);
+            toastr.warning(data2.responseJSON.message, "Thông báo")
+        }
+
+    });
+}
 
