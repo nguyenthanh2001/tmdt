@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Banh as ControllersBanh;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banh;
@@ -12,8 +13,10 @@ use App\Models\Anhct;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File; 
+use Illuminate\Validation\Rule;
 use Nette\Utils\Arrays;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\PseudoTypes\False_;
 
 class QLbanh extends Controller
 {
@@ -198,5 +201,128 @@ class QLbanh extends Controller
         }
         return redirect()->route('admin.getbanh');
     }
+    public function EditPostCake(Request $request,$id){
+        if ($request->ajax()) {
+            $Cake = Banh::find($id);
+            if (!empty($Cake)) {
+                if ($request->has('giabanh')) {
+                    $rule = [
+                        'tenbanh' =>['required',Rule::unique('banh')->ignore($Cake->tenbanh,'tenbanh')],
+                        'soluong' => 'required|numeric|min:1',
+                        'giabanh' => 'required|numeric|min:1',
+                        'makm' => 'required|numeric',
+                        'maloai' => 'required|numeric',
+                        'mota' => 'required',
+                    ];
+                }else{
+                    $rule = [
+                        'tenbanh' =>['required',Rule::unique('banh')->ignore($Cake->tenbanh,'tenbanh')],
+                        'soluong' => 'required|numeric|min:1',
+                        'makm' => 'required|numeric',
+                        'maloai' => 'required|numeric',
+                        'mota' => 'required',
+                    ];
+                }
+               
+                $mess = [
+                    'required' => 'Không được bỏ trống dữ liệu',
+                    'tenbanh.unique' => 'Tên bánh tồn tại trông hệ thống',
+                    'numeric' => 'Vui lòng nhập số',
+                    'min' => 'Gía trị khuyến mãi không nhỏ hơn 1',
+                ];
+                $validator = Validator::make($request->all(), $rule, $mess);
+                $validator->validate();
+                $checkImgCake =null;
+                $checkImgCakes = null;
+                if (!$validator->fails()) {
+                    //check file      
+                    if($request -> hasFile('hinhanh')){
+                        $fileCake = $request->file('hinhanh');
+                        $fileExtensionCake = $fileCake->extension();
+                        if ($fileExtensionCake != 'jpg' && $fileExtensionCake != 'png' && $fileExtensionCake != 'jpeg') {
+                            return response()->json(['status' => false, 'dataErro' => 'File không hợp lệ']);
+                        }
+                        $checkImgCake =0;
+                    }
+                    if($request -> hasFile('hinhanhct')){
+                        $fileCakes = $request->file('hinhanhct');
+                        foreach ($fileCakes as $key => $value) {
+                            $fileExtensionCakes = $value->extension();
+                            if ($fileExtensionCakes != 'jpg' && $fileExtensionCakes != 'png' && $fileExtensionCakes != 'jpeg') {
+                                return response()->json(['status' => false, 'dataErro' => 'File chi tiết không hợp lệ']);
+                            }
+                        }
+                        $checkImgCakes = 0;
+                    }  
+                    //insert banh          
+                    $Cake->tenbanh = $request->tenbanh;
+                    $Cake->soluong = $request->soluong;             
+                    $Cake->mota = $request->mota;
+                    if ($request->has('giabanh')) {
+                        $Cake->giabanh = $request->giabanh;
+                    }else{
+                        $Cake->giabanh = 0;
+                    }
+                    if ($request->makm != 0) {
+                        $Cake->makm = $request->makm;
+                    }else{
+                        $Cake->makm =null;
+                    }
+                    $Cake->maloai_id = $request->maloai;
+                    //save img Cake
+                    if($checkImgCake === 0 && File::exists(public_path('upload/imgCake/'.$Cake->hinhanh))){
+                        $nameCake = $fileCake->hashName();      
+                        File::delete(public_path('upload/imgCake/'.$Cake->hinhanh));
+                        $Cake->hinhanh = $nameCake;
+                        $fileCake->move('upload/imgCake', $nameCake);
+                    }
+                    if ($Cake->save()) {
+                        //insert chi tiet anh    
+                        if($checkImgCakes === 0){
+                            foreach ($fileCakes as $key => $value) {
+                                $addDetailedImg = new Anhct();
+                                $nameCakes = $value->hashName();
+                                $addDetailedImg->link = $nameCakes;
+                                $addDetailedImg->mabanh = $Cake->mabanh;
+                                $addDetailedImg->save();
+                                $value->move('upload/imgCakes', $nameCakes);
+                            }
+                        }                  
+                         return response()->json(['status' => true]);
+                    }
+                    else{
+                        return response()->json(['status' => False,'dataErro' => 'Thêm bánh thất bại']);
+                    }
+                }
+             
+            }  
+            return response()->json(['status' => False],500);
+        }
+        return redirect()->route('admin.getbanh');
+    }
+
+    public function DeleteCake(Request $request,$id)
+    {  
+       if ($request->ajax()) {
+            $Cake = Banh::find($id)->load('anhct')->toArray();
+            $CakeDelete = Banh::find($id);
+            if (!empty($Cake) && File::exists(public_path('upload/imgCake/'.$Cake["hinhanh"]))) {             
+                File::delete(public_path('upload/imgCake/'.$Cake["hinhanh"]));
+                if(!empty($Cake["anhct"])){
+                    foreach ($Cake["anhct"] as $key => $value) {
+                        if(File::exists(public_path('upload/imgCakes/'.$value["link"]))){
+                            File::delete(public_path('upload/imgCakes/'.$value["link"]));
+                        }
+                    }
+                }
+               $status = $CakeDelete->delete();
+               return response()->json(['status' => $status]);
+            }
+            return response()->json(['status' => false]);
+       }
+        return redirect()->route('admin.getbanh');
+    }
+
+
 
 }

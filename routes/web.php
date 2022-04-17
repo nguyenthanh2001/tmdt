@@ -61,6 +61,8 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(functio
     Route::post('addCake','PostAddCake')->name('postAddCake');
     Route::get('editCake/{id}','getEditCake');
     Route::get('deleteImgCakes/{id}','getDeleteImgCakes');
+    Route::post('editCake/{id}','EditPostCake')->name('postEditCake');
+    Route::get('deleteCake/{id}','DeleteCake');
     // Route::post('khuyen-mai','Post_add_khuyenmai');
     // Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
     // Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');

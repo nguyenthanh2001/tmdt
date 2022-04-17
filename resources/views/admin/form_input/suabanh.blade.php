@@ -7,7 +7,7 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data" id="formEditCake">
+                <form  enctype="multipart/form-data" method="POST" id="formEditCake">
                 @csrf
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1" class="font-weight-bold">Tên bánh</label>

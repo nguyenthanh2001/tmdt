@@ -109,4 +109,9 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('custom/admin/qlbanh.js') }}"></script>
     <script src="{{ asset('admin/hashtag/tagsinput.js') }}"></script>  
+    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <script>
+         CKEDITOR.replace( 'editor' );    
+         CKEDITOR.replace( 'editor1' );      
+    </script>
 @endpush

@@ -149,7 +149,7 @@ function xoaloaibanh(id) {
         contentType: false,
         cache: false,
         processData: false,
-        success: function (data2) {              
+        success: function (data2) {               
           var trangthai=data2.status;
           if (trangthai == true) {               
             toastr.success('Xóa loại bánh thành công', 'Thông báo');                         

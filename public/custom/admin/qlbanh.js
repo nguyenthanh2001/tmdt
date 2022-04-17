@@ -193,6 +193,10 @@ function loaddata() {
 }
 
 function editCake(id) {
+    $('#formEditCake')[0].reset();
+    $('#imagesNew').empty();
+    $('#images-edit').empty();
+    $('#duongdanEdit').attr('src','');
     var url_edit='editCake/'+id;
     $.ajax({
       url : url_edit,
@@ -236,12 +240,9 @@ function editCake(id) {
                 var htmlPrice = `
                 <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
                 <div class="input-group mb-3">                
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" id="priceCake" value="${data2.dataCake.giabanh}" required>
                     <div class="input-group-prepend">
                       <span class="input-group-text">VNĐ</span>
-                    </div>
-                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" id="priceCake" value="${data2.dataCake.giabanh}" required>
-                    <div class="input-group-append">
-                      <span class="input-group-text">.000</span>
                     </div>
                 </div> `;
                 $('#editPrice').html(htmlPrice)
@@ -260,6 +261,7 @@ function editCake(id) {
             }else{
                 $('#promotion').val(data2.dataCake.makm).change();
             }
+
             $('#categoryEdit').val(data2.dataCake.maloai_id).change();
             CKEDITOR.instances.editor1.setData(data2.dataCake.mota);
            $("#btnEditCakeForm").attr('value', data2.dataCake.mabanh);
@@ -271,7 +273,6 @@ function editCake(id) {
 }
 
 $(document).ready(function () {
-    //loaddata();
     $('#formAddCake').on('submit', function (event) {
         event.preventDefault();
         for ( instance in CKEDITOR.instances ) {
@@ -307,6 +308,48 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#formEditCake').on('submit', function (event) {
+        event.preventDefault();
+        for ( instance in CKEDITOR.instances ) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+       var id =$("#btnEditCakeForm").val(); 
+        $.ajax({
+            url: "editCake/"+id,
+            method: 'POST',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data2,status,xhr) {
+                console.log(data2);
+                console.log(status);
+                console.log(xhr.status);
+                loaddata();
+                var trangthai = data2.status;
+                if (trangthai == true) {
+                    toastr.success('Sửa Bánh thành công', 'Thông báo');                
+                    loaddata();
+                }
+                else {
+                    toastr.error(data2.dataErro, "Thông báo")                
+                }
+            },
+            error: function (data2) {
+                console.log(data2);
+                if (data2.status >= 500) {
+                    location.reload();
+                }else{
+                    toastr.warning(data2.responseJSON.message, "Thông báo")
+                }
+               
+            }
+
+        });
+    });
+});
+
 function DeleteImgCakes(id,x) {
     var anh = $(x).parent().parent();
     $.ajax({
@@ -324,7 +367,6 @@ function DeleteImgCakes(id,x) {
                 setTimeout(function () {
                    anh.remove();
                  }, 2000);
-
             }else{
                 toastr.error('Xóa Ảnh Thất Bại','Thông Báo');
             }
@@ -337,4 +379,50 @@ function DeleteImgCakes(id,x) {
 
     });
 }
+
+function deleteCake(id) {
+    var url_delete = 'deleteCake/'+id;
+    Swal.fire({
+      title: 'Bạn có chắc muốn xóa Bánh này không ?',
+      text: "Dữ liệu này sẽ mất không thể khôi phục ",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Không đồng ý',
+      confirmButtonText: 'Đồng ý xóa'
+  
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url : url_delete,
+          method: 'GET',
+          contentType: false,
+          cache: false,
+          processData: false,
+          success: function (data2) {     
+               
+            var trangthai=data2.status;
+            if (trangthai == true) {               
+              toastr.success('Xóa loại bánh thành công', 'Thông báo');                         
+              loaddata();            
+            }
+            else{
+              toastr.error('Không thể xóa bánh này',"Thông báo")
+           }                 
+          },
+           error: function (data_er) { 
+             console.log(data_er);
+               toastr.warning(data_er.responseJSON.message,"Thông báo") 
+               location.reload();
+           }
+          
+        });
+  
+      }
+    });
+    
+  }
+
+
 

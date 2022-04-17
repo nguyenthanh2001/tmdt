@@ -56,11 +56,6 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-    <script>
-         CKEDITOR.replace( 'editor' );    
-         CKEDITOR.replace( 'editor1' );      
-    </script>
     @stack('js')
 
 </body>
