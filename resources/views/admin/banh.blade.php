@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive ">
+                <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -64,7 +64,7 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $item['tenbanh'] }}</td>
-                                    <td style="width:20%"><img style="width:100%;height: 200px;object-fit: contain;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail"></td>
+                                    <td style="width:20%"><img style="width:100%;height: 200px;object-fit: contain;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail hact" onclick="seeimg(this)" data-original="{{asset('upload/imgCake/'.$item['hinhanh'])  }}"></td>
                                     <td>{{ $item['soluong'] }}</td>
                                     <td> {{ Str::limit($item['mota'], 30) }}</td>
                                    @if ($item['giabanh'] == 0)
@@ -96,10 +96,17 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                 
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div >
+        <div class="show-img">
+        <img class="full" src="" alt="" >
+        </div>         
     </div>
     @include('admin.form_input.thembanh')
     @include('admin.form_input.suabanh')
@@ -108,6 +115,7 @@
 @push('js')
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('custom/admin/qlbanh.js') }}"></script>
+    <script src="{{ asset('custom/admin/SeeImgCake.js') }}"></script>
     <script src="{{ asset('admin/hashtag/tagsinput.js') }}"></script>  
     <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
     <script>

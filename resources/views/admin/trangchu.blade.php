@@ -1,3 +1,4 @@
+{{-- file test --}}
 @extends('master_layout.admin.layout_admin')
 @push('css')
 <link href=" {{ asset('admin/hashtag/tagsinput.css') }}" rel="stylesheet">

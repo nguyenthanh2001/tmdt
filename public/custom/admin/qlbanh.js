@@ -190,6 +190,8 @@ function loaddata() {
             { data: 'btn-xoa' },
         ]
     });
+
+  
 }
 
 function editCake(id) {

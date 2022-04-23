@@ -10,6 +10,7 @@ use App\Models\Sizebanh;
 use App\Models\Loaibanh;
 use App\Models\Khuyenmai;
 use App\Models\Anhct;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File; 
@@ -17,19 +18,23 @@ use Illuminate\Validation\Rule;
 use Nette\Utils\Arrays;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\PseudoTypes\False_;
+use App\Models\User;
 
 class QLbanh extends Controller
 {
     public function Showbanh(Request $request)
     {
         $banh = Banh::orderBy('mabanh', 'desc')->with(['loaibanh', 'khuyenmai'])->get()->toArray();
+    //    $test = Banh::where('maloai_id',1)->with(['loaibanh', 'khuyenmai'])->get();
+    //    dd($test);
+    //dd(Auth::user());
         if ($request->ajax()) {
             $custom  = array();
             foreach ($banh as $key => $value) {
                 $custom[$key]['stt'] = $key + 1;
                 $custom[$key]['tenbanh'] = $value['tenbanh'];
                 $custom[$key]['soluong'] = $value['soluong'];
-                $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: contain;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail">';
+                $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: contain;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail hact"  onclick="seeimg(this)" data-original="'.asset('upload/imgCake/'.$value['hinhanh']).'" >';
                 $custom[$key]['mota'] = Str::limit($value['mota'], 30);
                 if($value['giabanh'] == 0){
                     $custom[$key]['giabanh'] ='<button class="badge badge-pil badge-success">Bánh có nhiều Size</button>';
@@ -322,7 +327,4 @@ class QLbanh extends Controller
        }
         return redirect()->route('admin.getbanh');
     }
-
-
-
 }

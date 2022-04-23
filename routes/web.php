@@ -5,6 +5,7 @@ use App\Http\Controllers\Home;
 use App\Http\Controllers\Admin\QLloaibanh;
 use App\Http\Controllers\Admin\QLkhuyenmai;
 use App\Http\Controllers\Admin\QLbanh;
+use App\Http\Controllers\Admin\Qlsize;
 
 
 
@@ -63,11 +64,12 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(functio
     Route::get('deleteImgCakes/{id}','getDeleteImgCakes');
     Route::post('editCake/{id}','EditPostCake')->name('postEditCake');
     Route::get('deleteCake/{id}','DeleteCake');
-    // Route::post('khuyen-mai','Post_add_khuyenmai');
-    // Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
-    // Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
-    // Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
+
  });
+
+ Route::prefix('admin')->controller(Qlsize::class)->name('admin.')->group(function (){
+    Route::get('size','Showsize')->name('getSize');
+});
 
 Route::get('test',[Home::class,'index']);
 Route::post('new',[Home::class,'form']);

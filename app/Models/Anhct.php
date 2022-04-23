@@ -12,4 +12,5 @@ class Anhct extends Model
     protected $table ='anhct';
     protected $primaryKey = 'maanhct';
     public $timestamps = false;
+    
 }

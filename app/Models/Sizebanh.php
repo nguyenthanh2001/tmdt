@@ -11,4 +11,8 @@ class Sizebanh extends Model
     protected $table ='sizebanh';
     protected $primaryKey = 'masize';
     public $timestamps = false;
+
+    public function banh(){
+        return $this->belongsTo(Banh::class,'mabanh','mabanh');
+    }
 }
