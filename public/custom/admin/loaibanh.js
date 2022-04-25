@@ -32,7 +32,6 @@ $(document).ready(function () {
 
 
     $('#form-edit').on('submit', function (event) {
-      
       event.preventDefault();
       var id =$("#btn-edit-from").val();  
       var url_form_edit = 'edit-loaibanh/'+id;

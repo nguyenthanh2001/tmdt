@@ -69,6 +69,12 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(functio
 
  Route::prefix('admin')->controller(Qlsize::class)->name('admin.')->group(function (){
     Route::get('size','Showsize')->name('getSize');
+    Route::post('getName','GetNamevsId');
+    Route::post('addSize','AddSizeCake');
+    Route::get('getIdSize/{id}','getIdEditSize');
+    Route::post('editSize/{id}','postEditSize');
+    Route::get('deleteSize/{id}','GetDeleteSize');
+    
 });
 
 Route::get('test',[Home::class,'index']);

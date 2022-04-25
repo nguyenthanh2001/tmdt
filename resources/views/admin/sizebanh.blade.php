@@ -1,5 +1,11 @@
 @extends('master_layout.admin.layout_admin')
 @push('css')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<style>
+    .ui-front {
+    z-index: 9999999 !important;
+}
+</style>
 @endpush
 <!-- Begin Page Content -->
 @section('main_admin')
@@ -17,7 +23,7 @@
                 Size Bánh
              </div>
              <div class="m-0 font-weight-bold text-primary">
-                <button class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#themloaibanh">
+                <button class="btn btn-success btn-icon-split" onclick="opensize()" data-toggle="modal" data-target="#themsize">
                     <span class="icon text-white-50">
                         <i class="fa-duotone fa-plus"></i>
                     </span>
@@ -56,7 +62,7 @@
                             <td>{{ $size->banh->tenbanh }}</td>
                             <td>{{ number_format($size->gia) }}</td>
                             <td>                                    
-                                <button onclick="EditSize({{ $size->masize }})" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#sualoaibanh">
+                                <button onclick="EditSize({{ $size->masize }})" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#suasize">
                                     <i class="fas fa-edit"></i>
                                 </button>
                             </td>
@@ -75,10 +81,11 @@
     </div>
 
 </div>
-
-
-
 @endsection
+@include('admin.form_input.themsize')
+@include('admin.form_input.suasize')
 @push('js')
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="{{ asset('custom/admin/qlsizebanh.js') }}"></script>
 @endpush
+
