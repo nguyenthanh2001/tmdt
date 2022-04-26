@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\QLloaibanh;
 use App\Http\Controllers\Admin\QLkhuyenmai;
 use App\Http\Controllers\Admin\QLbanh;
 use App\Http\Controllers\Admin\Qlsize;
-
+use App\Http\Controllers\Admin\Qltaikhoan;
 
 
 /*
@@ -39,7 +39,7 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
 });
 
 //admin-loại bánh
-Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(function (){ 
+Route::prefix('admin')->controller(QLloaibanh::class)->middleware('checkAdmin')->name('admin.')->group(function (){ 
     // Route::get('index','index')->name('trangchu_admin');
     Route::get('loai-banh','getloaibanh')->name('getloaibanh');
     Route::post('postloaibanh','postloaibanh');
@@ -49,7 +49,7 @@ Route::prefix('admin')->controller(QLloaibanh::class)->name('admin.')->group(fun
     
 });
 //admin-khuyến mãi
-Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(function (){
+Route::prefix('admin')->controller(QLkhuyenmai::class)->middleware('checkAdmin')->name('admin.')->group(function (){
    Route::get('khuyen-mai','Showkhuyenmai')->name('getkhuyenmai');
    Route::post('khuyen-mai','Post_add_khuyenmai');
    Route::get('edit-khuyen-mai/{id}','get_edit_khuyen_mai');
@@ -57,7 +57,7 @@ Route::prefix('admin')->controller(QLkhuyenmai::class)->name('admin.')->group(fu
    Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
 });
 //admin-bánh
-Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(function (){
+Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->middleware('checkAdmin')->group(function (){
     Route::get('banh','Showbanh')->name('getbanh');
     Route::post('addCake','PostAddCake')->name('postAddCake');
     Route::get('editCake/{id}','getEditCake');
@@ -67,7 +67,7 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(functio
 
  });
 
- Route::prefix('admin')->controller(Qlsize::class)->name('admin.')->group(function (){
+ Route::prefix('admin')->controller(Qlsize::class)->name('admin.')->middleware('checkAdmin')->group(function (){
     Route::get('size','Showsize')->name('getSize');
     Route::post('getName','GetNamevsId');
     Route::post('addSize','AddSizeCake');
@@ -75,6 +75,10 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->group(functio
     Route::post('editSize/{id}','postEditSize');
     Route::get('deleteSize/{id}','GetDeleteSize');
     
+});
+
+Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
+    Route::get('taikhoan','ShowTk')->name('getTk');
 });
 
 Route::get('test',[Home::class,'index']);

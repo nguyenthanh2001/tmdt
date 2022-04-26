@@ -12,5 +12,12 @@
 @section('main')
 @include('main.main_trangchu')
 @endsection
+@push('js')
+@if (session('mess'))
+   <script>
+        toastr.error("{{session('mess')}}","Thông báo !") 
+   </script>
+@endif
+@endpush
 
 

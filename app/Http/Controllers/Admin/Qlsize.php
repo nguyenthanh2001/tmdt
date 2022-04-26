@@ -33,9 +33,6 @@ class Qlsize extends Controller
                 }
                 return response()->json(['data' => $custom]);
             }
-    
-        //     $loaibanh = Loaibanh::orderBy('maloai', 'desc')->get();
-        //     $khuyenmai = Khuyenmai::orderBy('giatri', 'desc')->get();
             return view('admin.sizebanh', compact('size'));
     }
 
