@@ -1,4 +1,8 @@
 @extends('master_layout.admin.login')
+@push('css')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+@endpush
+
 @section('dangnhap_dangky')
 <style>
 input::-webkit-outer-spin-button,
@@ -61,9 +65,12 @@ input::-webkit-inner-spin-button {
                                         <span style="color: red" class="er er_sdt"></span>
                                 </div>                             
                             </div>                       
-                     
-                            
                             <div class="form-group">
+                                <input type="text" class="form-control diachi" placeholder="Xã - Huyện - Thành phố" name="tp" required>
+                                <input type="hidden" class="form-control xaid" name="xaid" required>
+                            </div>  
+
+                            <div class="form-group ">
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Địa Chỉ" name="diachi" required></textarea>
                                     <span style="color: red" class="er er_diachi"></span>
                             </div>  
@@ -83,4 +90,5 @@ input::-webkit-inner-spin-button {
 @endsection
 @push('js')
 <script src="{{ asset('custom/dangky.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 @endpush

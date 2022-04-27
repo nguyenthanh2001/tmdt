@@ -36,6 +36,8 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
 
     Route::post('dang-ky','handle_dangky')->middleware('checklogin');
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
+
+    Route::post('test','CheckDiaChi');
 });
 
 //admin-loại bánh
@@ -81,5 +83,6 @@ Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')-
     Route::get('taikhoan','ShowTk')->name('getTk');
 });
 
-Route::get('test',[Home::class,'index']);
+Route::get('test',[Home::class,'CheckDiaChi']);
+
 Route::post('new',[Home::class,'form']);

@@ -9,8 +9,9 @@ class phanquyen extends Model
 {
     use HasFactory;
     protected $table ='phanquyen';
+    protected $primaryKey = 'maquyen';
     public function us()
     {
-        return $this->hasMany(User::class,'phanquyen_id','id');
+        return $this->hasMany(User::class,'maquyen','maquyen');
     }
 }

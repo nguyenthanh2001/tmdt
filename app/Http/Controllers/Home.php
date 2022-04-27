@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Diachi;
+use App\Models\Banh;
+use App\Models\Loaibanh;
+use App\Models\Khuyenmai;
 
 
 class Home extends Controller
@@ -21,8 +25,11 @@ class Home extends Controller
 
     }
     public function index(Request $request){
-      
-        return view('home');
+        $banh = Banh::orderBy('mabanh', 'desc')->with(['loaibanh', 'khuyenmai'])->skip(0)->take(10)->get();
+        $Cakehot =Loaibanh::orderBy('maloai', 'desc')->with(['banh'=>function ($query){
+            $query->orderBy('mabanh', 'desc')->skip(0)->take(2)->get();
+        },'banh.khuyenmai'])->skip(0)->take(4)->get()->toArray();
+        return view('home',compact('banh','Cakehot'));
     }
     public function chitietsp($id=null){
         if (empty($id)) {                
@@ -84,7 +91,8 @@ class Home extends Controller
         'gioitinh' => 'required|boolean',
         'ngaysinh'=> 'required',
         'sdt'=> 'required|numeric',
-        'diachi'=>'required'  
+        'diachi'=>'required',
+        'xaid'=> 'required|numeric|exists:devvn_xaphuongthitran,xaid' 
     ];
         $mess=
         [
@@ -94,10 +102,10 @@ class Home extends Controller
         'email'=>'Sai định dạng email',
         'email.unique'=>'email tồn tại trên hệ thống',
         'min'=>'Mật khẩu dài hơn 6 ký tự',
+        'xaid.exists'=>'Đỉa chỉ không tồn tại'
         ];
         $validator = Validator::make($request->all(), $rule,$mess);      
         $validator->validate();
-
         if (!$validator->fails()) {
   
             $user = new User();
@@ -108,16 +116,37 @@ class Home extends Controller
             $user->ngaysinh = $request->ngaysinh;         
             $user->sdt = $request->sdt;
             $user->diachi =$request->diachi;
-            $user->phanquyen_id = 2;       
-            $trangthai = $user->save();           
+            $user->maquyen = 2; 
+            $user->xaid =$request->xaid;
+            try {
+                $trangthai = $user->save(); 
+            } catch (\Throwable $th) {
+                return response()->json(['status'=>$th->getMessage()]);
+            }      
+                     
             return response()->json(['status'=>$trangthai]);
        }
   
     }
 
 
-    public function sayhi(){
-      return view('home');
+    public function CheckDiaChi(Request $request){       
+       // $a = Diachi::find(1)->load('quanhuyen','quanhuyen.thanhpho')->toArray();
+        // $b=Thanhpho::Where('name','like','%Vĩnh long%')->with('quanhuyen:maqh,name,matp','quanhuyen.xaphuong:xaid,name,maqh')->get()->toArray();
+        // $b=Thanhpho::Where('name','like','%Vĩnh long%')->with(['quanhuyen' => function ($query) {
+        //     $query->Where('name','like','%Long hồ%')->get();
+        // },'quanhuyen.xaphuong'=> function ($query2) {
+        //     $query2->Where('name','like','%thị%')->get();
+        // }
+        // ])->get()->toArray();
+        
+        // dd($b);
+      if ($request->ajax()) {
+        $name = $request->tp;
+        $b=Diachi::Where('name','like','%'.$name.'%')->with('huyen','huyen.thanhpho')->skip(0)->take(10)->get()->toArray();
+        return response()->json(['dataName' => $b]);  
+    }
+     return response('',404);
     }
     public function form(Request $Request){
         $a = Array('name'=>'required');

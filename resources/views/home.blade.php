@@ -1,4 +1,7 @@
 @extends('master_layout.layout_trangchu')
+@push('css')
+<link rel="stylesheet" href="{{ asset('custom/css/home.css') }}">
+@endpush
 @section('img_sidebar')
 <div class="hero__item set-bg" data-setbg="{{ asset('asset/img/hero/banner.jpg') }}">
     <div class="hero__text">

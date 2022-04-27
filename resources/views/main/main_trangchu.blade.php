@@ -6,31 +6,14 @@
                 <h3>Sản Phẩm Mới Nhất</h3>
             </div>
             <div class="categories__slider owl-carousel">
+                @foreach ($banh as $item)
+           
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
-                        <h5><a href="#">Fresh Fruit</a></h5>
+                    <div class="categories__item set-bg" data-setbg="{{asset('upload/imgCake/'.$item->hinhanh)  }}">
+                        <h5 class="text"><a style="background-color: #FAFDD6"  href="#">{{Str::limit($item->tenbanh, 15) }}</a></h5>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
-                        <h5><a href="#">Dried Fruit</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
-                        <h5><a href="#">Vegetables</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
-                        <h5><a href="#">drink fruits</a></h5>
-                    </div>
-                </div>
+                @endforeach             
             </div>
         </div>
     </div>
@@ -43,7 +26,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Featured Product</h2>
+                    <h2>Sản phẩm nổi bật</h2>
                 </div>
                 <div class="featured__controls">
                     <ul>
@@ -57,6 +40,10 @@
             </div>
         </div>
         <div class="row featured__filter">
+            @dd($Cakehot)
+            @foreach ($Cakehot as $item)
+                
+            @endforeach
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
@@ -67,8 +54,10 @@
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="#">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+                        <h6><a href="#">Crab Pool Security</a></h6>  
+                        <h5>$30.00</h5>     
+                        <span style="background-color: #AB46D2" class="badge badge-primary">Giảm 17%</span>            
+                        <del>129.000 ₫</del>
                     </div>
                 </div>
             </div>
