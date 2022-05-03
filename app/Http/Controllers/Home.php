@@ -31,6 +31,25 @@ class Home extends Controller
         },'banh.khuyenmai'])->skip(0)->take(4)->get()->toArray();
         return view('home',compact('banh','Cakehot'));
     }
+
+    public function shop(Request $request){
+        $custom = Array();
+        $Cakehot =Loaibanh::all()->sortBy([ ['maloai', 'desc']])->take(4)->toArray();
+       foreach ($Cakehot as $key => $value) {
+        $Banh = Banh::where('maloai_id',$value['maloai'])->with('khuyenmai')->orderBy('mabanh', 'desc')->get()->take(3)->toArray();
+        array_push($custom,$Banh);
+       };
+       $khuyenmai = Banh::whereNotNull('makm')
+       ->orderByDesc('mabanh')
+       ->with('khuyenmai','loaibanh')
+       ->get()->toArray();
+
+       $indexCake = Banh::whereNull('makm')
+       ->orderBy('mabanh', 'desc')      
+       ->paginate(12);
+       //dd($indexCake);
+       return view('shop',compact('custom','khuyenmai','indexCake'));
+    }
     public function chitietsp($id=null){
         if (empty($id)) {                
             return abort(404);

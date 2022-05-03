@@ -36,7 +36,7 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
 
     Route::post('dang-ky','handle_dangky')->middleware('checklogin');
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
-
+    Route::get('shop','shop')->name('shop');
     Route::post('test','CheckDiaChi');
 });
 

@@ -40,10 +40,9 @@
             </div>
         </div>
         <div class="row featured__filter">
-            @dd($Cakehot)
-            @foreach ($Cakehot as $item)
-                
-            @endforeach
+            {{-- @foreach ($Cakehot as $item)
+              
+            @endforeach --}}
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">

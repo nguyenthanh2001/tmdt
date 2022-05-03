@@ -17,5 +17,9 @@ class Loaibanh extends Model
     {
         return $this->hasMany(Banh::class,'maloai_id','maloai');
     }
+    public function banhShop()
+    {
+        return $this->hasMany(Banh::class,'maloai_id','maloai')->orderBy('mabanh', 'desc');
+    }
     
 }

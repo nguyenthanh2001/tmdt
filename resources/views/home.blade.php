@@ -16,6 +16,9 @@
 @include('main.main_trangchu')
 @endsection
 @push('js')
+<script>
+    document.querySelector(".home").classList.add('active');
+</script>
 @if (session('mess'))
    <script>
         toastr.error("{{session('mess')}}","Thông báo !") 
