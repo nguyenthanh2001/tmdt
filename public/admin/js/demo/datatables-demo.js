@@ -4,7 +4,7 @@ $(document).ready(function() {
     language: {
       "sProcessing":   "Đang xử lý...",
       "sLengthMenu":   "Xem thông tin _MENU_ mục",
-      "sZeroRecords":  "Không tìm thấy dòng nào phù hợp",
+      "sZeroRecords":  "Không tồn tại dữ liệu",
       "sInfo":         "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
       "sInfoEmpty":    "Đang xem 0 đến 0 trong tổng số 0 mục",
       "sInfoFiltered": "(được lọc từ _MAX_ mục)",

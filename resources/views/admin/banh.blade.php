@@ -108,11 +108,14 @@
         <img class="full" src="" alt="" >
         </div>         
     </div>
+
+              
     @include('admin.form_input.thembanh')
     @include('admin.form_input.suabanh')
     
 @endsection
 @push('js')
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('custom/admin/qlbanh.js') }}"></script>
     <script src="{{ asset('custom/admin/SeeImgCake.js') }}"></script>

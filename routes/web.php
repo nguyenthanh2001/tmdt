@@ -26,7 +26,7 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::get('/','index');
     Route::get('index','index')->name('trangchu');
 
-    Route::get('chi-tiet-san-pham/{id?}','chitietsp')->name('chitietsp');
+    Route::get('details/{id}','details')->where('id', '[0-9]+')->name('details');
 
     Route::get('dang-nhap','dangnhap')->middleware('checklogin')->name('dangnhap');
 
@@ -38,6 +38,12 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
     Route::get('shop','shop')->name('shop');
     Route::post('test','CheckDiaChi');
+    Route::get('shop/category/{id}','Category')->where('id', '[0-9]+')->name('category');
+
+    //check loggin
+    Route::post('addCart','AddCart')->name('addCart');
+    Route::get('showcart','ShowCart')->name('ShowCart');
+    Route::post('UpdateCartQuantity','UpdateCartQuantity')->name('UpdateCartQuantity');
 });
 
 //admin-loại bánh
@@ -83,6 +89,9 @@ Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')-
     Route::get('taikhoan','ShowTk')->name('getTk');
 });
 
-Route::get('test',[Home::class,'CheckDiaChi']);
+Route::get('test', function () {
+   return view('test');
+});
 
-Route::post('new',[Home::class,'form']);
+
+

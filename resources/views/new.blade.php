@@ -1,1 +1,0 @@
-<img src="{{asset('upload/imgCake/'.$name)}}" alt="" srcset="">

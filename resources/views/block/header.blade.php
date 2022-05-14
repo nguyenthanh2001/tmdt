@@ -145,15 +145,17 @@
                     <ul>
                         <li class="home"><a href="{{ route('index') }}">Home</a></li>
                         <li class="shop"><a href="{{ route('home.shop') }}">Shop</a></li>
-                        <li class="pages"><a href="#">Pages</a>
+                        <li class="details"><a href="./shop-details.html">Details</a></li>
+                        <li class="cart"><a href="./shoping-cart.html">Giỏ Hàng</a></li>
+                        <li class="order"><a href="#">Đơn hàng</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                <li><a href="./checkout.html">Check Out</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
+                                <li><a href="./shop-details.html">Thủ tục thanh toán</a></li>
+                                <li><a href="./checkout.html">Chờ xác nhận</a></li>
+                                <li><a href="./blog-details.html">Đã xác nhận</a></li>
+                                <li><a href="./blog-details.html">Đã nhận</a></li>
                             </ul>
                         </li>
-                        <li><a href="./contact.html">Contact</a></li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -185,7 +187,7 @@
                     </div>
                     <ul>                 
                         @forelse ($loaibanh as $loaibanh)
-                        <li><a href="{{$loaibanh->maloai }}">{{$loaibanh->tenloai }}</a></li>
+                        <li><a href="{{route('home.category',['id' => $loaibanh->maloai ]) }}">{{$loaibanh->tenloai }}</a></li>
                         @empty
                         <li>Không có dữ liệu</li>
                         @endforelse                    
@@ -206,7 +208,7 @@
                     </div>
                     <div class="hero__search__phone">
                         <div class="hero__search__phone__icon">
-                            <i class="fa fa-phone"></i>
+                            <i class="fa fa-phone iconPhone"></i>
                         </div>
                         <div class="hero__search__phone__text">
                             <h5>+0846431099</h5>

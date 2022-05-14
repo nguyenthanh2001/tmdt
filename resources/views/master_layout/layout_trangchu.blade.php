@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     @stack('css')
+    <Style>
+        .header__menu ul li a{
+            font-size: 12px;
+        }
+    </Style>
 </head>
 
 <body>

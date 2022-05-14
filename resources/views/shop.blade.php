@@ -9,18 +9,24 @@
            line-clamp: 1; 
    -webkit-box-orient: vertical;
 }
+.iconPhone{
+    margin-top: 15px;
+}
+.iconCake{
+    margin-top: 10px;
+}
 </style>
 @endpush
+@include('block.load')
 @section('main')
-<section class="breadcrumb-section set-bg" style="background-color: #151D3B">
+<section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/breadcrumb.jpg') }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Organi Shop</h2>
+                    <h2>Cake Shop</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
-                        <span>Shop</span>
+                        <a href="./index.html">Home</a><span>Shop</span>
                     </div>
                 </div>
             </div>
@@ -33,10 +39,11 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Department</h4>
-                        <ul>                       
+                        <h4>Loại Bánh</h4>
+                        <ul>  
+                            <li><a href="{{route('home.shop') }}">Xem tất cả</a></li>                      
                             @forelse ($loaibanh as $loaibanhShop)                
-                            <li><a href="{{$loaibanhShop->maloai }}">{{$loaibanhShop->tenloai }}</a></li>
+                            <li><a href="{{route('home.category',['id' => $loaibanhShop->maloai ]) }}">{{$loaibanhShop->tenloai }}</a></li>
                             @empty
                             <li>Không có dữ liệu</li>
                             @endforelse                                       
@@ -46,7 +53,7 @@
            
                     <div class="sidebar__item">
                         <div class="latest-product__text">
-                            <h4>Latest Products</h4>
+                            <h4>Loại khuyến mãi</h4>
                             <div class="latest-product__slider owl-carousel">
                                 @foreach ($custom as $value)
                                 <div class="latest-prdouct__slider__item">
@@ -87,7 +94,11 @@
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
                         <h2>Giảm giá</h2>
+                    </div>             
+                    <div class="filter__found">
+                        <h6><span>{{ $CoutSale }}</span> Sản phẩm được giảm giá</h6>
                     </div>
+                   
                     <div class="row">
                         <div class="product__discount__slider owl-carousel">
                         
@@ -97,15 +108,14 @@
                                     <div class="product__discount__item__pic set-bg"
                                         data-setbg="{{ asset('upload/imgCake/'.$khuyenmai['hinhanh']) }}">
                                         <div class="product__discount__percent">{{$khuyenmai['khuyenmai']['giatri']}}%</div>
-                                        <ul class="product__item__pic__hover">      
-                                                                           
-                                            <li><a href="#"> <i class="fa fa-eye" aria-hidden="true"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        <ul class="product__item__pic__hover">                                                                           
+                                            <li><a href="{{route('home.details',['id'=>$khuyenmai['mabanh']])}}"> <i class="iconCake fa fa-eye" aria-hidden="true"></i></a></li>
+                                            <li><a href="#"><i class="iconCake fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__discount__item__text">
                                         <span>{{$khuyenmai['loaibanh']['tenloai']}}</span>
-                                        <h5><a href="#">{{$khuyenmai['tenbanh']}}</a></h5>
+                                        <h5><a href="{{route('home.details',['id'=>$khuyenmai['mabanh']])}}">{{$khuyenmai['tenbanh']}}</a></h5>
                                         @if ($khuyenmai['giabanh'] == 0)
                                         <div class="product__item__price"> <p class="badge badge-pill badge-success">bánh có nhiều size</p> </div>
                                         @else
@@ -137,7 +147,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <div class="filter__found">
-                                <h6><span>16</span> Products found</h6>
+                                <h6><span>{{ $coutCake }}</span>Sản phẩm của shop</h6>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-3">
@@ -154,12 +164,12 @@
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{ asset('upload/imgCake/'.$itemCake->hinhanh) }}">
                                 <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a href="{{route('home.details',['id'=>$itemCake->mabanh])}}"><i class="iconCake fa fa-eye"></i></a></li>
+                                    <li><a href="#"><i class="iconCake fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6 class="nameCake"><a href="#">{{ $itemCake->tenbanh }}</a></h6>
+                                <h6 class="nameCake"><a href="{{route('home.details',['id'=>$itemCake->mabanh])}}">{{ $itemCake->tenbanh }}</a></h6>
                                 @if ($itemCake->giabanh == 0)
                                 <h5 class="product__item__price"> <p class="badge badge-pill badge-success">bánh có nhiều size</p> </h5>
                                 @else

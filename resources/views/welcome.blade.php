@@ -1,3 +1,0 @@
-day la say hi
-
-
