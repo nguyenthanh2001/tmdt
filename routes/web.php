@@ -44,6 +44,7 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::post('addCart','AddCart')->name('addCart');
     Route::get('showcart','ShowCart')->name('ShowCart');
     Route::post('UpdateCartQuantity','UpdateCartQuantity')->name('UpdateCartQuantity');
+    Route::post('DeleteItem','Delete')->name('DeleteItem');
 });
 
 //admin-loại bánh

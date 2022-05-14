@@ -34,5 +34,40 @@ $(document).ready(function() {
 
         });  
     });
-    
+
+//     $( ".DeleteItem" ).click(function() {
+//         var item = this.data('item');
+//         console.log(item);
+// });
 });
+function DeleteItem(info) {
+    if($(info).is('[data-size]')){
+        var size = $(info).data("size");
+    }
+    var item = $(info).data("item");
+    $.ajax({
+        url : urlDelete,
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            "mabanh": item,
+            "masize":size
+          },
+        success: function (data) {            
+          console.log(data);
+       
+        },
+         error: function (data_er) { 
+            // if (data_er.status >= 500) {
+            //     location.reload();
+            //   }
+              console.log(data_er);
+              toastr.warning(data_er.responseJSON.message, "Thông báo")        
+         }
+
+    }); 
+    }
+
+    

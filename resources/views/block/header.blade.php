@@ -161,11 +161,20 @@
             </div>
             <div class="col-lg-3">
                 <div class="header__cart">
-                    <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                    <ul>                   
+                        @if (empty($itemCart))
+                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
+                        @else
+                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>{{$itemCart['numberOfItems']}}</span></a></li>
+                        @endif
+                       
                     </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    @if (empty($itemCart))
+                          <div class="header__cart__price">Tổng giá: <span>0 VNĐ</span></div>
+                        @else
+                        <div class="header__cart__price">Tổng giá: <span>{{$itemCart['Total']}} VNĐ</span></div>
+                        @endif
+                    
                 </div>
             </div>
         </div>

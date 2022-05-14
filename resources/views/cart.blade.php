@@ -100,9 +100,16 @@
                                             {{ $arCartID['tonggia'] }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-circle btn-sm">
+                                            @if (!empty($arCartID['sizebanh']))
+                                            <button type="button" class="btn btn-danger btn-circle btn-sm" data-item="{{ $arCartID['mabanh'] }}"  data-size="{{ $arCartID['masize'] }}" onclick="DeleteItem(this);">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
+                                            @else
+                                            <button type="button" class="btn btn-danger btn-circle btn-sm"  data-item="{{ $arCartID['mabanh'] }}" onclick="DeleteItem(this);">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                            @endif
+                                          
                                         </td>
                                     </tr>
                                 @empty
@@ -148,12 +155,12 @@
                 </div>     
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
+                        <h5>Tổng giỏ hàng</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Tổng phụ <span>{{$Total}} VNĐ</span></li>
+                            <li>Toàn bộ <span>{{$Total}} VNĐ</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="#" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
                     </div>
                 </div>
             </div>
@@ -167,6 +174,7 @@
     </script>
     <script>
      var urlUpdate = '{{route('home.UpdateCartQuantity')}}';
+     var urlDelete ='{{route('home.DeleteItem')}}';
     </script>
     <script src="{{ asset('custom/showCart.js') }}"></script>
     <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>

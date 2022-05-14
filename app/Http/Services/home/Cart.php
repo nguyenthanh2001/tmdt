@@ -5,7 +5,7 @@ use App\Models\Sizebanh;
 use App\Models\Banh;
 class Cart
 {
-    public function HandlingSeesonCart($SeesonCart)
+    public function HandlingSessionCart($SeesonCart)
     {
         $result = array();
         foreach ($SeesonCart as $key => $value) {
@@ -68,4 +68,28 @@ class Cart
         } 
         return $arCartID;
     }
+    public function showItemCart($arCart)
+    {
+        $arCartID = [];
+        $Total = 0;
+        foreach ($arCart as $key => $value) {
+            $infoCake = Banh::find($key)->load('khuyenmai', 'sizebanh');
+            if ($infoCake->sizebanh->isEmpty()) {
+                $arrTmp = $this->ArrCartNoSize($value, $infoCake);
+                array_push($arCartID, $arrTmp);
+            } else {
+                foreach ($value['masize'] as $key2 => $value2) {
+                    $infoCakeSize = Sizebanh::find($key2);
+                    $arrTmp = $this->ArrCartHaveSize($value2, $infoCakeSize, $infoCake);
+                    array_push($arCartID, $arrTmp);
+                }
+            }
+        }  
+        foreach ($arCartID as $key => $value) {
+             $Total += (float)$value['tonggia'];
+        }   
+        $Total = number_format($Total.'000');
+       return array('numberOfItems'=>count($arCartID),'Total'=>$Total);
+    }
+
 }

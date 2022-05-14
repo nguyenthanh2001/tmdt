@@ -33,7 +33,7 @@ $(document).ready(function() {
      
     //nhieu size
     $('.btnPrice').on('click', function (e) {
-    $('.btn.btn-outline-primary.m-1.btnprice.active').removeClass('active');
+    $('.btnPrice').removeClass('active');
     $(this).addClass( "active" );
     var masize = $(this).val();
     $("#masize").val(masize)
