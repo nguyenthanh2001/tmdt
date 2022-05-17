@@ -23,21 +23,21 @@ class Cart
         $arCartID['hinhanh']=$infoCake->hinhanh;
         $arCartID['sizebanh']=null;
         $arCartID['soluongmua']=$value2['soluong'];
-        $arCartID['giabanh_tamp']=number_format($infoCake->giabanh);
+        $arCartID['giabanh_tamp']=($infoCake->giabanh);
         if ($infoCake->makm != null) {
             //co khuyen mai khong size
             $arCartID['khuyenmai']=$infoCake->khuyenmai->giatri;   
-            $gia =number_format(($infoCake->giabanh*((100-$infoCake->khuyenmai->giatri)/100)));                                         
+            $gia =($infoCake->giabanh*((100-$infoCake->khuyenmai->giatri)/100));                                         
             $arCartID['gia']=$gia;
-            $tonggia =number_format((int)$value2['soluong']*(float)$gia);
-            $arCartID['tonggia']=$tonggia.',000';
+            $tonggia =((int)$value2['soluong']*(float)$gia);
+            $arCartID['tonggia']=$tonggia;
         }else{
              //khong khuyen mai khong size
             $arCartID['khuyenmai']=null;
-            $gia =number_format($infoCake->giabanh);
+            $gia =$infoCake->giabanh;
             $arCartID['gia']= $gia; 
-            $tonggia =number_format((int)$value2['soluong']*(float)$gia);                                             
-            $arCartID['tonggia']=$tonggia.',000';
+            $tonggia =((int)$value2['soluong']*(float)$gia);                                             
+            $arCartID['tonggia']=$tonggia;
         } 
         return $arCartID;
     }
@@ -54,17 +54,17 @@ class Cart
         if ($infoCake->makm != null) {
             //co khuyen mai khong size
             $arCartID['khuyenmai']=$infoCake->khuyenmai->giatri;   
-            $gia =number_format(($infoCakeSize->gia*((100-$infoCake->khuyenmai->giatri)/100)));                                         
+            $gia =($infoCakeSize->gia*((100-$infoCake->khuyenmai->giatri)/100));                                         
             $arCartID['gia']=$gia;
-            $tonggia =number_format((int)$value2*(float)$gia);
-            $arCartID['tonggia']=$tonggia.',000';
+            $tonggia =(int)$value2*(float)$gia;
+            $arCartID['tonggia']=$tonggia;
         }else{
              //khong khuyen mai khong size
             $arCartID['khuyenmai']=null;
-            $gia =number_format($infoCakeSize->gia);
+            $gia =$infoCakeSize->gia;
             $arCartID['gia']= $gia; 
-            $tonggia =number_format((int)$value2*(float)$gia);                                             
-            $arCartID['tonggia']=$tonggia.',000';
+            $tonggia =(int)$value2*(float)$gia;                                             
+            $arCartID['tonggia']=$tonggia;
         } 
         return $arCartID;
     }
@@ -88,8 +88,26 @@ class Cart
         foreach ($arCartID as $key => $value) {
              $Total += (float)$value['tonggia'];
         }   
-        $Total = number_format($Total.'000');
+        $Total = number_format($Total);
        return array('numberOfItems'=>count($arCartID),'Total'=>$Total);
+    }
+    public function showDetailItemCart($arCart)
+    {
+        $arCartID = [];
+        foreach ($arCart as $key => $value) {
+            $infoCake = Banh::find($key)->load('khuyenmai', 'sizebanh');
+            if ($infoCake->sizebanh->isEmpty()) {
+                $arrTmp = $this->ArrCartNoSize($value, $infoCake);
+                array_push($arCartID, $arrTmp);
+            } else {
+                foreach ($value['masize'] as $key2 => $value2) {
+                    $infoCakeSize = Sizebanh::find($key2);
+                    $arrTmp = $this->ArrCartHaveSize($value2, $infoCakeSize, $infoCake);
+                    array_push($arCartID, $arrTmp);
+                }
+            }
+        }  
+       return $arCartID;
     }
 
 }

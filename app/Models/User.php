@@ -50,4 +50,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function Diachi()
+    {
+        return $this->belongsTo(Diachi::class,'xaid','xaid');
+    }
 }

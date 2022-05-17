@@ -46,18 +46,18 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="active"><a href="{{ route('index') }}">Home</a></li>
-            <li><a href="{{ route('home.shop') }}">Shop</a></li>
-            <li><a href="#">Pages</a>
+            <li class="home"><a href="{{ route('index') }}">Home</a></li>
+            <li class="shop"><a href="{{ route('home.shop') }}">Shop</a></li>
+            <li class="details"><a>Details</a></li>
+            <li class="cart"><a href="{{ route('home.ShowCart') }}">Giỏ Hàng</a></li>
+            <li class="order"><a>Đơn hàng</a>
                 <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">Shop Details</a></li>
-                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                    <li><a href="./checkout.html">Check Out</a></li>
-                    <li><a href="./blog-details.html">Blog Details</a></li>
+                    <li><a href="{{ route('home.chechout') }}">Thủ tục thanh toán</a></li>
+                    <li><a href="./checkout.html">Chờ xác nhận</a></li>
+                    <li><a href="./blog-details.html">Đã xác nhận</a></li>
+                    <li><a href="./blog-details.html">Đã nhận</a></li>
                 </ul>
             </li>
-            <li><a href="./blog.html">Blog</a></li>
-            <li><a href="./contact.html">Contact</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -145,11 +145,11 @@
                     <ul>
                         <li class="home"><a href="{{ route('index') }}">Home</a></li>
                         <li class="shop"><a href="{{ route('home.shop') }}">Shop</a></li>
-                        <li class="details"><a href="./shop-details.html">Details</a></li>
-                        <li class="cart"><a href="./shoping-cart.html">Giỏ Hàng</a></li>
-                        <li class="order"><a href="#">Đơn hàng</a>
+                        <li class="details"><a>Details</a></li>
+                        <li class="cart"><a href="{{ route('home.ShowCart') }}">Giỏ Hàng</a></li>
+                        <li class="order"><a>Đơn hàng</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">Thủ tục thanh toán</a></li>
+                                <li><a href="{{ route('home.chechout') }}">Thủ tục thanh toán</a></li>
                                 <li><a href="./checkout.html">Chờ xác nhận</a></li>
                                 <li><a href="./blog-details.html">Đã xác nhận</a></li>
                                 <li><a href="./blog-details.html">Đã nhận</a></li>
@@ -163,16 +163,16 @@
                 <div class="header__cart">
                     <ul>                   
                         @if (empty($itemCart))
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
+                        <li><a href="{{ route('home.ShowCart') }}"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
                         @else
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>{{$itemCart['numberOfItems']}}</span></a></li>
+                        <li><a href="{{ route('home.ShowCart') }}"><i class="fa fa-shopping-bag"></i> <span>{{$itemCart['numberOfItems']}}</span></a></li>
                         @endif
                        
                     </ul>
                     @if (empty($itemCart))
                           <div class="header__cart__price">Tổng giá: <span>0 VNĐ</span></div>
                         @else
-                        <div class="header__cart__price">Tổng giá: <span>{{$itemCart['Total']}} VNĐ</span></div>
+                        <div class="header__cart__price">Tổng giá: <span class="TotalPrice">{{$itemCart['Total']}} VNĐ</span></div>
                         @endif
                     
                 </div>

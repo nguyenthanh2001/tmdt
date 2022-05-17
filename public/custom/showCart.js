@@ -25,20 +25,20 @@ $(document).ready(function() {
             processData: false,
             success: function (data2) {            
               console.log(data2);
+              if(data2.data){
+                toastr.success('Cập nhật thành công', 'Thông báo');
+                loaddata();
+                
+              }
            
             },
              error: function (data2) { 
-                 console.log(data2);
+                 console.log(data2.responseJSON.message);
                
              }
 
         });  
     });
-
-//     $( ".DeleteItem" ).click(function() {
-//         var item = this.data('item');
-//         console.log(item);
-// });
 });
 function DeleteItem(info) {
     if($(info).is('[data-size]')){
@@ -57,7 +57,11 @@ function DeleteItem(info) {
           },
         success: function (data) {            
           console.log(data);
-       
+          if(data.data){
+            toastr.success('Xóa thành công', 'Thông báo');
+            loaddata();
+            
+          }
         },
          error: function (data_er) { 
             // if (data_er.status >= 500) {
@@ -69,5 +73,61 @@ function DeleteItem(info) {
 
     }); 
     }
+    function loaddata() {
+      $('#dataTable').DataTable({
+          destroy: true,
+          searching: true,
+          processing: true,
+          language: {
+              "sProcessing": "Đang xử lý...",
+              "sLengthMenu": "Xem thông tin _MENU_ mục",
+              "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+              "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+              "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+              "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+              "sInfoPostFix": "",
+              "sSearch": "Tìm thông tin:",
+              "sUrl": "",
+              "oPaginate": {
+                  "sFirst": "Đầu",
+                  "sPrevious": "Trước",
+                  "sNext": "Tiếp",
+                  "sLast": "Cuối"
+              }
+          },
+          ajax: {
+              "url": load,
+              "type": "GET"
+          },
+          columns: [
+              { data: 'stt' },
+              { data: 'tenbanh' },
+              { data: 'sizebanh' },
+              { data: 'hinhanh', "width": "20%" } ,
+              { data: 'khuyenmai' },     
+              { data: 'gia' },
+              { data: 'soluongmua' },    
+              { data: 'tonggia' },
+              { data: 'btnXoa' },
+          ]
+      });
 
-    
+      $.ajax({
+        url : load,
+        method: 'GET',   
+        success: function (data) {            
+          console.log(data);
+          $('.TotalPrice').html(data.total)
+        },
+         error: function (data_er) { 
+            // if (data_er.status >= 500) {
+            //     location.reload();
+            //   }
+              console.log(data_er);
+              toastr.warning(data_er.responseJSON.message, "Thông báo")        
+         }
+  
+    });
+  }
+
+ 

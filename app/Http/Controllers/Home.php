@@ -15,17 +15,20 @@ use App\Models\User;
 use App\Models\Diachi;
 use App\Models\Banh;
 use App\Models\Loaibanh;
+use App\Models\Hoadon;
+use App\Models\CThoadon;
 use App\Models\Khuyenmai;
 use App\Http\Services\home\Detail;
 use App\Http\Services\home\Cart;
 use App\Models\Sizebanh;
+use App\Http\Services\home\Checkout;
 use phpDocumentor\Reflection\PseudoTypes\False_;
 use phpDocumentor\Reflection\PseudoTypes\True_;
-
 class Home extends Controller
 {
     protected $CakeDetail;
     protected $Cart;
+    private $CartTamp;
     public function __construct(Detail $dataDetail, Cart $cart)
     {
         $this->CakeDetail = $dataDetail;
@@ -262,6 +265,7 @@ class Home extends Controller
     }
     public function ShowCart(Request $request)
     {
+
         $arCartID = [];
         //$request->session()->forget('Cart');
         //dd(session('Cart'));
@@ -280,17 +284,18 @@ class Home extends Controller
                         array_push($arCartID, $arrTmp);
                     }
                 }
-            }  
+            }
             foreach ($arCartID as $key => $value) {
-                 $Total += (float)$value['tonggia'];
-            }   
-            $Total = number_format($Total.'000');
-        } 
-        else {
+                $Total += (float)$value['tonggia'];;
+            }
+            $Total = number_format($Total);
+        } else {
             //giỏ hàng rỗng
             $arCartID = [];
         }
-        return view('cart', compact('arCartID','Total'));
+
+
+        return view('cart', compact('arCartID', 'Total'));
     }
     public function UpdateCartQuantity(Request $request)
     {
@@ -299,7 +304,7 @@ class Home extends Controller
         foreach ($quantity as $key => $value) {
             if ($key == 'mabanh') {
                 foreach ($quantity["mabanh"]  as $key2 => $value2) {
-                    for ($i = 0; $i < count($cart); $i++) {
+                    foreach ($cart as $i => $session) {
                         if (isset($cart[$i][$key2])) {
                             if ($cart[$i][$key2]["mabanh"] == $key2) {
                                 $cart[$i][$key2]["soluong"] = $value2;
@@ -309,7 +314,7 @@ class Home extends Controller
                 }
             } else if ($key == 'masize') {
                 foreach ($quantity["masize"]  as $key2 => $value2) {
-                    for ($i = 0; $i < count($cart); $i++) {
+                    foreach ($cart as $i => $session) {
                         if (isset($cart[$i][$key2]) && isset($cart[$i][$key2]["masize"])) {
                             foreach ($cart[$i][$key2]["masize"] as $key3 => $value3) {
                                 foreach ($quantity["masize"][$key2] as $key4 => $value4) {
@@ -323,35 +328,113 @@ class Home extends Controller
                 }
             }
         }
-        session()->put('Cart',$cart);
+        session()->put('Cart', $cart);
         return response()->json(['data' => True]);
     }
 
     public function Delete(Request $request)
     {
-         $cart = session('Cart');
-         $mabanh = $request->mabanh;
-         foreach ($cart as $key => $value) {
+        $cart = session('Cart');
+        $mabanh = $request->mabanh;
+        foreach ($cart as $key => $value) {
             if ($request->has('masize')) {
-                $masize = $request->masize;  
+                $masize = $request->masize;
                 foreach ($value as $key2 => $value2) {
-                    if (array_key_exists($masize,$value2['masize'])) {
-                        unset($cart[$key][$key2]['masize'][$masize]);
-                        if(empty($cart[$key][$key2]['masize'])){
-                            unset($cart[$key]);
+                    if (isset($value2['masize'])) {
+                        if (array_key_exists($masize, $value2['masize'])) {
+                            unset($cart[$key][$key2]['masize'][$masize]);
+                            if (empty($cart[$key][$key2]['masize'])) {
+                                unset($cart[$key]);
+                            }
+                            session()->put('Cart', $cart);
                         }
-                        session()->put('Cart',$cart);
-                    } 
+                    }
                 }
-             }
-            else{
-                if (array_key_exists($mabanh,$value)) {
+            } else {
+                if (array_key_exists($mabanh, $value)) {
                     unset($cart[$key]);
-                    session()->put('Cart',$cart);
-                } 
-             } 
-         } 
-       
-
+                    session()->put('Cart', $cart);
+                }
+            }
+        }
+        return response()->json(['data' => True]);
     }
+    public function ShowCartAjax(Request $request)
+    {
+        if (session()->has('Cart') && count(session('Cart')) > 0) {
+            $itemSeeson = $this->Cart->HandlingSessionCart(session('Cart'));
+            $Cart = $this->Cart->showDetailItemCart($itemSeeson);
+            $custom = array();
+            $Total = 0;
+            foreach ($Cart as $key => $value) {
+                $custom[$key]['stt'] = $key + 1;
+                $custom[$key]['tenbanh'] = $value['tenbanh'];
+                if (empty($value['sizebanh'])) {
+                    $custom[$key]['sizebanh'] = null;
+                    $custom[$key]['soluongmua'] = '<div class="quantity"><div class="pro-qty"><span class="dec qtybtn">-</span><input class="quantityCart" type="number" name="quantity[mabanh]['.$value['mabanh'].']"value="'.$value['soluongmua'].'" min="1" max="500" step="1"><span class="inc qtybtn">+</span></div></div>';
+                    $custom[$key]['btnXoa'] = ' <button type="button" class="btn btn-danger rounded-circle btn-sm"  data-item="' . $value['mabanh'] . '" onclick="DeleteItem(this);"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                } else {
+                    $custom[$key]['sizebanh'] = 'Size ' . $value['sizebanh'];
+                    $custom[$key]['soluongmua'] = '<div class="quantity"><div class="pro-qty"><span class="dec qtybtn">-</span><input class="quantityCart" type="number" name="quantity[masize][' . $value['mabanh'] . '][' . $value['masize'] . ']"value="' . $value['soluongmua'] . '" min="1" max="500" step="1"><span class="inc qtybtn">+</span></div></div>';
+                    $custom[$key]['btnXoa'] = '<button type="button" class="btn btn-danger rounded-circle btn-sm" data-item="' . $value['mabanh'] . '"  data-size="' . $value['masize'] . '" onclick="DeleteItem(this);"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                }
+                $custom[$key]['hinhanh'] = '<img src="' . asset('upload/imgCake/' . $value['hinhanh']) . '" alt="" class="imgCart img-thumbnail hact">';
+                if (empty($value['khuyenmai'])) {
+                    $custom[$key]['khuyenmai'] = null;
+                } else {
+                    $custom[$key]['khuyenmai'] = $value['khuyenmai'];
+                }
+                $custom[$key]['gia'] = number_format($value['gia']);
+                $custom[$key]['tonggia'] = number_format($value['tonggia']);
+                $Total += (float)$value['tonggia'];
+            }
+        } else {
+            $custom = [];
+            $Total = 0;
+        }
+        return response()->json(['data' => $custom, 'total' => number_format($Total) . ' VNĐ']);
+    }
+
+    public function Checkout(Request $request)
+    {
+        $Checkout = new Checkout();
+        $name = $Checkout->ShowNameAddress();
+        if (session()->has('Cart') && count(session('Cart')) > 0) {
+            $Total = 0;
+            $itemSeeson = $this->Cart->HandlingSessionCart(session('Cart'));
+            $Cart = $this->Cart->showDetailItemCart($itemSeeson);
+            foreach ($Cart as $key => $value) {
+                $Total += (float)$value['tonggia'];
+            }     
+        } else {
+            $Cart = [];
+            $Total = 0;
+        }
+        return view('Checkout', compact('name', 'Cart', 'Total'));
+    }
+    public function HandleCheckout(Request $request)
+    {
+        $itemSeeson = $this->Cart->HandlingSessionCart(session('Cart'));
+        $Cart = $this->Cart->showDetailItemCart($itemSeeson);     
+        $checkout = new Checkout();
+        $mahd = $checkout->addBill($request);
+        $kq = $checkout->addBillDetail($Cart,$mahd);
+        if($kq){
+            session()->forget('Cart');
+        }
+      return back();
+    }
+    public function Waiting(Request $request)
+    {   
+        $dataBill = Hoadon::where('users_id',Auth::user()->id)->with('user.Diachi.huyen.thanhpho')->get();
+        return view('waitBill',compact('dataBill'));
+    }
+    public function See(Request $request)
+    {   
+        $a=$request->all();
+        $datasee = CThoadon::where('hoadon_id',$request->mahd)->with('banh','size')->get();
+        return response()->json(['data' => $datasee]);
+        // return view('waitBill',compact('dataBill'));
+    }
+
 }

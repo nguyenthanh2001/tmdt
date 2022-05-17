@@ -57,6 +57,7 @@ class QLbanh extends Controller
                 </button>
                 ';
             }
+            
             return response()->json(['data' => $custom]);
         }
 

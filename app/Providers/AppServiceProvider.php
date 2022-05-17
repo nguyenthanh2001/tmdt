@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer('block.header', function ($view) {
             if (session()->has('Cart') && Auth::check()) {
                $Data = new Cart();
-               $a=session('Cart');
                $itemSeeson = $Data->HandlingSessionCart(session('Cart'));
                $itemCart = $Data->showItemCart($itemSeeson);
             }else{

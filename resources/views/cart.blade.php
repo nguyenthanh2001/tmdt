@@ -1,10 +1,10 @@
 @extends('master_layout.layout_trangchu')
 @push('css')
-    <link href=" {{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <style>
         .iconPhone {
-            margin-top: 15px;
+            margin-top: 12px;
         }
         .imgCart {
             width: 100%;
@@ -52,9 +52,10 @@
                                     <th>Giá</th>
                                     <th>Số lượng</th>
                                     <th>Tổng giá</th>
-                                    <th></th>
+                                    <th>Xóa</th>
                                 </tr>
                             </thead>
+                           
                        
                             <tbody>   
                     
@@ -79,7 +80,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $arCartID['gia'] }}
+                                            {{ number_format($arCartID['gia']) }}
                                         </td>
                                         <td class="shoping__cart__quantity">                       
                                             <div class="quantity">
@@ -90,22 +91,20 @@
                                                     @else
                                                     <input class="quantityCart" type="text" name="quantity[mabanh][{{ $arCartID['mabanh'] }}]"
                                                     value="{{ $arCartID['soluongmua'] }}" min="1" max="500" step="1">
-                                                    @endif
-                                                
-
+                                                    @endif                                             
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $arCartID['tonggia'] }}
+                                            {{ number_format($arCartID['tonggia']) }}
                                         </td>
                                         <td>
                                             @if (!empty($arCartID['sizebanh']))
-                                            <button type="button" class="btn btn-danger btn-circle btn-sm" data-item="{{ $arCartID['mabanh'] }}"  data-size="{{ $arCartID['masize'] }}" onclick="DeleteItem(this);">
+                                            <button type="button" class="btn btn-danger rounded-circle btn-sm" data-item="{{ $arCartID['mabanh'] }}"  data-size="{{ $arCartID['masize'] }}" onclick="DeleteItem(this);">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             @else
-                                            <button type="button" class="btn btn-danger btn-circle btn-sm"  data-item="{{ $arCartID['mabanh'] }}" onclick="DeleteItem(this);">
+                                            <button type="button" class="btn btn-danger rounded-circle btn-sm"  data-item="{{ $arCartID['mabanh'] }}" onclick="DeleteItem(this);">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             @endif
@@ -123,11 +122,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
-                    </div>
-                     <input type="submit" >
+                        <a href="{{route('home.shop')}}" class="primary-btn cart-btn">TIẾP TỤC MUA HÀNG</a>
+                        <button type="submit" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            CẬP NHẬT</button>
+                    </div>                 
                     </form>    
                 </div>  
                 <div class="col-lg-6">
@@ -157,10 +155,10 @@
                     <div class="shoping__checkout">
                         <h5>Tổng giỏ hàng</h5>
                         <ul>
-                            <li>Tổng phụ <span>{{$Total}} VNĐ</span></li>
-                            <li>Toàn bộ <span>{{$Total}} VNĐ</span></li>
+                            <li>Tổng phụ <span class="TotalPrice">{{$Total}} VNĐ</span></li>
+                            <li>Toàn bộ <span class="TotalPrice">{{$Total}} VNĐ</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
+                        <a href="{{route('home.chechout')}}" class="primary-btn">TIẾN HÀNH THANH TOÁN</a>
                     </div>
                 </div>
             </div>
@@ -172,13 +170,15 @@
         document.querySelector(".cart").classList.add('active');
         document.querySelector(".hero").classList.add("hero-normal");
     </script>
-    <script>
-     var urlUpdate = '{{route('home.UpdateCartQuantity')}}';
-     var urlDelete ='{{route('home.DeleteItem')}}';
-    </script>
-    <script src="{{ asset('custom/showCart.js') }}"></script>
     <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <!-- Page level custom scripts -->
     <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
+
+    <script>
+        var urlUpdate = '{{route('home.UpdateCartQuantity')}}';
+        var urlDelete ='{{route('home.DeleteItem')}}';
+        var load = '{{route('home.loaddata')}}';
+    </script>
+    <script src="{{ asset('custom/showCart.js') }}"></script>
 @endpush

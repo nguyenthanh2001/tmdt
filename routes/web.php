@@ -45,6 +45,11 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::get('showcart','ShowCart')->name('ShowCart');
     Route::post('UpdateCartQuantity','UpdateCartQuantity')->name('UpdateCartQuantity');
     Route::post('DeleteItem','Delete')->name('DeleteItem');
+    Route::get('loaddata','ShowCartAjax')->name('loaddata');
+    Route::get('checkout','Checkout')->name('chechout');
+    Route::post('handleCheckout','HandleCheckout')->name('HandleCheckout');
+    Route::get('Waiting','Waiting')->name('Waiting');
+    Route::post('see','See')->name('see');
 });
 
 //admin-loại bánh
