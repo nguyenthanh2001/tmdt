@@ -53,7 +53,7 @@
             <li class="order"><a>Đơn hàng</a>
                 <ul class="header__menu__dropdown">
                     <li><a href="{{ route('home.chechout') }}">Thủ tục thanh toán</a></li>
-                    <li><a href="./checkout.html">Chờ xác nhận</a></li>
+                    <li><a href="{{route('home.Waiting')}}">Chờ xác nhận</a></li>
                     <li><a href="./blog-details.html">Đã xác nhận</a></li>
                     <li><a href="./blog-details.html">Đã nhận</a></li>
                 </ul>
@@ -150,9 +150,9 @@
                         <li class="order"><a>Đơn hàng</a>
                             <ul class="header__menu__dropdown">
                                 <li><a href="{{ route('home.chechout') }}">Thủ tục thanh toán</a></li>
-                                <li><a href="./checkout.html">Chờ xác nhận</a></li>
-                                <li><a href="./blog-details.html">Đã xác nhận</a></li>
-                                <li><a href="./blog-details.html">Đã nhận</a></li>
+                                <li><a href="{{route('home.Waiting')}}">Chờ xác nhận</a></li>
+                                <li><a href="{{route('home.confirmedBill')}}">Đã xác nhận</a></li>
+                                <li><a href="{{route('home.Success')}}">Đã nhận</a></li>
                             </ul>
                         </li>
                         

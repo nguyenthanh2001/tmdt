@@ -426,15 +426,55 @@ class Home extends Controller
     }
     public function Waiting(Request $request)
     {   
-        $dataBill = Hoadon::where('users_id',Auth::user()->id)->with('user.Diachi.huyen.thanhpho')->get();
-        return view('waitBill',compact('dataBill'));
+        $dataBill = Hoadon::where('users_id',Auth::user()->id)
+        ->where('trangthai',0)
+        ->with('user.Diachi.huyen.thanhpho')->get();
+        $trangthai =0;
+        return view('waitBill',compact('dataBill','trangthai'));
     }
     public function See(Request $request)
     {   
-        $a=$request->all();
         $datasee = CThoadon::where('hoadon_id',$request->mahd)->with('banh','size')->get();
         return response()->json(['data' => $datasee]);
-        // return view('waitBill',compact('dataBill'));
     }
+    public function Deletebill(Request $request)
+    {   
+        $rule = [
+            'mahd' => 'required|numeric|exists:hoadon,mahd',
+        ];
+        $mess = [
+            'required' => 'Không được bỏ trống dữ liệu',
+            'numeric' => 'Vui lòng nhập số',
+            'mahd.exists' => 'Bánh không tồn tại',
+        ];
+        $validator = Validator::make($request->all(), $rule, $mess);
+        $validator->validate();
+        if (!$validator->fails()) {
+            $billDetail = Hoadon::find($request->mahd);
+            if($billDetail->users_id == Auth::user()->id && $billDetail->trangthai == 0){
+                $billDetail->delete();
+            }
+        }
+        return back();
+    }
+    public function confirmedBill(Request $request)
+    {   
+        $dataBill = Hoadon::where('users_id',Auth::user()->id)
+        ->where('trangthai',1)
+        ->with('user.Diachi.huyen.thanhpho')->get();
+        $trangthai=1;
+        return view('waitBill',compact('dataBill','trangthai'));
+    }
+    public function Success(Request $request)
+    {   
+        $dataBill = Hoadon::where('users_id',Auth::user()->id)
+        ->where('trangthai',2)
+        ->with('user.Diachi.huyen.thanhpho')->get();
+        $trangthai=2;
+        return view('waitBill',compact('dataBill','trangthai'));
+    }
+
+
+
 
 }

@@ -20,10 +20,19 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Checkout</h2>
+                        <h2>Đơn hàng</h2>
                         <div class="breadcrumb__option">
                             <a href="./index.html">Home</a>
-                            <span>Wait for verification</span>
+                            @if ($trangthai == 0)
+                            <span>Chờ xác nhận</span>
+                            @else
+                                @if ($trangthai == 1)
+                                <span>Đã xác nhận</span>
+                                @else
+                                <span>Đã nhận</span>
+                                @endif
+                            @endif
+                         
                         </div>
                     </div>
                 </div>
@@ -35,8 +44,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__table">
-                        <form  method="POST" id="updatecart" enctype="multipart/form-data">  
-                            @csrf
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
@@ -47,9 +54,12 @@
                                     <th>Địa chỉ</th>
                                     <th>Ghi chú</th>
                                     <th>Xem</th>
-                                    <th>Xóa</th>
+                                    @if ($trangthai == 0)
+                                    <th>Xóa</th>                                         
+                                    @endif
+                                   
                                 </tr>
-                            </thead>                                             
+                            </thead>                                      
                             <tbody>   
                                 @forelse ($dataBill as $dataBill)
                                 <tr>
@@ -64,13 +74,19 @@
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
+                                    @if ($trangthai == 0)
                                     <td>
-                                        <button type="button" class="btn btn-danger rounded-circle btn-sm">
+                                        <form action="{{route('home.detelebill')}}" method="POST"> 
+                                            @csrf
+                                            <input type="hidden" name="mahd" value="{{$dataBill->mahd}}">
+                                        <button type="submit" class="btn btn-danger rounded-circle btn-sm">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
+                                        </form>
                                     </td>
+                                    @endif                           
                                 </tr> 
-                                @empty                
+                                @empty
                                 @endforelse
                                                         
                             </tbody>
@@ -139,10 +155,21 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="shoping__checkout">
-                                <h5>Tổng giá đơn hàng đang chờ thanh toán</h5>
-                                <ul>
+                                @if ($trangthai == 0)
+                                <h5>Tổng giá đơn hàng đang chờ xác nhận</h5>
+                                @else
+                                @if ($trangthai == 1)
+                                <h5>Tổng giá đơn hàng đã xác nhận</h5>
+                                @else
+                                <h5>Tổng giá đơn hàng đã nhận</h5>
+                                @endif
+                                @endif                               
+                                <ul>                               
                                     <li>Tổng phụ <span class="TotalPrice"> VNĐ</span></li>
                                     <li>Toàn bộ <span class="TotalPrice"> VNĐ</span></li>
+                                    @if ($trangthai == 2)
+                                    <li>Đã thanh toán</li>
+                                    @endif
                                 </ul>                 
                             </div>
                         </div>

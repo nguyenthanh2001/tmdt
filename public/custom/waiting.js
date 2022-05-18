@@ -27,18 +27,21 @@ function see(id) {
       var arr =data2.data;
       var gia=0;
       var html='';
+      var ten ='';
       var total=0;
       for (const key in arr) {
           if(arr[key].masize == null){
-           gia = arr[key].gia;
+           gia = arr[key].gia; 
+           ten = arr[key].banh.tenbanh;    
           }else{
             gia = arr[key].size.gia;
+            ten =  arr[key].banh.tenbanh+'- Size'+arr[key].size.tensize;
           }
          html +=` 
         <tr>
         <td class="shoping__cart__item">
             <img class="imgDetailBill" src="${linkImg+'/'+arr[key].banh.hinhanh}" alt="">
-            <h5>${arr[key].banh.tenbanh}</h5>
+            <h5>${ten}</h5>
         </td>
         <td class="shoping__cart__price">
             ${new Intl.NumberFormat().format(gia)}
@@ -52,7 +55,6 @@ function see(id) {
     </tr>`;
           total += arr[key].tonggia;
       }
-
         $('.detailBill').html(html);
         $('.TotalPrice').html(new Intl.NumberFormat().format(total)+' VNĐ');
         swal.close();             

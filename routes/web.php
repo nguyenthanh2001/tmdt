@@ -7,8 +7,8 @@ use App\Http\Controllers\Admin\QLkhuyenmai;
 use App\Http\Controllers\Admin\QLbanh;
 use App\Http\Controllers\Admin\Qlsize;
 use App\Http\Controllers\Admin\Qltaikhoan;
-
-
+use App\Http\Controllers\Admin\Qldonhang;
+use App\Http\Controllers\Admin\Thongke;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +50,9 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::post('handleCheckout','HandleCheckout')->name('HandleCheckout');
     Route::get('Waiting','Waiting')->name('Waiting');
     Route::post('see','See')->name('see');
+    Route::post('detelebilldetail','Deletebill')->name('detelebill');
+    Route::get('confirmedBill','confirmedBill')->name('confirmedBill');
+    Route::get('success','Success')->name('Success');
 });
 
 //admin-loại bánh
@@ -80,7 +83,7 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->middleware('c
     Route::get('deleteCake/{id}','DeleteCake');
 
  });
-
+//admin size
  Route::prefix('admin')->controller(Qlsize::class)->name('admin.')->middleware('checkAdmin')->group(function (){
     Route::get('size','Showsize')->name('getSize');
     Route::post('getName','GetNamevsId');
@@ -90,7 +93,19 @@ Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->middleware('c
     Route::get('deleteSize/{id}','GetDeleteSize');
     
 });
+//admin dơn hàng
+Route::prefix('admin')->controller(Qldonhang::class)->name('admin.')->middleware('checkAdmin')->group(function (){
+    Route::get('qldonhang','Qlbill')->name('Qlbill');  
+    Route::get('qldonhangby1','Qlbillby1')->name('Qlbill1'); 
+    Route::get('qldonhangby2','Qlbillby2')->name('Qlbill2'); 
+    Route::post('updateBillAdmin','OrderReview')->name('updateBillAdmin');
+    Route::post('deleteBillAdmin','Deletebill')->name('adminDeteleBill');
 
+});
+//admin thông kê
+Route::prefix('admin')->controller(Thongke::class)->name('admin.')->middleware('checkAdmin')->group(function (){
+    Route::get('thongke','Thongke')->name('Thongke'); 
+});
 Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
     Route::get('taikhoan','ShowTk')->name('getTk');
 });
