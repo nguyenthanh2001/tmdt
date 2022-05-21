@@ -12,19 +12,15 @@
     <!-- Content Row -->
     <div class="row">
 
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-8 col-lg-8">
             <!-- Bar Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-bar">
-                        <canvas id="myBarChart"></canvas>
-                    </div>
+                        <canvas id="myChart"></canvas>
                     <hr>
-                    Styling for the bar chart can be found in the
-                    <code>/js/demo/chart-bar-demo.js</code> file.
                 </div>
             </div>
 
@@ -35,5 +31,11 @@
 </div>
 @endsection
 @push('js')
-    <script src="{{ asset('admin/js/demo/chart-bar-demo.js') }}"></script>
+    <script>
+        var urlLoai ='{{route('admin.TKLoai')}}';
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('custom/admin/thongke.js') }}"></script>
+    {{-- <script src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('admin/js/demo/chart-bar-demo.js') }}"></script> --}}
 @endpush
