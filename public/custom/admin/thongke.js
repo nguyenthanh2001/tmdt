@@ -1,4 +1,6 @@
-let myChart = document.getElementById('myChart').getContext('2d');
+let myChart = document.getElementById('myChart');
+let CakeTop = document.getElementById('CakeTop');
+
 
 // Global Options
 Chart.defaults.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -47,11 +49,36 @@ const config = {
     options: {
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            callback: function(value, index, ticks) {
+                return "Số lượng "+value;
+            }
+        }
         }
       }
     },
   };
 
+  const dataTop = {
+    labels:NameTop,
+    datasets: [{
+      label: 'Top 5 sản phẩm',
+      data: QuantityTop,
+      backgroundColor: [
+        '#FF8AAE',
+        '#FFB2A6',
+        '#FFF89A',
+        '#9ADCFF',
+        '#00C897'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const configTop = {
+    type: 'doughnut',
+    data: dataTop,
+  };
 
- let massPopChart = new Chart(myChart, config);
+  new Chart(myChart, config);
+  new Chart(CakeTop, configTop);

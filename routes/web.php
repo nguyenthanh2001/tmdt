@@ -106,6 +106,7 @@ Route::prefix('admin')->controller(Qldonhang::class)->name('admin.')->middleware
 Route::prefix('admin')->controller(Thongke::class)->name('admin.')->middleware('checkAdmin')->group(function (){
     Route::get('thongke','Thongke')->name('Thongke'); 
     Route::get('TKloai','TKLoai')->name('TKLoai');
+    Route::get('TopCake','TopCake')->name('TopCake');
 });
 Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
     Route::get('taikhoan','ShowTk')->name('getTk');

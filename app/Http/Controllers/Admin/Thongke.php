@@ -12,21 +12,39 @@ class Thongke extends Controller
 {
     public function Thongke()
     {
-       return view('admin.thongke');
+        $TopCake = new TK();
+        $result = $TopCake->TopCake();
+        $arrTop = array();
+        foreach ($result as $key => $value) {
+          $arrTop['nameCake'][] =  $value->banh->tenbanh;
+          $arrTop['quantity'][] = $value->Tongsoluong;
+     }
+       return view('admin.thongke',compact('arrTop'));
     }
     public function TKLoai(Request $request)
     {
-    //    if ($request->ajax()) {
-    // }
-            $LoaiCake = new TK();
-           $loai = $LoaiCake->LoaiCake();
-           $arr = array();
-           foreach ($loai as $key => $value) {
-                $arr[$key]['maloai']= $value->maloai;
-                $arr[$key]['tenloai']= $value->tenloai;
-                $arr[$key]['soluongbanh']= $value->banh->count();
-           }
-          return response()->json(['arr' => $arr]);
-    
+       if ($request->ajax()) {
+        $LoaiCake = new TK();
+        $loai = $LoaiCake->LoaiCake();
+        $arr = array();
+        foreach ($loai as $key => $value) {
+             $arr[$key]['maloai']= $value->maloai;
+             $arr[$key]['tenloai']= $value->tenloai;
+             $arr[$key]['soluongbanh']= $value->banh->count();
+        }
+       return response()->json(['arr' => $arr]);
     }
+     return abort(404);
+    }
+    public function TopCake(Request $request)
+    {
+    //    if ($request->ajax()) {
+    //     $LoaiCake = new TK();
+        
+    //    return response()->json();
+    // }
+    //  return abort(404);
+
+    }
+
 }
