@@ -57,7 +57,6 @@
                             <div class="latest-product__slider owl-carousel">
                                 @foreach ($custom as $value)
                                 <div class="latest-prdouct__slider__item">
-                             
                                     @forelse ($value as $value2)                                  
                                     <a href="#" class="latest-product__item">
                                         <div class="latest-product__item__pic">
@@ -165,7 +164,6 @@
                             <div class="product__item__pic set-bg" data-setbg="{{ asset('upload/imgCake/'.$itemCake->hinhanh) }}">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="{{route('home.details',['id'=>$itemCake->mabanh])}}"><i class="iconCake fa fa-eye"></i></a></li>
-                                    <li><a href="#"><i class="iconCake fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">

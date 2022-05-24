@@ -24,10 +24,18 @@
     <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     @stack('css')
     <Style>
         .header__menu ul li a{
             font-size: 12px;
+        }    
+        .ui-autocomplete { 
+            z-index:2147483647; 
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 20px;
         }
     </Style>
 </head>
@@ -51,6 +59,8 @@
     <script src="{{ asset('asset/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('asset/js/main.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('custom/info.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     @stack('js')
 </body>
 </html>

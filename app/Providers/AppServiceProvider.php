@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\View\Composers\ProfileComposer;
 use Illuminate\Support\Facades\View;
 use App\Models\Loaibanh;
+use App\Models\User;
 use App\Http\Services\home\Cart;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,9 +39,17 @@ class AppServiceProvider extends ServiceProvider
                $itemCart = $Data->showItemCart($itemSeeson);
             }else{
                 $itemCart=null;
-            }
-            
-                $view->with(compact('itemCart'));
+            }           
+               return $view->with(compact('itemCart'));
         });
+            View::composer('block.footer', function ($view) {
+                if(Auth::check()){
+                    $info = User::find(Auth::user()->id)->load('Diachi.huyen.thanhpho');     
+                    return $view->with(compact('info'));   
+                }
+                    
+            });     
+     
+
     }
 }

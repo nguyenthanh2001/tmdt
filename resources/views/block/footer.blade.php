@@ -65,3 +65,47 @@
             </div>
         </div>
     </footer>
+
+@if (Auth::check())
+<div class="modal" id="infouser">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Hồ sơ</h4>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('home.infoUser') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="container rounded bg-white mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-md-3 border-right">
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThLP6xJXBY_W2tT5waakogfnpHk4uhpVTy7A&usqp=CAU"><span class="font-weight-bold">{{ Auth::user()->name }}</span><span class="text-black-50">{{ Auth::user()->email }}</span><span> </span></div>
+                        </div>
+                        <div class="col-md-9 border-right">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Hồ sở thông tin của {{ Auth::user()->name }}</h4>
+                                </div>                           
+                                <div class="row mt-1">
+                                    <div class="col-md-12"><label class="labels">Tên người dùng</label><input type="text" class="form-control" placeholder="Nhập người dùng" name="name" value="{{ Auth::user()->name }}" required></div>
+                                    <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" class="form-control" placeholder="Địa chỉ" name="diachi" value="{{$info->diachi}}" required></div>
+                                    <div class="col-md-12"><label class="labels">Nởi ở</label><input type="text" class="form-control diachi" placeholder="Nơi ở" value="{{$info->Diachi->name}} - {{$info->Diachi->huyen->name}} - {{$info->Diachi->huyen->thanhpho->name}}"></div>
+                                    <input type="hidden" class="xaid" name="xaid" value="{{$info->xaid }}">
+                                    <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" class="form-control" placeholder="Số điện thoại" value="{{$info->sdt}}" readonly></div>
+                                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="email" value="{{$info->email}}" readonly></div>
+                      
+                                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Lưu</button></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endif

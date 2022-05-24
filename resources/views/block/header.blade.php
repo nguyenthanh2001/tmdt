@@ -106,7 +106,7 @@
                             </div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="#">Hồ sơ</a></li>
+                                <li><a  data-toggle="modal" data-target="#infouser">Hồ sơ</a></li>
                                 <li><a href="{{ route('home.dangxuat') }}">Đăng xuất</a></li>
                             </ul>
                             @else
@@ -206,13 +206,13 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
+                        <form action="{{ route('home.shop') }}" method="GET">
                             <div class="hero__search__categories">
-                                All Categories
+                                Tất cả Bánh
                                 <span class="arrow_carrot-down"></span>
                             </div>
-                            <input type="text" placeholder="What do yo u need?">
-                            <button type="submit" class="site-btn">SEARCH</button>
+                            <input type="text" name="q" placeholder="Nhập tên bánh">
+                            <button type="submit" class="site-btn">Tìm kiểm</button>
                         </form>
                     </div>
                     <div class="hero__search__phone">

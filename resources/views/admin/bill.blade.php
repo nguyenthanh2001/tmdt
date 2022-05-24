@@ -25,7 +25,7 @@
                             <div class="billed"><span class="font-weight-bold text-uppercase">NGÀY ĐẶT MUA:</span><span class="ml-1">{{\Carbon\Carbon::parse($bill->created_at)->format('d-m-Y')}}</span></div>
                             <div class="billed"><span class="font-weight-bold text-uppercase">NGÀY GIAO HÀNG:</span><span class="ml-1">{{\Carbon\Carbon::now()->format('d-m-Y')}}</span></div>
                             <div class="billed"><span class="font-weight-bold text-uppercase">MÃ HÓA ĐƠN:</span><span class="ml-1">{{$bill->mahd}}</span></div>
-                            <div class="billed"><span class="font-weight-bold text-uppercase">NỞI Ở:</span><span class="ml-1">{{$bill->user->Diachi->name}} - {{$bill->user->Diachi->huyen->name}} - {{$bill->user->Diachi->huyen->thanhpho->name}}</span></div>
+                            <div class="billed"><span class="font-weight-bold text-uppercase">NỞI Ở:</span><span class="ml-1">{{$bill->noi->name}} - {{$bill->noi->huyen->name}} - {{$bill->noi->huyen->thanhpho->name}}</span></div>
                             <div class="billed"><span class="font-weight-bold text-uppercase">ĐỊA CHỈ:</span><span class="ml-1">{{$bill->diachi}}</span></div>
                             
                         </div>

@@ -1,5 +1,15 @@
 @extends('master_layout.admin.layout_admin')
 @push('css')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<style>
+    .ui-autocomplete { 
+           z-index:2147483647;
+           max-height: 200px;
+           overflow-y: auto;
+           overflow-x: hidden;
+           padding-right: 20px;
+       }
+</style>
 @endpush
 <!-- Begin Page Content -->
 @section('main_admin')
@@ -37,7 +47,7 @@
                             <th>Số Điện Thoại</th>
                             <th>Địa Chỉ</th>
                             <th>Quyền</th>
-                            <th>Sửa</th>
+                    
                             <th>Xóa</th>
                         </tr>
                     </thead>
@@ -51,7 +61,6 @@
                             <th>Số Điện Thoại</th>
                             <th>Địa Chỉ</th>
                             <th>Quyền</th>
-                            <th>Sửa</th>
                             <th>Xóa</th>
                         </tr>
                     </tfoot>
@@ -73,16 +82,11 @@
                             <td>Admim</td>
                             @else
                             <td>Khách Hàng</td>
-                            @endif
-                            <td>                                    
-                                <button onclick="EditAccount({{ $Account->id }})" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#suatk">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
+                            @endif                        
                             <td>
-                            <button onclick="DeleteAccount({{ $Account->id }})" class="btn btn-danger btn-circle btn-sm">
+                            <a href="{{ route('admin.deleteTk',['id'=>$Account->id]) }}" class="btn btn-danger btn-circle btn-sm">
                                 <i class="fas fa-trash"></i>
-                            </button>
+                            </a>
                             </td>
                         </tr>  
                         @endforeach
@@ -92,10 +96,23 @@
             </div>
         </div>
     </div>
-
 </div>
+@include('admin.form_input.themtk')
 @endsection
-
 @push('js')
-
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script src="{{ asset('custom/admin/adminUser.js') }}"></script>
+<script> 
+var link ='{{ route('home.check') }}';
+</script>
+@if (session('xoatk'))
+   <script>
+        toastr.success("{{session('xoatk')}}","Thông báo !") 
+   </script>
+@endif
+@if (session('xoatktb'))
+   <script>
+        toastr.warning("{{session('xoatktb')}}","Thông báo !") 
+   </script>
+@endif
 @endpush

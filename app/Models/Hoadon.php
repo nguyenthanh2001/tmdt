@@ -18,4 +18,8 @@ class Hoadon extends Model
     {
         return $this->belongsTo(User::class,'users_id','id');
     }
+    public function noi()
+    {
+        return $this->belongsTo(Diachi::class,'xa_id','xaid');
+    }
 }

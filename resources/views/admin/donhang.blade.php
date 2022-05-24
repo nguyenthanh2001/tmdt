@@ -48,13 +48,14 @@
                                
                             </tr>
                         </thead>                                      
-                        <tbody>   
+                        <tbody>  
+                           
                             @forelse ($dataBill as $dataBill)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{$dataBill->user->name}}</td>
-                                <td>{{$dataBill->created_at}}</td>
-                                <td>{{$dataBill->user->Diachi->name}}-{{$dataBill->user->Diachi->huyen->name}}-{{$dataBill->user->Diachi->huyen->thanhpho->name}}</td>
+                                <td>{{$dataBill->created_at}}</td>                        
+                                <td>{{$dataBill->noi->name}}-{{$dataBill->noi->huyen->name}}-{{$dataBill->noi->huyen->thanhpho->name}}</td>
                                 <td>{{$dataBill->diachi}}</td>
                                 <td>{{$dataBill->note}}</td>
                                 <td>

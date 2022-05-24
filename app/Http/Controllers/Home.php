@@ -44,7 +44,9 @@ class Home extends Controller
     }
 
     public function shop(Request $request)
-    {
+    {    
+        // dd($request->has('a'));
+       // $request->query('q');
         $custom = array();
         $Cakehot = Loaibanh::all()->sortBy([['maloai', 'desc']])->take(4)->toArray();
         foreach ($Cakehot as $key => $value) {
@@ -92,14 +94,12 @@ class Home extends Controller
             return abort(404);
         }
         $detail->load(['loaibanh', 'khuyenmai', 'anhct', 'sizebanh']);
-        $price = $this->CakeDetail->CheckPriceCake($detail);
-        // foreach ($price['giabanh'] as $key => $value) {
-        //   echo  $value['giagoc'];
-        // }
-        //$this->CakeDetail->CheckPriceCake($detail)
-        return view('details', compact('detail', 'price'));
+        $price = $this->CakeDetail->CheckPriceCake($detail); 
+        $indexCake = Banh::whereNull('makm')
+        ->where('maloai_id',$detail->maloai_id)   
+        ->get()->random(4)->sortByDesc('mabanh'); 
+        return view('details', compact('detail', 'price','indexCake'));
         //trangchitiet
-
     }
 
     public function dangnhap()
@@ -158,7 +158,7 @@ class Home extends Controller
             'ngaysinh' => 'required',
             'sdt' => 'required|numeric',
             'diachi' => 'required',
-            'xaid' => 'required|numeric|exists:devvn_xaphuongthitran,xaid'
+            'xaid' => 'required|numeric|exists:devvn_xaphuongthitran,xaid',
         ];
         $mess =
             [
@@ -428,7 +428,7 @@ class Home extends Controller
     {   
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',0)
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('noi.huyen.thanhpho')->get();
         $trangthai =0;
         return view('waitBill',compact('dataBill','trangthai'));
     }
@@ -461,7 +461,7 @@ class Home extends Controller
     {   
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',1)
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('noi.huyen.thanhpho')->get();
         $trangthai=1;
         return view('waitBill',compact('dataBill','trangthai'));
     }
@@ -469,9 +469,33 @@ class Home extends Controller
     {   
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',2)
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('noi.huyen.thanhpho')->get();
         $trangthai=2;
         return view('waitBill',compact('dataBill','trangthai'));
+    }
+    public function infoUser(Request $request)
+    {
+        $rule = [
+            'name' => 'required',
+            'xaid'=>'required|numeric|exists:devvn_xaphuongthitran,xaid',
+            'diachi'=>'required',
+        ];
+        $mess = [
+            'required' => 'Không được bỏ trống dữ liệu',
+            'xaid.exists' => 'Nơi ở không tồn tại',
+            'numeric' => 'Vui lòng nhập số',  
+        ];
+        $validator = Validator::make($request->all(), $rule, $mess);
+        $validator->validate();
+         if (!$validator->fails()) {
+            $update = User::find(Auth::user()->id);
+            $update->name =$request->name;
+            $update->diachi =$request->diachi;
+            $update->xaid = $request->xaid;
+            $update->save();
+        
+         }
+        return back();
     }
 
 

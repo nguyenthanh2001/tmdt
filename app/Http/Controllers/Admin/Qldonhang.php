@@ -14,7 +14,7 @@ class Qldonhang extends Controller
     {
         $dataBill = Hoadon::where('trangthai',0)
         ->orderByDesc('mahd')
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('user','noi.huyen.thanhpho')->get();
         $trangthai =0;
         return view('admin.donhang',compact('dataBill','trangthai'));
     }
@@ -22,7 +22,7 @@ class Qldonhang extends Controller
     {
         $dataBill = Hoadon::where('trangthai',1)
         ->orderByDesc('mahd')
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('user','noi.huyen.thanhpho')->get();
         $trangthai =1;
         return view('admin.donhang',compact('dataBill','trangthai'));
     }
@@ -30,7 +30,7 @@ class Qldonhang extends Controller
     {
         $dataBill = Hoadon::where('trangthai',2)
         ->orderByDesc('mahd')
-        ->with('user.Diachi.huyen.thanhpho')->get();
+        ->with('user','noi.huyen.thanhpho')->get();
         $trangthai =2;
         return view('admin.donhang',compact('dataBill','trangthai'));
     }
@@ -82,7 +82,7 @@ class Qldonhang extends Controller
     {
         
         $databill = CThoadon::where('hoadon_id',$id)->with('banh','size')->get();
-        $bill =Hoadon::find($id)->load('user.Diachi.huyen.thanhpho');
+        $bill =Hoadon::find($id)->load('user','noi.huyen.thanhpho');
         $Total = $databill->sum('tonggia');
         return view('admin.bill',compact('databill','Total','bill'));
     }

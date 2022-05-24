@@ -37,22 +37,23 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
     Route::post('dang-ky','handle_dangky')->middleware('checklogin');
     Route::get('dang-xuat','dangxuat')->middleware('check_home')->name('dangxuat');
     Route::get('shop','shop')->name('shop');
-    Route::post('test','CheckDiaChi');
+    Route::post('infoUser','infoUser')->middleware('check_home')->where('id', '[0-9]+')->name('infoUser');
+    Route::post('test','CheckDiaChi')->name('check');
     Route::get('shop/category/{id}','Category')->where('id', '[0-9]+')->name('category');
 
     //check loggin
-    Route::post('addCart','AddCart')->name('addCart');
-    Route::get('showcart','ShowCart')->name('ShowCart');
-    Route::post('UpdateCartQuantity','UpdateCartQuantity')->name('UpdateCartQuantity');
-    Route::post('DeleteItem','Delete')->name('DeleteItem');
-    Route::get('loaddata','ShowCartAjax')->name('loaddata');
-    Route::get('checkout','Checkout')->name('chechout');
-    Route::post('handleCheckout','HandleCheckout')->name('HandleCheckout');
-    Route::get('Waiting','Waiting')->name('Waiting');
-    Route::post('see','See')->name('see');
-    Route::post('detelebilldetail','Deletebill')->name('detelebill');
-    Route::get('confirmedBill','confirmedBill')->name('confirmedBill');
-    Route::get('success','Success')->name('Success');
+    Route::post('addCart','AddCart')->middleware('check_home')->name('addCart');
+    Route::get('showcart','ShowCart')->middleware('check_home')->name('ShowCart');
+    Route::post('UpdateCartQuantity','UpdateCartQuantity')->middleware('check_home')->name('UpdateCartQuantity');
+    Route::post('DeleteItem','Delete')->middleware('check_home')->name('DeleteItem');
+    Route::get('loaddata','ShowCartAjax')->middleware('check_home')->name('loaddata');
+    Route::get('checkout','Checkout')->middleware('check_home')->name('chechout');
+    Route::post('handleCheckout','HandleCheckout')->middleware('check_home')->name('HandleCheckout');
+    Route::get('Waiting','Waiting')->middleware('check_home')->name('Waiting');
+    Route::post('see','See')->middleware('check_home')->name('see');
+    Route::post('detelebilldetail','Deletebill')->middleware('check_home')->name('detelebill');
+    Route::get('confirmedBill','confirmedBill')->middleware('check_home')->name('confirmedBill');
+    Route::get('success','Success')->middleware('check_home')->name('Success');
 });
 
 //admin-loại bánh
@@ -112,6 +113,8 @@ Route::prefix('admin')->controller(Thongke::class)->name('admin.')->middleware('
 });
 Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
     Route::get('taikhoan','ShowTk')->name('getTk');
+    Route::post('addTK','addTK')->name('addTK');
+    Route::get('deleteTk/{id}','deleteTk')->name('deleteTk');
 });
 
 Route::get('test', function () {
