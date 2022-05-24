@@ -3,6 +3,7 @@
 @push('css')
 <style>
 
+
 </style>
 @endpush
 @section('main_admin')
@@ -20,22 +21,48 @@
                 <div class="card-body">
                         <canvas id="myChart"></canvas>
                     <hr>
-                    Số lượng bánh của các loại sản phẩm
+                   <p>Số lượng bánh của các loại sản phẩm</p> 
                 </div>
             </div>
         </div>
+
         <div class="col-xl-4 col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Top 5 sản phẩm</h6>
                 </div>
-                <div class="card-body">       
+                <div class="card-body test">       
                         <canvas id="CakeTop"></canvas>
                     <hr>
-                    Top 5 sản phẩm được mua nhiều nhất
+                    <p> Top 5 sản phẩm được mua nhiều nhất</p>        
                 </div>        
         </div>
     </div>
+
+    <div class="col-xl-8 col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Doanh thu 4 tháng</h6>
+            </div>
+            <div class="card-body">
+                    <canvas id="CVturnover"></canvas>
+                <hr>
+                <p>Doanh thu 4 tháng gần đây </p> 
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top 5 người dùng trong 4 tháng</h6>
+            </div>
+            <div class="card-body test">       
+                    <canvas id="CVuser"></canvas>
+                <hr>
+                <p> Top 5 người dùng có số lần mua nhiều trong 4 tháng</p>        
+            </div>        
+    </div>
+</div>
 
 </div>
 @endsection
@@ -44,9 +71,11 @@
         var urlLoai ='{{route('admin.TKLoai')}}';
         var NameTop = @json($arrTop['nameCake']);
         var QuantityTop = @json($arrTop['quantity']);
+        var NameMonthYear = @json($arrTop['monthYear']);
+        var totalBill = @json($arrTop['totalBill']);
+        var userBuyQuantity =@json($arrTop['userBuyQuantity']);
+        var userName =@json($arrTop['userName']);
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('custom/admin/thongke.js') }}"></script>
-    {{-- <script src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
-    <script src="{{ asset('admin/js/demo/chart-bar-demo.js') }}"></script> --}}
 @endpush

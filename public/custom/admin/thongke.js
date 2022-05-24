@@ -1,11 +1,8 @@
-let myChart = document.getElementById('myChart');
-let CakeTop = document.getElementById('CakeTop');
-
 
 // Global Options
 Chart.defaults.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.defaultFontColor = '#858796';
-
+Chart.defaults.animation.duration = 3000;
 var kq = function () {
     var tmp = null;
     $.ajax({
@@ -24,7 +21,6 @@ for (const key in kq) {
     nameCategory.push(kq[key].tenloai)
     numCategory.push(kq[key].soluongbanh)
   }
-console.log(nameCategory);
 const data = {
   labels: nameCategory,
   datasets: [{
@@ -79,6 +75,49 @@ const config = {
     type: 'doughnut',
     data: dataTop,
   };
+  
+  const dataturnover = {
+    labels: NameMonthYear,
+    datasets: [{
+      label: 'Doanh thu trong tháng',
+      data: totalBill,
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+  };
+  const configTurnover = {
+    type: 'line',
+    data: dataturnover,
+  };
 
+  const dataUser = {
+    labels:userName,
+    datasets: [{
+      label: 'My First Dataset',
+      data: userBuyQuantity,
+      backgroundColor: [
+        '#293462',
+        '#F24C4C',
+        '#EC9B3B',
+        '#F7D716',
+        '#92B4EC'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const configUser = {
+    type: 'pie',
+    data: dataUser,
+  };
+
+let myChart = document.getElementById('myChart');
+let CakeTop = document.getElementById('CakeTop');
+let turnover = document.getElementById('CVturnover');
+let CVuser =document.getElementById('CVuser');
   new Chart(myChart, config);
   new Chart(CakeTop, configTop);
+  new Chart(turnover, configTurnover);
+  new Chart(CVuser, configUser);
+
+

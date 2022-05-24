@@ -100,6 +100,8 @@ Route::prefix('admin')->controller(Qldonhang::class)->name('admin.')->middleware
     Route::get('qldonhangby2','Qlbillby2')->name('Qlbill2'); 
     Route::post('updateBillAdmin','OrderReview')->name('updateBillAdmin');
     Route::post('deleteBillAdmin','Deletebill')->name('adminDeteleBill');
+    Route::get('showBill/{id}','showBill')->name('showBill'); 
+
 
 });
 //admin thông kê

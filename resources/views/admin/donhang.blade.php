@@ -42,6 +42,9 @@
                                 @if ($trangthai == 0)
                                 <th>Xóa</th>                                         
                                 @endif
+                                @if ($trangthai == 1)
+                                    <th>In</th>
+                                @endif
                                
                             </tr>
                         </thead>                                      
@@ -49,7 +52,7 @@
                             @forelse ($dataBill as $dataBill)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{Auth::user()->name}}</td>
+                                <td>{{$dataBill->user->name}}</td>
                                 <td>{{$dataBill->created_at}}</td>
                                 <td>{{$dataBill->user->Diachi->name}}-{{$dataBill->user->Diachi->huyen->name}}-{{$dataBill->user->Diachi->huyen->thanhpho->name}}</td>
                                 <td>{{$dataBill->diachi}}</td>
@@ -70,6 +73,7 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </button>
                                 </td>
+         
                                 @if ($trangthai != 2)
                                 <td>
                                     <form action="{{route('admin.updateBillAdmin')}}" method="POST"> 
@@ -91,7 +95,10 @@
                                     </button>
                                     </form>
                                 </td>
-                                @endif                           
+                                @endif    
+                                @if ($trangthai == 1)
+                                <td><a href="{{route('admin.showBill',['id'=>$dataBill->mahd])}}" target="_blank" class="btn btn-primary rounded-circle btn-sm"><i class="fa fa-print" aria-hidden="true"></i></a></td>
+                                @endif                       
                             </tr> 
                             @empty
                             @endforelse
@@ -154,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group ">                   
                         <button type="button" class="btn btn-danger"  data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

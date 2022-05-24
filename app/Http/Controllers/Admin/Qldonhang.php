@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hoadon;
+use App\Models\CThoadon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -77,6 +78,15 @@ class Qldonhang extends Controller
         }
         return back();
     }
+    public function showBill($id)
+    {
+        
+        $databill = CThoadon::where('hoadon_id',$id)->with('banh','size')->get();
+        $bill =Hoadon::find($id)->load('user.Diachi.huyen.thanhpho');
+        $Total = $databill->sum('tonggia');
+        return view('admin.bill',compact('databill','Total','bill'));
+    }
+  
 
 
 }
