@@ -415,8 +415,10 @@ function deleteCake(id) {
           },
            error: function (data_er) { 
              console.log(data_er);
+             if (data_er.status >= 500) {
+                location.reload();
+              }
                toastr.warning(data_er.responseJSON.message,"Thông báo") 
-               location.reload();
            }
           
         });

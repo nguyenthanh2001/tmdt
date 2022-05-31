@@ -28,7 +28,6 @@ class Home extends Controller
 {
     protected $CakeDetail;
     protected $Cart;
-    private $CartTamp;
     public function __construct(Detail $dataDetail, Cart $cart)
     {
         $this->CakeDetail = $dataDetail;
@@ -45,8 +44,6 @@ class Home extends Controller
 
     public function shop(Request $request)
     {    
-        // dd($request->has('a'));
-       // $request->query('q');
         $custom = array();
         $Cakehot = Loaibanh::all()->sortBy([['maloai', 'desc']])->take(4)->toArray();
         foreach ($Cakehot as $key => $value) {
@@ -57,11 +54,18 @@ class Home extends Controller
             ->orderByDesc('mabanh')
             ->with('khuyenmai', 'loaibanh')
             ->get()->toArray();
-
-        $indexCake = Banh::whereNull('makm')
+        if ($request->has('q') && !empty($request->query('q'))) {
+            $q =$request->query('q');
+            $indexCake = Banh::whereNull('makm')
+            ->where('tenbanh','LIKE','%'.$q.'%')
             ->orderBy('mabanh', 'desc')
             ->paginate(9);
-
+            $indexCake->appends(['q' => $q]);
+        }else{
+            $indexCake = Banh::whereNull('makm')
+            ->orderBy('mabanh', 'desc')
+            ->paginate(9);
+        }    
         $coutCake = Banh::whereNull('makm')->count();
         $CoutSale = Banh::whereNotNull('makm')->count();
         return view('shop', compact('custom', 'khuyenmai', 'indexCake', 'coutCake', 'CoutSale'));

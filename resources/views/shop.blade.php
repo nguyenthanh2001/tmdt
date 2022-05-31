@@ -79,7 +79,8 @@
                                             @endif
                                         </div>
                                     </a>
-                                    @empty                                       
+                                    @empty   
+
                                     @endforelse                                                                    
                                 </div>   
                                 @endforeach
@@ -158,7 +159,7 @@
                     </div>
                 </div>          
                 <div class="row">
-                    @foreach ($indexCake as $itemCake)
+                    @forelse ($indexCake as $itemCake)
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{ asset('upload/imgCake/'.$itemCake->hinhanh) }}">
@@ -177,12 +178,15 @@
                             </div>
                         </div>
                     </div> 
-                    @endforeach
+                    @empty
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <p style="text-align: center">Không tồn tại dữ liệu</p>
+                    </div>
+                    @endforelse
                     
 
                 </div>
-                
-                 
+                   
                     {{$indexCake->links("pagination::bootstrap-4")}}
                 
             
