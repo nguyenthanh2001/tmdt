@@ -96,9 +96,14 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="{{ route('admin.Thongke') }}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Thống kê</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.Thongke') }}">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>Email</span></a>
         </li>
 
         <!-- Divider -->

@@ -110,6 +110,8 @@ Route::prefix('admin')->controller(Thongke::class)->name('admin.')->middleware('
     Route::get('thongke','Thongke')->name('Thongke'); 
     Route::get('TKloai','TKLoai')->name('TKLoai');
     Route::get('TopCake','TopCake')->name('TopCake');
+    Route::get('email/{id}','email')->name('email');
+    Route::get('Showemail','Showemail')->name('Showemail');
 });
 Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
     Route::get('taikhoan','ShowTk')->name('getTk');

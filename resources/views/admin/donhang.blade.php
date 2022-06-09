@@ -44,8 +44,7 @@
                                 @endif
                                 @if ($trangthai == 1)
                                     <th>In</th>
-                                @endif
-                               
+                                @endif                               
                             </tr>
                         </thead>                                      
                         <tbody>  

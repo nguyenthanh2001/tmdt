@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Loaibanh;
 use App\Http\Services\admin\Thongke as TK;
+use App\Mail\UserTop;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 class Thongke extends Controller
 {
     public function Thongke()
@@ -46,15 +49,18 @@ class Thongke extends Controller
     }
      return abort(404);
     }
-    public function TopCake(Request $request)
+    public function email(Request $request,$id)
     {
-    //    if ($request->ajax()) {
-    //     $LoaiCake = new TK();
-        
-    //    return response()->json();
-    // }
-    //  return abort(404);
-
+      $acc = User::find($id);
+      Mail::to($acc->email)->send(new UserTop($acc));
+      return back();
     }
+    public function Showemail(Request $request)
+    {
+      $Statistics = new TK();
+      $Account = $Statistics->Top5UsersBuy();
+      return view('admin.Email',compact('Account'));
+    }
+
 
 }
