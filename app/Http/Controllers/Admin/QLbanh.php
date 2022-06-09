@@ -312,16 +312,22 @@ class QLbanh extends Controller
        if ($request->ajax()) {
             $Cake = Banh::find($id)->load('anhct')->toArray();
             $CakeDelete = Banh::find($id);
-            if (!empty($Cake) && File::exists(public_path('upload/imgCake/'.$Cake["hinhanh"]))) {             
-                File::delete(public_path('upload/imgCake/'.$Cake["hinhanh"]));
-                if(!empty($Cake["anhct"])){
-                    foreach ($Cake["anhct"] as $key => $value) {
-                        if(File::exists(public_path('upload/imgCakes/'.$value["link"]))){
-                            File::delete(public_path('upload/imgCakes/'.$value["link"]));
+            if (!empty($Cake) && File::exists(public_path('upload/imgCake/'.$Cake["hinhanh"]))) {      
+                try {
+                    if ($status = $CakeDelete->delete()) {
+                        File::delete(public_path('upload/imgCake/'.$Cake["hinhanh"]));              
+                        if(!empty($Cake["anhct"])){
+                            foreach ($Cake["anhct"] as $key => $value) {
+                                if(File::exists(public_path('upload/imgCakes/'.$value["link"]))){
+                                    File::delete(public_path('upload/imgCakes/'.$value["link"]));
+                                }
+                            }
                         }
-                    }
+                    }                
+                } catch (\Throwable $th) {
+                    $status=false;
                 }
-               $status = $CakeDelete->delete();
+                       
                return response()->json(['status' => $status]);
             }
             return response()->json(['status' => false]);
