@@ -55,7 +55,7 @@ class QLloaibanh extends Controller
         }
     }
 
-    public function get_edit_loaibanh($id, Request $request)
+    public function get_edit_loaibanh($id, Request $request)//sua banh, show tt loai banh
     {
         if ($request->ajax()) {
             $loaibanh = Loaibanh::find($id);

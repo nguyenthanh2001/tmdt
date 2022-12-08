@@ -49,7 +49,7 @@
                                 <td>{{($loop->index)+1}}</td>
                                 <td>{{ $ad_lb->tenloai }}</td>
                                 <td>                                    
-                                    <button onclick="sualoaibanh({{ $ad_lb->maloai }})" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#sualoaibanh">
+                                    <button onclick="sualoaibanh({{ $ad_lb->maloai }})" class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#sualoaibanh">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                 </td>

@@ -427,6 +427,3 @@ function deleteCake(id) {
     });
     
   }
-
-
-
