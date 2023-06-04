@@ -44,7 +44,7 @@ class Home extends Controller
     }
 
     public function shop(Request $request)
-    {    
+    {
         $custom = array();
         $Cakehot = Loaibanh::all()->sortBy([['maloai', 'desc']])->take(4)->toArray();
         foreach ($Cakehot as $key => $value) {
@@ -66,7 +66,7 @@ class Home extends Controller
             $indexCake = Banh::whereNull('makm')
             ->orderBy('mabanh', 'desc')
             ->paginate(9);
-        }    
+        }
         $coutCake = Banh::whereNull('makm')->count();
         $CoutSale = Banh::whereNotNull('makm')->count();
         return view('shop', compact('custom', 'khuyenmai', 'indexCake', 'coutCake', 'CoutSale'));
@@ -99,10 +99,10 @@ class Home extends Controller
             return abort(404);
         }
         $detail->load(['loaibanh', 'khuyenmai', 'anhct', 'sizebanh']);
-        $price = $this->CakeDetail->CheckPriceCake($detail); 
+        $price = $this->CakeDetail->CheckPriceCake($detail);
         $indexCake = Banh::whereNull('makm')
-        ->where('maloai_id',$detail->maloai_id)   
-        ->get()->random(1)->sortByDesc('mabanh'); 
+        ->where('maloai_id',$detail->maloai_id)
+        ->get()->random(1)->sortByDesc('mabanh');
         return view('details', compact('detail', 'price','indexCake'));
         //trangchitiet
     }
@@ -144,11 +144,11 @@ class Home extends Controller
                 $maquyen = Auth::user()->maquyen; // lấy giá trị của mã quyền
                 if ($maquyen == '1') { // kiểm tra giá trị của mã quyền
                    $link = route('admin.getbanh');
-                   return response()->json(['status' => true, 'link' => $link]);           
+                   return response()->json(['status' => true, 'link' => $link]);
                 }
                 elseif ($maquyen == '3') { // kiểm tra giá trị của mã quyền
                     $link = route('nhanvien.getloaibanh_nhanvien');
-                    return response()->json(['status' => true, 'link' => $link]);           
+                    return response()->json(['status' => true, 'link' => $link]);
                  } else {
                     $link = route('home.trangchu');
                    return response()->json(['status' => true, 'link' => $link]);
@@ -195,7 +195,7 @@ class Home extends Controller
             $user = new User();
             $user->name = $request->hoten;
             $user->email = $request->email;
-            $user->password =  bcrypt($request->matkhau); //password_hash($request->matkhau,PASSWORD_DEFAULT),   
+            $user->password =  bcrypt($request->matkhau); //password_hash($request->matkhau,PASSWORD_DEFAULT),
             $user->gioitinh = $request->gioitinh;
             $user->ngaysinh = $request->ngaysinh;
             $user->sdt = $request->sdt;
@@ -441,20 +441,26 @@ class Home extends Controller
             return back();
         }
         $itemSeeson = $this->Cart->HandlingSessionCart(session('Cart'));
-        $Cart = $this->Cart->showDetailItemCart($itemSeeson);     
+        $Cart = $this->Cart->showDetailItemCart($itemSeeson);
         $checkout = new Checkout();
-        $mahd = $checkout->addBill($request);
-        $kq = $checkout->addBillDetail($Cart,$mahd);
-        if($kq){
-            session()->forget('Cart');
+        if($checkout->checkNumberCar($Cart)){
+            $mahd = $checkout->addBill($request);
+            $kq = $checkout->addBillDetail($Cart,$mahd);
+            if($kq){
+                session()->forget('Cart');
+            }
+            Alert::success('Đặt hàng thành công', 'Đặt hàng thành công');
+        } else{
+            Alert::success('Thong bao', 'so luong trong kho khong du');
         }
-        Alert::success('Đặt hàng thành công', 'Đặt hàng thành công');
+
+
       return back();
-    
+
 
     }
     public function Waiting(Request $request)
-    {   
+    {
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',0)
         ->with('noi.huyen.thanhpho')->get();
@@ -462,12 +468,12 @@ class Home extends Controller
         return view('waitBill',compact('dataBill','trangthai'));
     }
     public function See(Request $request)
-    {   
+    {
         $datasee = CThoadon::where('hoadon_id',$request->mahd)->with('banh','size')->get();
         return response()->json(['data' => $datasee]);
     }
     public function Deletebill(Request $request)
-    {   
+    {
         $rule = [
             'mahd' => 'required|numeric|exists:hoadon,mahd',
         ];
@@ -487,7 +493,7 @@ class Home extends Controller
         return back();
     }
     public function confirmedBill(Request $request)
-    {   
+    {
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',1)
         ->with('noi.huyen.thanhpho')->get();
@@ -495,7 +501,7 @@ class Home extends Controller
         return view('waitBill',compact('dataBill','trangthai'));
     }
     public function Success(Request $request)
-    {   
+    {
         $dataBill = Hoadon::where('users_id',Auth::user()->id)
         ->where('trangthai',2)
         ->with('noi.huyen.thanhpho')->get();
@@ -512,7 +518,7 @@ class Home extends Controller
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
             'xaid.exists' => 'Nơi ở không tồn tại',
-            'numeric' => 'Vui lòng nhập số',  
+            'numeric' => 'Vui lòng nhập số',
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();
@@ -522,7 +528,7 @@ class Home extends Controller
             $update->diachi =$request->diachi;
             $update->xaid = $request->xaid;
             $update->save();
-        
+
          }
         return back();
     }

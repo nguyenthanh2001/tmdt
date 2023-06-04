@@ -25,7 +25,7 @@ class Checkout
         $bill->diachi=Auth::user()->diachi;
         if (!empty($request->note)) {
             $bill->note =$request->note;
-        }      
+        }
         $bill->save();
         return $bill->mahd;
     }
@@ -40,12 +40,23 @@ class Checkout
             $billDetail->tonggia =$value['tonggia'];
             if (empty($value['sizebanh'])) {
                 $billDetail->masize =null;
-            } 
+            }
             else{
                 $billDetail->masize =$value['masize'];
-            }    
+            }
             $billDetail->save();
-        }      
+        }
         return true;
+    }
+    public function checkNumberCar($Cart)
+    {
+        $check = true;
+        foreach ($Cart as $key => $value) {
+            $product =  Banh::find($value['mabanh']);
+            if($value['soluong'] > $product->soluong){
+                return false;
+            }
+        }
+        return $check;
     }
 }
