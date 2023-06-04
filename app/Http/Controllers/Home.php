@@ -451,7 +451,7 @@ class Home extends Controller
             }
             Alert::success('Đặt hàng thành công', 'Đặt hàng thành công');
         } else{
-            Alert::success('Thong bao', 'so luong trong kho khong du');
+            Alert::warning('Thông báo', 'Số lượng trong kho không đủ');
         }
 
 
