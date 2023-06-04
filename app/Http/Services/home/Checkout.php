@@ -44,7 +44,11 @@ class Checkout
             else{
                 $billDetail->masize =$value['masize'];
             }
+            $product = Banh::find($value['mabanh']);
+            $product->soluong =  $product->soluong - $value['soluongmua'];
+            $product->save();
             $billDetail->save();
+
         }
         return true;
     }
