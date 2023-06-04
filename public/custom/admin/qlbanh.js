@@ -91,7 +91,7 @@ function size_banh(number) {
     var html = `
     <div class="form-group">
     <label for="exampleFormControlTextarea1" class="font-weight-bold">Size hải sản Thứ ${number + 1}</label>
-    <input type="number" class="form-control" placeholder="Nhập Size" name="tensize[]" required>
+    <input type="text" class="form-control" placeholder="Nhập Size" name="tensize[]" required>
     </div>
     <label for="exampleFormControlTextarea1" class="font-weight-bold">Gía hải sản Size Thứ ${number + 1} </label>
                 <div class="input-group mb-3">                
@@ -112,11 +112,11 @@ $(document).ready(function () {
     <label for="exampleFormControlTextarea1" class="font-weight-bold">Chọn số lượng size</label>
     <select class="custom-select mr-sm-2" id="size_select" aria-label=".form-select-lg example" name="chonsize" required>
         <option selected disabled>hải sản có bao nhiêu size</option>
-        <option value="1">1 Kg</option>
-        <option value="2">2 Kg</option>
-        <option value="3">3 Kg</option>
-        <option value="4">4 Kg</option>
-        <option value="5">5 Kg</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
     </select>
     <div class="form-group" id="size_div_2">
     </div>

@@ -89,7 +89,7 @@
                                         @endif
                                     @endforeach
                                 @endif
-                            </div>
+                            </div>                            
                         </div>
                         @if (isset($price['giabanh'][0]['giagiam']))
                             {{-- co giam gia --}}
@@ -105,7 +105,7 @@
                                 data-price="{{ $price['giabanh'][0]['giagoc'] }}">{{ $price['giabanh'][0]['giagoc'] }}
                                 VND</div>
                         @endif
-
+                        <h5>Số lượng: {{ $detail->soluong }}</h5>
                         <p>{!! Str::limit($detail->mota, 30) !!}</p>
 
                         <form method="post" id="addCart">
