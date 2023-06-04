@@ -53,7 +53,7 @@ class Checkout
         $check = true;
         foreach ($Cart as $key => $value) {
             $product =  Banh::find($value['mabanh']);
-            if($value['soluong'] > $product->soluong){
+            if($value['soluongmua'] > $product->soluong){
                 return false;
             }
         }
