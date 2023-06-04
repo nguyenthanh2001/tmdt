@@ -65,14 +65,14 @@
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $item['tenbanh'] }}</td>
                                     <td style="width:20%"><img style="width:100%;height: 200px;object-fit: contain;" src="{{asset('upload/imgCake/'.$item['hinhanh'])  }}" alt="{{ $item['tenbanh'] }}" class="img-thumbnail hact" onclick="seeimg(this)" data-original="{{asset('upload/imgCake/'.$item['hinhanh'])  }}"></td>
-                                    <td>{{ $item['soluong'] }}</td>
+                                    <td>{{ $item['soluong'] <= 0 ? 'Hết hàng' : $item['soluong'] }}</td>
                                     <td> {{ Str::limit($item['mota'], 30) }}</td>
                                    @if ($item['giabanh'] == 0)
                                    <td><button class="badge badge-pil badge-success">Hải sản có nhiều Size</button></td>
                                    @else
                                    <td>{{ number_format($item['giabanh']) }}</td>
                                    @endif
-                                
+
                                     <td><span class="badge badge-pill badge-info">{{ $item['loaibanh']['tenloai'] }}</span> </td>
                                     @if (!empty($item['khuyenmai']))
                                         <td>{{ $item['khuyenmai']['giatri'] }}</td>
@@ -96,7 +96,7 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                 
+
                     </table>
                 </div>
             </div>
@@ -106,23 +106,23 @@
     <div >
         <div class="show-img">
         <img class="full" src="" alt="" >
-        </div>         
+        </div>
     </div>
 
-              
+
     @include('admin.form_input.thembanh')
     @include('admin.form_input.suabanh')
-    
+
 @endsection
 @push('js')
 <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('custom/admin/qlbanh.js') }}"></script>
     <script src="{{ asset('custom/admin/SeeImgCake.js') }}"></script>
-    <script src="{{ asset('admin/hashtag/tagsinput.js') }}"></script>  
+    <script src="{{ asset('admin/hashtag/tagsinput.js') }}"></script>
     <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
     <script>
-         CKEDITOR.replace( 'editor' );    
-         CKEDITOR.replace( 'editor1' );      
+         CKEDITOR.replace( 'editor' );
+         CKEDITOR.replace( 'editor1' );
     </script>
 @endpush

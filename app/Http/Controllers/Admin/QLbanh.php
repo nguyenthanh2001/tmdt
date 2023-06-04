@@ -13,7 +13,7 @@ use App\Models\Anhct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use Nette\Utils\Arrays;
 use Illuminate\Support\Facades\Storage;
@@ -33,13 +33,13 @@ class QLbanh extends Controller
             foreach ($banh as $key => $value) {
                 $custom[$key]['stt'] = $key + 1;
                 $custom[$key]['tenbanh'] = $value['tenbanh'];
-                $custom[$key]['soluong'] = $value['soluong'];
+                $custom[$key]['soluong'] = $value['soluong'] <= 0 ? 'Hết hàng' : $value['soluong'];
                 $custom[$key]['hinhanh'] = '<img style="width:100%;height: 200px;object-fit: contain;" src="'.asset('upload/imgCake/'.$value['hinhanh']).'" alt="'.$value['tenbanh'].'" class="img-thumbnail hact"  onclick="seeimg(this)" data-original="'.asset('upload/imgCake/'.$value['hinhanh']).'" >';
                 $custom[$key]['mota'] = Str::limit($value['mota'], 30);
                 if($value['giabanh'] == 0){
                     $custom[$key]['giabanh'] ='<button class="badge badge-pil badge-success">Hải sản có nhiều Size</button>';
                 }else{
-                    $custom[$key]['giabanh'] = number_format($value['giabanh']);   
+                    $custom[$key]['giabanh'] = number_format($value['giabanh']);
                 }
                 $custom[$key]['loaibanh'] = '<span class="badge badge-pill badge-info">'.$value["loaibanh"]["tenloai"].'</span> ';
                 if(!empty($value["khuyenmai"])){
@@ -57,7 +57,7 @@ class QLbanh extends Controller
                 </button>
                 ';
             }
-            
+
             return response()->json(['data' => $custom]);
         }
 
@@ -114,7 +114,7 @@ class QLbanh extends Controller
 
 
         if (!$validator->fails()) {
-            //check file              
+            //check file
             $fileCake = $request->file('hinhanh');
             $fileCakes = $request->file('hinhanhct');
 
@@ -132,8 +132,8 @@ class QLbanh extends Controller
             }
 
             $nameCake = $fileCake->hashName();
-            //  $fileCake->move('upload/imgCake', $nameCake);           
-            //insert banh          
+            //  $fileCake->move('upload/imgCake', $nameCake);
+            //insert banh
             $addCake = new Banh();
             $addCake->tenbanh = $request->tenbanh;
             $addCake->soluong = $request->soluong;
@@ -150,7 +150,7 @@ class QLbanh extends Controller
             //save img Cake
             $fileCake->move('upload/imgCake', $nameCake);
             if ($addCake->save()) {
-                //insert chi tiet anh     
+                //insert chi tiet anh
                 foreach ($fileCakes as $key => $value) {
                     $addDetailedImg = new Anhct();
                     $nameCakes = $value->hashName();
@@ -160,7 +160,7 @@ class QLbanh extends Controller
                     $value->move('upload/imgCakes', $nameCakes);
                 }
                 if ($checkSize) {
-                    //insert size banh    
+                    //insert size banh
                     for ($i = 0; $i < count($request->gia); $i++) {
                         $addSizeCake = new Sizebanh();
                         $addSizeCake->tensize = $request->tensize[$i];
@@ -175,20 +175,20 @@ class QLbanh extends Controller
     }
 
     public function getEditCake(Request $request,$id)
-    {   
+    {
         if ($request->ajax()) {
             $banh = Banh::find($id)->load('sizebanh','anhct')->toArray();
             if (!empty($banh)) {
                 $tmpNameCake = $banh["hinhanh"];
                 $banh["hinhanh"] = asset('upload/imgCake/'.$tmpNameCake);
                 if (count($banh["anhct"]) != 0) {
-                    for ($i=0; $i < count($banh["anhct"]); $i++) { 
+                    for ($i=0; $i < count($banh["anhct"]); $i++) {
                        $tmpName =  $banh["anhct"][$i]["link"];
                        $path = asset('upload/imgCakes/'.$tmpName);
                        $banh["anhct"][$i]["link"] = $path;
                     }
                 }
-               
+
                 return response()->json(['dataCake' => $banh]);
             }
       }
@@ -196,7 +196,7 @@ class QLbanh extends Controller
     }
 
     public function getDeleteImgCakes(Request $request,$id)
-    {  
+    {
         if ($request->ajax()) {
             $imgDetailed = Anhct::find($id);
             if (!empty($imgDetailed) && File::exists(public_path('upload/imgCakes/'.$imgDetailed->link))) {
@@ -229,7 +229,7 @@ class QLbanh extends Controller
                         'mota' => 'required',
                     ];
                 }
-               
+
                 $mess = [
                     'required' => 'Không được bỏ trống dữ liệu',
                     'tenbanh.unique' => 'Tên hải sản tồn tại trông hệ thống',
@@ -241,7 +241,7 @@ class QLbanh extends Controller
                 $checkImgCake =null;
                 $checkImgCakes = null;
                 if (!$validator->fails()) {
-                    //check file      
+                    //check file
                     if($request -> hasFile('hinhanh')){
                         $fileCake = $request->file('hinhanh');
                         $fileExtensionCake = $fileCake->extension();
@@ -259,10 +259,10 @@ class QLbanh extends Controller
                             }
                         }
                         $checkImgCakes = 0;
-                    }  
-                    //insert banh          
+                    }
+                    //insert banh
                     $Cake->tenbanh = $request->tenbanh;
-                    $Cake->soluong = $request->soluong;             
+                    $Cake->soluong = $request->soluong;
                     $Cake->mota = $request->mota;
                     if ($request->has('giabanh')) {
                         $Cake->giabanh = $request->giabanh;
@@ -277,13 +277,13 @@ class QLbanh extends Controller
                     $Cake->maloai_id = $request->maloai;
                     //save img Cake
                     if($checkImgCake === 0 && File::exists(public_path('upload/imgCake/'.$Cake->hinhanh))){
-                        $nameCake = $fileCake->hashName();      
+                        $nameCake = $fileCake->hashName();
                         File::delete(public_path('upload/imgCake/'.$Cake->hinhanh));
                         $Cake->hinhanh = $nameCake;
                         $fileCake->move('upload/imgCake', $nameCake);
                     }
                     if ($Cake->save()) {
-                        //insert chi tiet anh    
+                        //insert chi tiet anh
                         if($checkImgCakes === 0){
                             foreach ($fileCakes as $key => $value) {
                                 $addDetailedImg = new Anhct();
@@ -293,29 +293,29 @@ class QLbanh extends Controller
                                 $addDetailedImg->save();
                                 $value->move('upload/imgCakes', $nameCakes);
                             }
-                        }                  
+                        }
                          return response()->json(['status' => true]);
                     }
                     else{
                         return response()->json(['status' => False,'dataErro' => 'Thêm hải sản thất bại']);
                     }
                 }
-             
-            }  
+
+            }
             return response()->json(['status' => False],500);
         }
         return redirect()->route('admin.getbanh');
     }
 
     public function DeleteCake(Request $request,$id)
-    {  
+    {
        if ($request->ajax()) {
             $Cake = Banh::find($id)->load('anhct')->toArray();
             $CakeDelete = Banh::find($id);
-            if (!empty($Cake) && File::exists(public_path('upload/imgCake/'.$Cake["hinhanh"]))) {      
+            if (!empty($Cake) && File::exists(public_path('upload/imgCake/'.$Cake["hinhanh"]))) {
                 try {
                     if ($status = $CakeDelete->delete()) {
-                        File::delete(public_path('upload/imgCake/'.$Cake["hinhanh"]));              
+                        File::delete(public_path('upload/imgCake/'.$Cake["hinhanh"]));
                         if(!empty($Cake["anhct"])){
                             foreach ($Cake["anhct"] as $key => $value) {
                                 if(File::exists(public_path('upload/imgCakes/'.$value["link"]))){
@@ -323,11 +323,11 @@ class QLbanh extends Controller
                                 }
                             }
                         }
-                    }                
+                    }
                 } catch (\Throwable $th) {
                     $status=false;
                 }
-                       
+
                return response()->json(['status' => $status]);
             }
             return response()->json(['status' => false]);
