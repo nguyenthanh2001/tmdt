@@ -19,14 +19,14 @@
 @endpush
 @include('block.load')
 @section('main')
-<section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/breadcrumb.jpg') }}">
+<section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/62527818_99f64b.jpg') }}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Cake Shop</h2>
+                    <h2>Cửa hàng hải sản</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a><span>Shop</span>
+                        <!-- <a href="./index.html">Home</a><span>Shop</span> -->
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Loại Bánh</h4>
+                        <h4>Loại Hải Sản</h4>
                         <ul>  
                             <li><a href="{{route('home.shop') }}">Xem tất cả</a></li>                      
                             @forelse ($loaibanh as $loaibanhShop)                
@@ -66,7 +66,7 @@
                                         <div class="latest-product__item__text">
                                             <h6>{{ $value2['tenbanh'] }}</h6>
                                             @if ($value2['giabanh']==0)
-                                            <span>Bánh có nhiều Size</span> 
+                                            <span>hải sản có nhiều Size</span> 
                                             @else
                                             @if ($value2['khuyenmai']==null)
                                             <span>{{ number_format($value2['giabanh']) }} VNĐ</span>
@@ -117,7 +117,7 @@
                                         <span>{{$khuyenmai['loaibanh']['tenloai']}}</span>
                                         <h5><a href="{{route('home.details',['id'=>$khuyenmai['mabanh']])}}">{{$khuyenmai['tenbanh']}}</a></h5>
                                         @if ($khuyenmai['giabanh'] == 0)
-                                        <div class="product__item__price"> <p class="badge badge-pill badge-success">bánh có nhiều size</p> </div>
+                                        <div class="product__item__price"> <p class="badge badge-pill badge-success">hải sản có nhiều size</p> </div>
                                         @else
                                         <div class="product__item__price">{{ number_format( ($khuyenmai['giabanh']*((100-$khuyenmai['khuyenmai']['giatri'])/100)) )}} VNĐ <span>{{ number_format($khuyenmai['giabanh']) }} VNĐ </span></div>
                                         @endif
@@ -170,7 +170,7 @@
                             <div class="product__item__text">
                                 <h6 class="nameCake"><a href="{{route('home.details',['id'=>$itemCake->mabanh])}}">{{ $itemCake->tenbanh }}</a></h6>
                                 @if ($itemCake->giabanh == 0)
-                                <h5 class="product__item__price"> <p class="badge badge-pill badge-success">bánh có nhiều size</p> </h5>
+                                <h5 class="product__item__price"> <p class="badge badge-pill badge-success">hải sản có nhiều size</p> </h5>
                                 @else
                                 <h5>{{ number_format($itemCake->giabanh) }} VNĐ</h5>
                                 @endif

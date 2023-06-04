@@ -46,9 +46,9 @@
                             <th>Ngày Sinh</th>
                             <th>Số Điện Thoại</th>
                             <th>Địa Chỉ</th>
-                            <th>Quyền</th>
-                    
+                            <th>Quyền</th>                
                             <th>Xóa</th>
+                            <th>Sửa</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -62,6 +62,7 @@
                             <th>Địa Chỉ</th>
                             <th>Quyền</th>
                             <th>Xóa</th>
+                            <th>Sửa</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -79,14 +80,27 @@
                             <td>{{ $Account->sdt }}</td>
                             <td>{{ $Account->diachi}}</td>
                             @if ($Account->maquyen == 1)
-                            <td>Admim</td>
+                            <td>Admin</td>
+                            @elseif ($Account->maquyen == 3)
+                            <td>Nhân viên</td>
                             @else
                             <td>Khách Hàng</td>
                             @endif                        
                             <td>
-                            <a href="{{ route('admin.deleteTk',['id'=>$Account->id]) }}" class="btn btn-danger btn-circle btn-sm">
+                            <!-- <a href="{{ route('admin.deleteTk',['id'=>$Account->id]) }}" class="btn btn-danger btn-circle btn-sm">
                                 <i class="fas fa-trash"></i>
+                            </a> -->
+                            <a href="{{ route('admin.deleteTk',['id'=>$Account->id]) }}" class="btn btn-danger btn-circle btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')">
+                            <i class="fas fa-trash"></i>
                             </a>
+
+                            <td>
+                                
+
+                                <button type="button" onclick="edittaikhoan({{ $Account->id }})" class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#edittaikhoan">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
                             </td>
                         </tr>  
                         @endforeach
@@ -98,10 +112,12 @@
     </div>
 </div>
 @include('admin.form_input.themtk')
+@include('admin.form_input.suatk')
 @endsection
 @push('js')
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 <script src="{{ asset('custom/admin/adminUser.js') }}"></script>
+<script src="{{ asset('custom/admin/adminsuatk.js') }}"></script>
 <script> 
 var link ='{{ route('home.check') }}';
 </script>

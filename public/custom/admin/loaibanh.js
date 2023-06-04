@@ -12,11 +12,11 @@ $(document).ready(function () {
              console.log(data2);
              var trangthai=data2.status;
              if (trangthai == true) {               
-               toastr.success('Thêm loại bánh thành công', 'Thông báo');  
+               toastr.success('Thêm loại hải sản thành công', 'Thông báo');  
                loaddata();            
              }
              else{
-               toastr.error('Thêm loại bánh thất bại',"Thông báo")
+               toastr.error('Thêm loại hải sản thất bại',"Thông báo")
                setTimeout(function(){
                 location.reload();
             }, 1000);
@@ -45,11 +45,11 @@ $(document).ready(function () {
          success: function (data2) {              
            var trangthai=data2.status;
            if (trangthai == true) {               
-             toastr.success('Sửa loại bánh thành công', 'Thông báo');                         
+             toastr.success('Sửa loại hải sản thành công', 'Thông báo');                         
              loaddata();            
            }
            else{
-             toastr.error('Sửa loại bánh thất bại',"Thông báo")
+             toastr.error('Sửa loại hải sản thất bại',"Thông báo")
              setTimeout(function(){
               location.reload();
           }, 1000);
@@ -85,7 +85,7 @@ function loaddata(){
           "sLast":     "Cuối"
       }
     },
-    ajax: 'loai-banh',
+    ajax: 'loai-haisan',
     columns: [
         { data: 'stt' },
         { data: 'tenloai' },
@@ -131,7 +131,7 @@ function xoaloaibanh(id) {
   var url_delete = 'delete-loaibanh/'+id;
 
   Swal.fire({
-    title: 'Bạn có chắc muốn xóa Loại Bánh này không ?',
+    title: 'Bạn có chắc muốn xóa Loại hải sản này không ?',
     text: "Dữ liệu này sẽ mất không thể khôi phục ",
     icon: 'warning',
     showCancelButton: true,
@@ -151,11 +151,11 @@ function xoaloaibanh(id) {
         success: function (data2) {               
           var trangthai=data2.status;
           if (trangthai == true) {               
-            toastr.success('Xóa loại bánh thành công', 'Thông báo');                         
+            toastr.success('Xóa loại hải sản thành công', 'Thông báo');                         
             loaddata();            
           }
           else{
-            toastr.error('Không thể xóa loại bánh này',"Thông báo")
+            toastr.error('Không thể xóa loại hải sản này',"Thông báo")
          }                 
         },
          error: function (data_er) { 

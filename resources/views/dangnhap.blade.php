@@ -1,5 +1,6 @@
 @extends('master_layout.admin.login')
 @section('dangnhap_dangky')
+
 <div class="container">
 
     <!-- Outer Row -->
@@ -11,11 +12,11 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                        <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Chào mừng bạn đã quay lại</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Đăng Nhập</h1>
                                 </div>
                                 <form class="user" id="dangnhap" method="POST">
                                     @csrf
@@ -26,15 +27,15 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                            placeholder="Password" name="matkhau" required>
+                                            placeholder="Mật khẩu" name="matkhau" id="myInput" required>
                                             <span style="color: red" class="er er_matkhau"></span>
                                     </div>
                                     <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
+                                        <!-- <div class="custom-control custom-checkbox small">
                                             <input type="checkbox" name="remember" class="custom-control-input" id="customCheck">
-                                            <label class="custom-control-label" for="customCheck">Remember
-                                                Me</label>
-                                        </div>
+                                            <label class="custom-control-label" for="customCheck">Hiển thị mật khẩu</label>
+                                        </div> -->
+                                        <input type="checkbox" onclick="hienthimatkhaudn()"> Hiển thị mật khẩu
                                     </div>
                                     <input type="submit" class="btn btn-primary btn-user btn-block" value="Đăng nhập">                             
                                 </form>
@@ -58,3 +59,13 @@
 @push('js')
 <script src="{{ asset('custom/dangnhap.js') }}"></script>
 @endpush
+<script>
+function hienthimatkhaudn() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>

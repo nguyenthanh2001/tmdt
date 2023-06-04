@@ -6,15 +6,18 @@ use App\Models\Banh;
 class Cart
 {
     public function HandlingSessionCart($SeesonCart)
-    {
-        $result = array();
+{
+    $result = array();
+    if (!empty($SeesonCart)) {
         foreach ($SeesonCart as $key => $value) {
             foreach ($value as $key2 => $value2) {
-                $result[$key2] = $value2;              
+                $result[$key2] = $value2;
             }
         }
-        return $result;
     }
+    return $result;
+}
+
     public function ArrCartNoSize($value2,$infoCake)
     {
         $arCartID = array();

@@ -23,11 +23,11 @@ input::-webkit-inner-spin-button {
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
                 <div class="col-lg-7">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Tạo Tài Khoản</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Đăng Ký Tài Khoản</h1>
                         </div>
                         <form class="user" id="dangky"  method="POST">
                             @csrf
@@ -44,9 +44,9 @@ input::-webkit-inner-spin-button {
                             <div class="form-group">
                                 <input type="password" class="form-control form-control-user" 
                                     placeholder="Nhập Mật Khẩu" name="matkhau" required>
+                                    <input type="checkbox" onclick="togglePassword()"> Hiển thị/ẩn mật khẩu
                                     <span style="color: red" class="er er_matkhau"></span>
                             </div>
-
                             <div class="form-check form-check-inline form-group">
                                 <input class="form-check-input" type="radio" name="gioitinh" value="0" checked>
                                 <label class="form-check-label" for="inlineRadio1">Nam</label>
@@ -96,4 +96,14 @@ input::-webkit-inner-spin-button {
 @push('js')
 <script src="{{ asset('custom/dangky.js') }}"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+    function togglePassword() {
+        var x = document.getElementsByName("matkhau")[0];
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 @endpush

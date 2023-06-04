@@ -1,11 +1,12 @@
  <!-- Page Preloder -->
  @yield('load')
+
 <!-- Humberger Begin -->
 
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-        <a href="#"><img src="{{ asset('asset/img/logo.png') }}" alt=""></a>
+        <a href=""><img src="{{ asset('asset/img/logo2.png') }}" alt=""></a>
     </div>
     <div class="humberger__menu__cart">
         <ul>
@@ -46,9 +47,9 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="home"><a href="{{ route('index') }}">Home</a></li>
-            <li class="shop"><a href="{{ route('home.shop') }}">Shop</a></li>
-            <li class="details"><a>Details</a></li>
+            <li class="home"><a href="{{ route('index') }}">Trang Chủ</a></li>
+            <li class="shop"><a href="{{ route('home.shop') }}">Cửa Hàng</a></li>
+            <!-- <li class="details"><a>Details</a></li> -->
             <li class="cart"><a href="{{ route('home.ShowCart') }}">Giỏ Hàng</a></li>
             <li class="order"><a>Đơn hàng</a>
                 <ul class="header__menu__dropdown">
@@ -69,8 +70,8 @@
     </div>
     <div class="humberger__menu__contact">
         <ul>
-            <li><i class="fa fa-envelope"></i> Giahy@gmail.com</li>
-            <li>Free Shipping Khi Mua Trên 200k</li>
+            <li><i class="fa fa-envelope"></i> 19004184@st.vlute.edu.vn</li>
+            <li>Miễn phí giao hàng trong khu vực Vĩnh Long</li>
         </ul>
     </div>
 </div>
@@ -85,8 +86,8 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li><i class="fa fa-envelope"></i> Giahy@gmail.com </li>
-                            <li>Free Shipping Khi Mua Trên 200k</li>
+                            <li><i class="fa fa-envelope"></i> 19004184@st.vlute.edu.vn </li>
+                            <li>Miễn phí giao hàng trong khu vực Vĩnh Long</li>
                         </ul>
                     </div>
                 </div>
@@ -94,9 +95,9 @@
                     <div class="header__top__right">
                         <div class="header__top__right__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <!-- <a href="#"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            <a href="#"><i class="fa fa-pinterest-p"></i></a> -->
                         </div>
                         <div class="header__top__right__language">
                             @if (Auth::check())
@@ -137,15 +138,15 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="{{ route('index') }}"><img src="{{ asset('asset/img/logo.png') }}" alt=""></a>
+                    <a href="{{ route('index') }}"><img src="{{ asset('asset/img/logo3.png') }}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="home"><a href="{{ route('index') }}">Home</a></li>
-                        <li class="shop"><a href="{{ route('home.shop') }}">Shop</a></li>
-                        <li class="details"><a>Details</a></li>
+                        <li class="home"><a href="{{ route('index') }}">Trang Chủ</a></li>
+                        <li class="shop"><a href="{{ route('home.shop') }}">Cửa Hàng</a></li>
+                        <!-- <li class="details"><a>Details</a></li> -->
                         <li class="cart"><a href="{{ route('home.ShowCart') }}">Giỏ Hàng</a></li>
                         <li class="order"><a>Đơn hàng</a>
                             <ul class="header__menu__dropdown">
@@ -192,7 +193,7 @@
                 <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
-                        <span>Loại Bánh</span>
+                        <span>Loại Hải Sản</span>
                     </div>
                     <ul>                 
                         @forelse ($loaibanh as $loaibanh)
@@ -208,10 +209,10 @@
                     <div class="hero__search__form">
                         <form action="{{ route('home.shop') }}" method="GET">
                             <div class="hero__search__categories">
-                                Tất cả Bánh
+                                Tất cả hải sản
                                 <span class="arrow_carrot-down"></span>
                             </div>
-                            <input type="text" name="q" placeholder="Nhập tên bánh">
+                            <input type="text" name="q" placeholder="Nhập tên hải sản">
                             <button type="submit" class="site-btn">Tìm kiểm</button>
                         </form>
                     </div>
@@ -220,7 +221,7 @@
                             <i class="fa fa-phone iconPhone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+0846431099</h5>
+                            <h5>+84 386541287</h5>
                             <span>Hỗ trợ 24/7 giờ</span>
                         </div>
                     </div>

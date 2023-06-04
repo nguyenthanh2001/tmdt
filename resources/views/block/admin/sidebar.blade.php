@@ -3,11 +3,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="haisan">
             <div class="sidebar-icon ">
                 <i class="fas fa-store-alt"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Admin Gia Hỷ</div>
+            <div class="sidebar-brand-text mx-3">Admin hải sản Vĩnh Long</div>
         </a>
 
         <!-- Divider -->
@@ -15,9 +15,9 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="haisan">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Quản Trị</span></a>
+                <span>Quản trị hệ thống</span></a>
         </li>
 
         <!-- Divider -->
@@ -38,10 +38,10 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Menu:</h6>
-                    <a class="collapse-item" href="{{ route('admin.getbanh') }}">Quản lý bánh</a>
+                    <a class="collapse-item" href="{{ route('admin.getbanh') }}">Quản lý hải sản</a>
                     <a class="collapse-item" href="{{ route('admin.getkhuyenmai') }}">Quản lý khuyến mãi</a>
-                    <a class="collapse-item" href="{{ route('admin.getloaibanh') }}">Quản lý loại bánh</a>
-                    <a class="collapse-item" href="{{ route('admin.getSize') }}">Quản lý size bánh</a>
+                    <a class="collapse-item" href="{{ route('admin.getloaibanh') }}">Quản lý loại hải sản</a>
+                    <a class="collapse-item" href="{{ route('admin.getSize') }}">Quản lý size hải sản</a>
                     <a class="collapse-item" href="{{ route('admin.getTk') }}">Quản lý tài khoản</a>
                 </div>
             </div>

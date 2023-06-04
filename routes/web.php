@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Qlsize;
 use App\Http\Controllers\Admin\Qltaikhoan;
 use App\Http\Controllers\Admin\Qldonhang;
 use App\Http\Controllers\Admin\Thongke;
+use App\Http\Controllers\Nhanvien\QLloaibanh_nhanvien;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,7 +60,7 @@ Route::prefix('home')->controller(Home::class)->name('home.')->group(function ()
 //admin-loại bánh
 Route::prefix('admin')->controller(QLloaibanh::class)->middleware('checkAdmin')->name('admin.')->group(function (){ 
     // Route::get('index','index')->name('trangchu_admin');
-    Route::get('loai-banh','getloaibanh')->name('getloaibanh');
+    Route::get('loai-haisan','getloaibanh')->name('getloaibanh');
     Route::post('postloaibanh','postloaibanh');
     Route::get('edit-loaibanh/{id}','get_edit_loaibanh');
     Route::post('edit-loaibanh/{id}','post_edit_loaibanh');
@@ -74,14 +75,24 @@ Route::prefix('admin')->controller(QLkhuyenmai::class)->middleware('checkAdmin')
    Route::post('edit-khuyen-mai/{id}','post_edit_khuyen_mai');
    Route::get('delete-khuyen-mai/{id}','get_delete_khuyen_mai');
 });
-//admin-bánh
+//admin-hải sản, truy cap vo trang admin
 Route::prefix('admin')->controller(QLbanh::class)->name('admin.')->middleware('checkAdmin')->group(function (){
-    Route::get('banh','Showbanh')->name('getbanh');
+    Route::get('haisan','Showbanh')->name('getbanh');
     Route::post('addCake','PostAddCake')->name('postAddCake');
     Route::get('editCake/{id}','getEditCake');
     Route::get('deleteImgCakes/{id}','getDeleteImgCakes');
     Route::post('editCake/{id}','EditPostCake')->name('postEditCake');
     Route::get('deleteCake/{id}','DeleteCake');
+
+ });
+ // Nhan Vien
+ //nhan vien hai san
+ Route::prefix('nhanvien')->controller(\App\Http\Controllers\Nhanvien\QLloaibanh_nhanvien::class)->name('nhanvien.')->middleware('checknhanvien')->group(function (){
+    Route::get('loai-haisan','getloaibanh_nhanvien')->name('getloaibanh_nhanvien');
+    Route::post('postloaibanh','postloaibanh');
+    Route::get('edit-loaibanh/{id}','get_edit_loaibanh');
+    Route::post('edit-loaibanh/{id}','post_edit_loaibanh');
+    Route::get('delete-loaibanh/{id}','get_delete_loaibanh');
 
  });
 //admin size
@@ -113,10 +124,14 @@ Route::prefix('admin')->controller(Thongke::class)->name('admin.')->middleware('
     Route::get('email/{id}','email')->name('email');
     Route::get('Showemail','Showemail')->name('Showemail');
 });
+//admin quan ly tai khoan
 Route::prefix('admin')->controller(Qltaikhoan::class)->middleware('checkAdmin')->name('admin.')->group(function (){
     Route::get('taikhoan','ShowTk')->name('getTk');
     Route::post('addTK','addTK')->name('addTK');
     Route::get('deleteTk/{id}','deleteTk')->name('deleteTk');
+    //them cn sua tk
+    Route::get('edit-tk/{id}', 'App\Http\Controllers\Admin\Qltaikhoan@getEditTk')->name('editTk');
+    Route::post('edit-tk/{id}', 'App\Http\Controllers\Admin\Qltaikhoan@postEditTk')->name('postedit');
 });
 
 Route::get('test', function () {

@@ -4,23 +4,23 @@
 @section('main_admin')
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Quản Lý Loại Bánh</h1>
-        <p class="mb-4 text-info">Tại đây quản trị có thể thêm loại bánh , sửa loại bánh , xóa loại bánh ,
-             xem thông tin loại bánh , tìm kiếm tất cả thông tin của loại bánh
+        <h1 class="h3 mb-2 text-gray-800">Quản Lý Loại hải sản</h1>
+        <p class="mb-4 text-info">Tại đây quản trị có thể thêm loại hải sản , sửa loại hải sản , xóa loại hải sản ,
+             xem thông tin loại hải sản , tìm kiếm tất cả thông tin của loại hải sản
         </p>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between">
                 <div class="m-0 font-weight-bold text-primary">
-                    Loại Bánh
+                    Loại hải sản
                  </div>
                  <div class="m-0 font-weight-bold text-primary">
                     <button class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#themloaibanh">
                         <span class="icon text-white-50">
                             <i class="fa-duotone fa-plus"></i>
                         </span>
-                        <span class="text">Thêm Loại Bánh</span>
+                        <span class="text">Thêm Loại hải sản</span>
                     </button>
                  </div>
             </div>
@@ -74,14 +74,14 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Thêm loại bánh</h4>
+                    <h4 class="modal-title">Thêm loại hải sản</h4>
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="formloaibanh" method="POST">
                         @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Tên Loại Bánh" name="tenloai" required>
+                        <input type="text" class="form-control" placeholder="Tên Loại hải sản" name="tenloai" required>
                     </div>
                     <div class="form-group ">
                         <button type="submit " name="submit" value="Gửi" id="btn_them" class="btn btn-success">Thêm</button>
@@ -97,14 +97,14 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Sửa loại bánh</h4>
+                    <h4 class="modal-title">Sửa loại hải sản</h4>
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="form-edit" method="POST">
                         @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control" id="tenloaibanh" placeholder="Tên Loại Bánh" name="tenloai" required>
+                        <input type="text" class="form-control" id="tenloaibanh" placeholder="Tên Loại hải sản" name="tenloai" required>
                     </div>
                     <div class="form-group ">
                         <button type="submit " name="submit" id="btn-edit-from" class="btn btn-success">Sửa</button>

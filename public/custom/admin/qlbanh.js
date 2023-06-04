@@ -90,15 +90,15 @@ function preview() {
 function size_banh(number) {
     var html = `
     <div class="form-group">
-    <label for="exampleFormControlTextarea1" class="font-weight-bold">Size Bánh Thứ ${number + 1}</label>
+    <label for="exampleFormControlTextarea1" class="font-weight-bold">Size hải sản Thứ ${number + 1}</label>
     <input type="number" class="form-control" placeholder="Nhập Size" name="tensize[]" required>
     </div>
-    <label for="exampleFormControlTextarea1" class="font-weight-bold">Gía Bánh Size Thứ ${number + 1} </label>
+    <label for="exampleFormControlTextarea1" class="font-weight-bold">Gía hải sản Size Thứ ${number + 1} </label>
                 <div class="input-group mb-3">                
                     <div class="input-group-prepend">
                       <span class="input-group-text">VNĐ</span>
                     </div>
-                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="gia[]" required>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá hải sản" name="gia[]" required>
                     <div class="input-group-append">
                       <span class="input-group-text">.000</span>
                     </div>
@@ -111,12 +111,12 @@ $(document).ready(function () {
     var html_size = `
     <label for="exampleFormControlTextarea1" class="font-weight-bold">Chọn số lượng size</label>
     <select class="custom-select mr-sm-2" id="size_select" aria-label=".form-select-lg example" name="chonsize" required>
-        <option selected disabled>Bánh có bao nhiêu size</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        <option selected disabled>hải sản có bao nhiêu size</option>
+        <option value="1">1 Kg</option>
+        <option value="2">2 Kg</option>
+        <option value="3">3 Kg</option>
+        <option value="4">4 Kg</option>
+        <option value="5">5 Kg</option>
     </select>
     <div class="form-group" id="size_div_2">
     </div>
@@ -135,12 +135,12 @@ $(document).ready(function () {
             });
         } else {
             var htmlPrice = `      
-            <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
+            <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá hải sản</label>
             <div class="input-group mb-3">                
                 <div class="input-group-prepend">
                   <span class="input-group-text">VNĐ</span>
                 </div>
-                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" required>
+                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá hải sản" name="giabanh" required>
                 <div class="input-group-append">
                   <span class="input-group-text">.000</span>
                 </div>
@@ -174,7 +174,7 @@ function loaddata() {
             }
         },
         ajax: {
-            "url": "banh",
+            "url": "haisan",
             "type": "GET"
         },
         columns: [
@@ -240,9 +240,9 @@ function editCake(id) {
 
             if(data2.dataCake.sizebanh.length == 0){
                 var htmlPrice = `
-                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
+                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá hải sản</label>
                 <div class="input-group mb-3">                
-                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá bánh" name="giabanh" id="priceCake" value="${data2.dataCake.giabanh}" required>
+                    <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Nhập giá hải sản" name="giabanh" id="priceCake" value="${data2.dataCake.giabanh}" required>
                     <div class="input-group-prepend">
                       <span class="input-group-text">VNĐ</span>
                     </div>
@@ -250,9 +250,9 @@ function editCake(id) {
                 $('#editPrice').html(htmlPrice)
             }else{
                 var htmlPrice = `
-                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá bánh</label>
+                <label for="exampleFormControlTextarea1" class="font-weight-bold">Giá hải sản</label>
                 <div class="input-group mb-3">                 
-                    <span class="badge tag">Bánh có nhiều Size mỗi giá khác nhau</span>
+                    <span class="badge tag">hải sản có nhiều Size mỗi giá khác nhau</span>
                 </div> `;
                 $('#editPrice').html(htmlPrice);
             }
@@ -291,7 +291,7 @@ $(document).ready(function () {
                 console.log(data2);
                 var trangthai = data2.status;
                 if (trangthai == true) {
-                    toastr.success('Thêm Bánh thành công', 'Thông báo');                
+                    toastr.success('Thêm hải sản thành công', 'Thông báo');                
                     loaddata();
                 }
                 else {
@@ -331,7 +331,7 @@ $(document).ready(function () {
                 loaddata();
                 var trangthai = data2.status;
                 if (trangthai == true) {
-                    toastr.success('Sửa Bánh thành công', 'Thông báo');                
+                    toastr.success('Sửa hải sản thành công', 'Thông báo');                
                     loaddata();
                 }
                 else {
@@ -385,7 +385,7 @@ function DeleteImgCakes(id,x) {
 function deleteCake(id) {
     var url_delete = 'deleteCake/'+id;
     Swal.fire({
-      title: 'Bạn có chắc muốn xóa Bánh này không ?',
+      title: 'Bạn có chắc muốn xóa hải sản này không ?',
       text: "Dữ liệu này sẽ mất không thể khôi phục ",
       icon: 'warning',
       showCancelButton: true,
@@ -406,11 +406,11 @@ function deleteCake(id) {
                
             var trangthai=data2.status;
             if (trangthai == true) {               
-              toastr.success('Xóa loại bánh thành công', 'Thông báo');                         
+              toastr.success('Xóa loại hải sản thành công', 'Thông báo');                         
               loaddata();            
             }
             else{
-              toastr.error('Không thể xóa bánh này',"Thông báo")
+              toastr.error('Không thể xóa hải sản này',"Thông báo")
            }                 
           },
            error: function (data_er) { 

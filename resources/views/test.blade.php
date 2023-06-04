@@ -11,29 +11,29 @@
     <thead>
         <tr>
             <th>STT</th>
-            <th>Tên Tên Bánh</th>   
+            <th>Tên Tên hải sản</th>   
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>     
+            <th>Tên Tên hải sản</th>     
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
         </tr>
     </thead>
     <tfoot>
         <tr>
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
             <th>STT</th>
-            <th>Tên Tên Bánh</th>  
+            <th>Tên Tên hải sản</th>  
         </tr>
     </tfoot>
     <tbody>

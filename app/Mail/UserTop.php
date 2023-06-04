@@ -31,6 +31,6 @@ class UserTop extends Mailable
     public function build()
     {
         $nameuser = $this->User->name;
-        return $this->from('example@example.com', 'SHOP GIA HỶ')->subject('Shop bánh ngọt Gia Hỷ Kính Gửi')->view('admin.sendemail',compact('nameuser'));
+        return $this->from('example@example.com', 'SHOP GIA HỶ')->subject('Shop hải sản Vĩnh Long Kính Gửi')->view('admin.sendemail',compact('nameuser'));
     }
 }

@@ -15,7 +15,7 @@
 
 @include('block.load')
 @section('main')
-    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/breadcrumb.jpg') }}">
+    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/62527818_99f64b.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -100,7 +100,7 @@
                     <div class="shoping__continue">
                         <div class="shoping__discount">
                             <h5 style="font-family: 'FontAwesome';">Lưu ý</h5>
-                            <li><b>Kho :</b> <span>Bánh sẽ được làm sau khi đặt hàng</span></li>
+                            <li><b>Kho :</b> <span>hải sản sẽ được chuẩn bị sau khi đặt hàng</span></li>
                             <li><b>Shipping :</b> <span>sau 1 ngày tính từ lúc duyệt đơn hàng. </span></li>
                             <li><b>Đơn hàng :</b> <span>Miễn phí ship nội thành với số lượng trên 5</span></li>
                             <li><b>Địa chỉ :</b> <span><a class="badge badge-primary"

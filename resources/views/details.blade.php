@@ -26,7 +26,7 @@
 @section('main')
     {{-- @dd(session('key')[0]) --}}
 
-    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/breadcrumb.jpg') }}">
+    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/62527818_99f64b.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -127,7 +127,7 @@
 
                         </form>
                         <ul>
-                            <li><b>Kho</b> <span>Bánh sẽ được làm sau khi đặt hàng</span></li>
+                            <li><b>Kho</b> <span>hải sản sẽ được chuẩn bị sau khi đặt hàng</span></li>
                             <li><b>Shipping</b> <span>sau 1 ngày tính từ lúc duyệt đơn hàng. </span></li>
                             <li><b>Đơn hàng</b> <span>Miễn phí ship nội thành với số lượng trên 5</span></li>
                             <li><b>Địa chỉ</b> <span><a class="badge badge-primary"
@@ -195,7 +195,7 @@
                                 </h6>
                                 @if ($itemCake->giabanh == 0)
                                     <h5 class="product__item__price">
-                                        <p class="badge badge-pill badge-success">bánh có nhiều size</p>
+                                        <p class="badge badge-pill badge-success">hải sản có nhiều size</p>
                                     </h5>
                                 @else
                                     <h5>{{ number_format($itemCake->giabanh) }} VNĐ</h5>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Shop Bánh Ngọt</title>
+    <title>Hải Sản Vĩnh Long</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -41,6 +41,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     @include('block.header')
     @yield('main')
     @include('block.footer')

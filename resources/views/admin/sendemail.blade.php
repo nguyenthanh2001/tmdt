@@ -132,7 +132,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Shop bánh ngọt Gia Hỷ xin cảm ơn khách hàng {{ $nameuser }} đã quan tâm tới Gia Hỷ</p>
+                            <p style="margin: 0;">Shop hải sản Vĩnh Long xin cảm ơn khách hàng {{ $nameuser }} đã quan tâm tới hải sản Vĩnh Long</p>
                         </td>
                     </tr>
                     <tr>
@@ -159,7 +159,7 @@
                     <tr>
                        
                         <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <br>   <br>  <p style="margin: 0;">Shop Gia Hỷ xin chân thành cảm ơn</p>
+                            <br>   <br>  <p style="margin: 0;">Shop hải sản Vĩnh Long xin chân thành cảm ơn</p>
                         </td>
                     </tr>
                 </table>

@@ -87,10 +87,10 @@ $('#formAddSize').on('submit', function (event) {
       console.log(data2);
       var trangthai = data2.status;
       if (trangthai == true) {
-        toastr.success('Thêm size bánh thành công', 'Thông báo');
+        toastr.success('Thêm size hải sản thành công', 'Thông báo');
         LoadData();
       } else {
-        toastr.error('Thêm size bánh thất bại', "Thông báo")
+        toastr.error('Thêm size hải sản thất bại', "Thông báo")
         setTimeout(function () {
           location.reload();
         }, 1000);
@@ -151,11 +151,11 @@ $('#formEditSize').on('submit', function (event) {
     success: function (data2) {
       var trangthai = data2.status;
       if (trangthai == true) {
-        toastr.success('Sửa size bánh thành công', 'Thông báo');
+        toastr.success('Sửa size hải sản thành công', 'Thông báo');
         LoadData();
       }
       else {
-        toastr.error('Sửa size bánh thất bại', "Thông báo")
+        toastr.error('Sửa size hải sản thất bại', "Thông báo")
         setTimeout(function () {
           location.reload();
         }, 1000);
@@ -175,7 +175,7 @@ $('#formEditSize').on('submit', function (event) {
 
 function DeleteSize(id) {
   Swal.fire({
-    title: 'Bạn có chắc muốn xóa Size Bánh này không ?',
+    title: 'Bạn có chắc muốn xóa Size hải sản này không ?',
     text: "Dữ liệu này sẽ mất không thể khôi phục ",
     icon: 'warning',
     showCancelButton: true,
@@ -192,11 +192,11 @@ function DeleteSize(id) {
         success: function (data2) {
           var trangthai = data2.status;
           if (trangthai == true) {
-            toastr.success('Xóa Size Bánh thành công', 'Thông báo');
+            toastr.success('Xóa Size hải sản thành công', 'Thông báo');
             LoadData();
           }
           else {        
-            toastr.error('Không thể xóa Size Bánh này', "Thông báo")
+            toastr.error('Không thể xóa Size hải sản này', "Thông báo")
           }
         },
         error: function (data_er) {

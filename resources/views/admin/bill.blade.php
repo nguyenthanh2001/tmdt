@@ -30,7 +30,7 @@
                             
                         </div>
                         <div class="col-md-6 text-right mt-3">
-                            <h4 class="text-danger mb-0">Gia Hỷ</h4><span>banhngotgiahy.com</span></div>
+                            <h4 class="text-danger mb-0">hải sản Vĩnh Long</h4><span>hải sản Vĩnh Long</span></div>
                     </div>
                     <div class="mt-3">
                         <div class="table-responsive">
@@ -38,8 +38,8 @@
                                 <thead>
                                     <tr>
                                         <th>Stt</th>
-                                        <th>Tên bánh</th>
-                                        <th>Size Bánh</th>
+                                        <th>Tên hải sản</th>
+                                        <th>Size hải sản</th>
                                         <th>Số lượng</th>
                                         <th>Giá</th>
                                         <th>Tổng giá</th>

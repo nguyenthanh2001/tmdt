@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\phanquyen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use RealRashid\SweetAlert\Facades\Alert;
 class Qltaikhoan extends Controller
 {
     public function ShowTk(Request $request)
@@ -74,4 +74,44 @@ class Qltaikhoan extends Controller
         return back()->with('xoatk','Xóa tài khoản thành công');;
        
     }
+    //them chuc nang sua tai khoan
+    // Controller functions in your PHP file
+public function getEditTk(Request $request, $id)
+{
+  if ($request->ajax()) {
+    $taikhoan = User::find($id);
+    if (!empty($taikhoan)) {
+      return response()->json([
+        'taikhoan' => $taikhoan,
+        'url'=> route('admin.postedit',['id'=>$taikhoan->id])
+    ]);
+    }
+  }
+  return redirect()->route('admin.getTk');
+}
+
+public function postEditTk(Request $request, $id)
+{
+   //chua co thong bao
+  $account = User::find($id);
+  if (!empty($account)) {
+    $account->maquyen = $request->maquyen;
+    $account->save();
+    Alert::success('Sửa tài khoản thành công!', 'Sửa tài khoản thành công!');
+    return redirect()->route('admin.getTk')->with('editTk', 'Sửa tài khoản thành công!');
+  }
+  return redirect()->route('admin.getTk');
+}
+
+
+public function editTk($id)
+{
+  $account = User::find($id);
+  if (!empty($account)) {
+    return view('admin.form_input.editTk')->with('account', $account);
+  }
+  return redirect()->route('admin.getTk');
+}
+
+
 }

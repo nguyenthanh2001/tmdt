@@ -24,6 +24,7 @@ use App\Models\Sizebanh;
 use App\Http\Services\home\Checkout;
 use phpDocumentor\Reflection\PseudoTypes\False_;
 use phpDocumentor\Reflection\PseudoTypes\True_;
+use RealRashid\SweetAlert\Facades\Alert;
 class Home extends Controller
 {
     protected $CakeDetail;
@@ -101,7 +102,7 @@ class Home extends Controller
         $price = $this->CakeDetail->CheckPriceCake($detail); 
         $indexCake = Banh::whereNull('makm')
         ->where('maloai_id',$detail->maloai_id)   
-        ->get()->random(4)->sortByDesc('mabanh'); 
+        ->get()->random(1)->sortByDesc('mabanh'); 
         return view('details', compact('detail', 'price','indexCake'));
         //trangchitiet
     }
@@ -128,7 +129,7 @@ class Home extends Controller
         ];
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
-            'min' => 'Mật khẩu dài hơn 6 ký tự',
+            'min' => 'Mật khẩu phải dài hơn 6 ký tự',
             'email' => 'Email không hợp lệ'
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
@@ -140,8 +141,20 @@ class Home extends Controller
             ];
             if (Auth::attempt($data, $remember)) {
                 $request->session()->regenerate();
-                $link = route('home.trangchu');
-                return response()->json(['status' => true, 'link' => $link]);
+                $maquyen = Auth::user()->maquyen; // lấy giá trị của mã quyền
+                if ($maquyen == '1') { // kiểm tra giá trị của mã quyền
+                   $link = route('admin.getbanh');
+                   return response()->json(['status' => true, 'link' => $link]);           
+                }
+                elseif ($maquyen == '3') { // kiểm tra giá trị của mã quyền
+                    $link = route('nhanvien.getloaibanh_nhanvien');
+                    return response()->json(['status' => true, 'link' => $link]);           
+                 } else {
+                    $link = route('home.trangchu');
+                   return response()->json(['status' => true, 'link' => $link]);
+                }
+                // $link = route('home.trangchu');
+                // return response()->json(['status' => true, 'link' => $link]);
             }
         }
         return response()->json(['status' => false]);
@@ -157,7 +170,7 @@ class Home extends Controller
         $rule = [
             'hoten' => 'required',
             'email' => 'required|email|unique:users',
-            'matkhau' => 'required|min:6',
+            'matkhau' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
             'gioitinh' => 'required|boolean',
             'ngaysinh' => 'required',
             'sdt' => 'required|numeric',
@@ -171,7 +184,8 @@ class Home extends Controller
                 'size' => 'Vui lòng nhập đúng qui định',
                 'email' => 'Sai định dạng email',
                 'email.unique' => 'email tồn tại trên hệ thống',
-                'min' => 'Mật khẩu dài hơn 6 ký tự',
+                'min' => 'Mật khẩu dài hơn 8 ký tự',
+                'matkhau.regex' => 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ in hoa, chữ số và ký tự đặc biệt',
                 'xaid.exists' => 'Đỉa chỉ không tồn tại'
             ];
         $validator = Validator::make($request->all(), $rule, $mess);
@@ -219,7 +233,7 @@ class Home extends Controller
             $mess = [
                 'required' => 'Không được bỏ trống dữ liệu',
                 'numeric' => 'Vui lòng nhập số',
-                'mabanh.exists' => 'Bánh không tồn tại',
+                'mabanh.exists' => 'hải sản không tồn tại',
             ];
             $validator = Validator::make($request->all(), $rule, $mess);
             $validator->validate();
@@ -401,6 +415,7 @@ class Home extends Controller
 
     public function Checkout(Request $request)
     {
+        // Alert::success('Success Title', 'Success Message');
         $Checkout = new Checkout();
         $name = $Checkout->ShowNameAddress();
         if (session()->has('Cart') && count(session('Cart')) > 0) {
@@ -409,15 +424,22 @@ class Home extends Controller
             $Cart = $this->Cart->showDetailItemCart($itemSeeson);
             foreach ($Cart as $key => $value) {
                 $Total += (float)$value['tonggia'];
-            }     
+            }
         } else {
             $Cart = [];
             $Total = 0;
         }
         return view('Checkout', compact('name', 'Cart', 'Total'));
+
     }
     public function HandleCheckout(Request $request)
     {
+        //dd($request->all(),session('Cart'));
+        if(empty(session('Cart')))
+        {
+            Alert::warning('Không thể đặt hàng khi giỏ hàng trống', 'Không thể đặt hàng khi giỏ hàng trống');
+            return back();
+        }
         $itemSeeson = $this->Cart->HandlingSessionCart(session('Cart'));
         $Cart = $this->Cart->showDetailItemCart($itemSeeson);     
         $checkout = new Checkout();
@@ -426,7 +448,10 @@ class Home extends Controller
         if($kq){
             session()->forget('Cart');
         }
+        Alert::success('Đặt hàng thành công', 'Đặt hàng thành công');
       return back();
+    
+
     }
     public function Waiting(Request $request)
     {   
@@ -449,7 +474,7 @@ class Home extends Controller
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
             'numeric' => 'Vui lòng nhập số',
-            'mahd.exists' => 'Bánh không tồn tại',
+            'mahd.exists' => 'hải sản không tồn tại',
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Gia Hỷ - Admin</title>
+    <title>Hải Sản Vĩnh Long - Admin</title>
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet"
         type="text/css">
@@ -25,6 +25,7 @@
 </head>
 
 <body id="page-top">
+    @include('sweetalert::alert')
     @include('block.admin.header')
     @yield('main_admin')
     @include('block.admin.footer')

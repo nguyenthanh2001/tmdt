@@ -43,7 +43,7 @@ class QLloaibanh extends Controller
         ];
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
-            'tenloai.unique' => 'Loại Bánh tồn tại trên hệ thống',
+            'tenloai.unique' => 'Loại hải sản tồn tại trên hệ thống',
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();
@@ -74,7 +74,7 @@ class QLloaibanh extends Controller
         ];
         $mess = [
             'required' => 'Không được bỏ trống dữ liệu',
-            'tenloai.unique' => 'Loại Bánh tồn tại trên hệ thống',
+            'tenloai.unique' => 'Loại hải sản tồn tại trên hệ thống',
         ];
         $validator = Validator::make($request->all(), $rule, $mess);
         $validator->validate();

@@ -62,7 +62,7 @@
                     <div class="form-group ">
                         <label for="exampleFormControlTextarea1" class="font-weight-bold">Phân quyền</label>
                         <select class="form-control" aria-label="Default select example" name="maquyen" required>
-                            <option selected>Chọn quyền</option>
+                            <!-- <option selected>Chọn quyền</option> -->
                             @foreach ($quyen as $quyen)
                             <option value="{{ $quyen->maquyen }}">{{ $quyen->tenquyen }}</option>
                             @endforeach

@@ -1042,11 +1042,13 @@ ol {
 	display: flex;
 	align-items: center;
 	padding: 45px 0 40px;
+	height: 410px; /* Thay đổi giá trị này để thay đổi kích thước của ảnh */
+    background-size: 60%; /* Có thể thay đổi giá trị này thành '100% 100%' */
 }
 
 .breadcrumb__text h2 {
 	font-size: 46px;
-	color: #ffffff;
+	color: #f11616;
 	font-weight: 700;
 }
 

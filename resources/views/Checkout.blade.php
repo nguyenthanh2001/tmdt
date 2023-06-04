@@ -9,10 +9,10 @@
         } 
     </style>
 @endpush
-
 @include('block.load')
 @section('main')
-    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/breadcrumb.jpg') }}">
+
+    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('asset/img/62527818_99f64b.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -129,3 +129,4 @@
     <!-- Page level custom scripts -->
     <script></script>
 @endpush
+@include('sweetalert::alert')
